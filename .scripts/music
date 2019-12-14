@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Function to turn on and off the music player
+if [ $# -eq 0 ]; then
+        mpd && ncmpcpp 2> /dev/null
+elif [ "$1" = "kill" ]; then
+        mpd --kill
+        echo "Closed music player and daemon."
+else
+    echo "Unknown parameters: $1"
+fi

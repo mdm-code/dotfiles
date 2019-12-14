@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Open applications in the _essentials folder
+
+set -eou pipefail
+
+dir="$HOME/../../Applications/_essentials"
+
+trap 'echo "Quitting...\n" && exit 1' SIGTERM
+
+! [ -d "$dir" ] && echo "Directory $dir does not exist!" >&2 && exit 1
+
+prog="$( find "$dir" -maxdepth 1 | fzf -i )" 2>/dev/null
+open $prog

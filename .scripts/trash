@@ -1,0 +1,4 @@
+#/bin/sh
+
+# Select files to remove from .Trash
+find ~/.Trash ! -path ~/.Trash -maxdepth 1 | fzf -m | xargs -I {} rm -rf "{}"
