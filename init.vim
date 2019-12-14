@@ -98,8 +98,12 @@ endfunction
 map <leader>N :call RenameFile()<cr>
 " }}}
 
-" Set path to python
+
+" {{{ Code competion uses Python binaries from Conda environment.
 let $VIRTUAL_ENV = $CONDA_PREFIX
+" }}}
+
+" Set path to python
 let g:python3_host_prog = '/Users/michal/Documents/python/miniconda3/bin/python3'
 
 " PEP-8 / PYTHON {{{
