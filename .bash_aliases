@@ -21,7 +21,7 @@ alias cdr='cd ~/Documents/_files/_research/monograph/phd_references'
 
 # Coding aliases
 alias cdd='cd ~/Documents/python/dev/'
-alisa cdg='cd ~/Documents/go'
+alias cdg='cd ~/Documents/go'
 
 # Open PhD bibliography
 alias bib='vim ~/Documents/_files/_research/monograph/body/thesis/local_bibliography.bib'
