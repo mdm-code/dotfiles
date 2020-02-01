@@ -18,20 +18,20 @@ case "$1" in
         echo "Setting up the environment..."
         brew services start yabai
         brew services start skhd
-        launchctl load "/Library/LaunchAgents/karabiner/org.pqrs.karabiner.karabiner_console_user_server.plist" 
-        sudo launchctl load "/Library/LaunchDaemons/karabiner/org.pqrs.karabiner.karabiner_grabber.plist"
-        sudo launchctl load "/Library/LaunchDaemons/karabiner/org.pqrs.karabiner.karabiner_observer.plist"
-        open -j "/Applications/_essentials/Karabiner-Elements.app" --hide
+        sudo launchctl load "/Library/LaunchDaemons/karabiner/org.pqrs.karabiner.karabiner_grabber.plist" 2>/dev/null
+        sudo launchctl load "/Library/LaunchDaemons/karabiner/org.pqrs.karabiner.karabiner_observer.plist" 2>/dev/null
+        launchctl enable gui/"$UID"/org.pqrs.karabiner.karabiner_console_user_server
+        launchctl bootstrap gui/"$UID" /Library/LaunchAgents/org.pqrs.karabiner.karabiner_console_user_server.plist 2>/dev/null
+        launchctl enable gui/"$UID"/org.pqrs.karabiner.karabiner_console_user_server
         echo "Set up completed."
         ;;
     "stop")
         echo "Tearing down the environment..." 
         brew services stop yabai
         brew services stop skhd
-        launchctl unload -F "/Library/LaunchAgents/karabiner/org.pqrs.karabiner.karabiner_console_user_server.plist" 
-        sudo launchctl unload -F "/Library/LaunchDaemons/karabiner/org.pqrs.karabiner.karabiner_grabber.plist"
-        sudo launchctl unload -F "/Library/LaunchDaemons/karabiner/org.pqrs.karabiner.karabiner_observer.plist" 
-        killall Karabiner-Menu
+        launchctl disable gui/"$UID"/org.pqrs.karabiner.karabiner_console_user_server
+        sudo launchctl unload "/Library/LaunchDaemons/karabiner/org.pqrs.karabiner.karabiner_grabber.plist" 2>/dev/null
+        sudo launchctl unload "/Library/LaunchDaemons/karabiner/org.pqrs.karabiner.karabiner_observer.plist" 2>/dev/null
         echo "Tear down completed."
         ;;
     *) echo "$USAGE"
