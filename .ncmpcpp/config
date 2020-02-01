@@ -1,5 +1,5 @@
 # Files
-mpd_music_dir = "~/Music/Music"
+mpd_music_dir = "~/Music/Music/Media.localized"
 ncmpcpp_directory = "~/.ncmpcpp"
 mpd_host = "127.0.0.1"
 mpd_port = "6600"
