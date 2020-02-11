@@ -76,9 +76,14 @@ set autoindent
 set foldmethod=manual
 set guicursor=n-i-v-c:block-Cursor
 set tags=tags
+set scrolloff=3
 
 " Set leader to comma
 let mapleader = ";"
+
+" {{{ Set scrolloff to center on the cursor on/off
+noremap <leader>zz :let &scrolloff=999-&scrolloff<CR>
+" }}}
 
 " Python selected code {{{
 " Enters interactive mode
