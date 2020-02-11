@@ -9,6 +9,8 @@ ln -sfv "${dir}/.bashrc" "${HOME}"
 
 # Vim
 ln -sfv "${dir}/init.vim" "${HOME}/.vimrc"
+## Set init.vim in .config/nvim
+ln -sfv "${dir}/init.vim" "${HOME}/.config/nvim/init.vim"
 
 # Window management
 ln -sfv "${dir}/.skhdrc" "${HOME}"
