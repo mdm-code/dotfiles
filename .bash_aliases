@@ -25,3 +25,25 @@ alias cdg='cd ~/Documents/go'
 
 # Open PhD bibliography
 alias bib='vim ~/Documents/_files/_research/monograph/body/thesis/local_bibliography.bib'
+
+# Git aliases
+alias g='git'
+alias ga='git add'
+alias gb='git branch'
+alias gc='git commit'
+alias gch='git checkout'
+alias gcl='git clone'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gf='git fetch'
+alias glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold green)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold yellow)(%ar)%C(reset)%C(auto)%d%C(reset)%n''       %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all"
+alias gm='git merge'
+alias gnb='git checkout -b'
+alias gpl='git pull'
+alias gplom='git pull origin master'
+alias gpu='git push'
+alias gr='git remote'
+alias gre='git restore'
+alias gres='git restore --staged .'
+alias grm='git remote'
+alias gstat='git status'
