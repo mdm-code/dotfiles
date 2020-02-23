@@ -69,21 +69,16 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 set backspace=indent,eol,start
-set hlsearch
 set incsearch
 set copyindent
 set autoindent
 set foldmethod=manual
 set guicursor=n-i-v-c:block-Cursor
 set tags=tags
-set scrolloff=3
+set nohlsearch
 
 " Set leader to comma
 let mapleader = ";"
-
-" {{{ Set scrolloff to center on the cursor on/off
-noremap <leader>zz :let &scrolloff=999-&scrolloff<CR>
-" }}}
 
 " Python selected code {{{
 " Enters interactive mode
@@ -134,7 +129,8 @@ augroup filetypedetect
     au BufRead,BufNewFile *.Rnw set filetype=tex
 augroup END
 " Latex text folding on 120 characters
-au BufRead,BufNewFile *.tex,*.Rnw,*.md setlocal textwidth=120
+au BufRead,BufNewFile *.tex,*.Rnw, setlocal textwidth=120
+au BufRead,BufNewFile *.md setlocal textwidth=70
 " }}}
 
 " Terminal Mode Configuration {{{
