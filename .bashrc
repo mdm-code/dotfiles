@@ -13,11 +13,12 @@ export LANG=en_US.UTF-8
 # added by Miniconda3 installer
 export PATH="/Users/michal/Documents/python/miniconda3/bin:$PATH"
 
+# The go language paths
+export PATH="/Users/michal/.go/goroot/current/bin:$PATH"
+export PATH="/Users/michal/.go/gopath/bin:$PATH"
+
 # Added Java home path
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home"
-
-# Added Maven to path - JAVA/GROOVY
-export PATH="/Users/michal/Documents/java/apache-maven-3.5.4/bin:$PATH"
 
 # Path to shell scripts
 export PATH="/Users/michal/.scripts:$PATH"
