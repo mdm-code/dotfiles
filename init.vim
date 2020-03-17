@@ -9,7 +9,10 @@ Plug 'tommcdo/vim-exchange'
 
 " Code completion
 Plug 'davidhalter/jedi-vim'
-Plug 'valloric/youcompleteme'
+" New code completion
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Old code completion
+"Plug 'valloric/youcompleteme'
 
 " Syntax checker
 Plug 'w0rp/ale'
@@ -20,7 +23,6 @@ Plug 'kien/rainbow_parentheses.vim'
 " Vim, tmux and airline theme
 Plug 'vim-airline/vim-airline'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'dracula/vim'
 
 " Snippets (Engine)
 " Snippet expansion c-e
@@ -35,12 +37,20 @@ Plug 'junegunn/vim-easy-align'
 " Vim sorround cs'" | ds" | ysiw"
 Plug 'tpope/vim-surround'
 
+" Comment out line with gcc / selection or motion with gc
+Plug 'tpope/vim-commentary'
+
 " Pywal color schemes for vim
 Plug 'dylanaraps/wal.vim'
 
+" Tagbar - menu bar with ctags
+Plug 'majutsushi/tagbar'
+
+
 " Go syntax and linting {{{
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
- Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Not sure if this is still useful
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " }}}
 
 call plug#end()
@@ -85,20 +95,6 @@ let mapleader = ";"
 autocmd FileType python xnoremap <leader>p :w! \| :sp \| :term python -i % <CR>
 " }}}
 
-" Rename current file
-function! RenameFile()
-  let old_name = expand('%')
-  let new_name = input('New file name: ', expand('%'))
-  if new_name != '' && new_name != old_name
-    exec ':saveas ' . new_name
-    exec ':silent !rm ' . old_name
-    redraw!
-  endif
-endfunction
-map <leader>N :call RenameFile()<cr>
-" }}}
-
-
 " {{{ Code competion uses Python binaries from Conda environment.
 let $VIRTUAL_ENV = $CONDA_PREFIX
 " }}}
@@ -134,7 +130,7 @@ au BufRead,BufNewFile *.md setlocal textwidth=70
 " }}}
 
 " Terminal Mode Configuration {{{
-nnoremap <Esc> <C-\><C-n>
+tnoremap <Esc> <C-\><C-n>
 " }}}
 
 " Navigations between splits {{{
@@ -200,17 +196,128 @@ autocmd FileType text inoremap <leader><tab> ~
 autocmd FileType tex map <leader>b :vsp<Space>$BIB<CR>
 " }}}
 
-" Polish characters in LaTeX
-autocmd FileType tex inoremap <c-a>a \k{a}
-autocmd FileType tex inoremap <c-a>c \'{c}
-autocmd FileType tex inoremap <c-a>e \k{e}
-autocmd FileType tex inoremap <c-a>l \l{}
-autocmd FileType tex inoremap <c-a>n \'{n}
-autocmd FileType tex inoremap <c-a>o \'{o}
-autocmd FileType tex inoremap <c-a>s \'{s}
-autocmd FileType tex inoremap <c-a>z \.{z}
-autocmd FileType tex inoremap <c-a>Z \'{z}
-
 " R markdown compilation {{{
 autocmd FileType rmd map <c-c> <Esc>:!echo<space> "require(rmarkdown);<space>render('<c-r>%')"<space>\|<space>R<space>--vanilla<enter>
 " }}}
+
+" Vertically center document when entering insert mode {{{
+autocmd InsertEnter * norm zz
+" }}}
+
+" Ctags bar - toggle/untoggle the bar {{{
+nmap gt :TagbarToggle<CR>
+" }}}
+
+" ------COC SETTINGS------
+" prettier command for coc
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+let g:coc_global_extensions = [
+  \ 'coc-snippets',
+  \ 'coc-pairs',
+  \ 'coc-prettier',
+  \ 'coc-json',
+  \ 'coc-python',
+  \ 'coc-texlab'
+  \ ]
+
+" From Coc Readme
+set updatetime=300
+
+" Some servers have issues with backup files, see #649
+set nobackup
+set nowritebackup
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Or use `complete_info` if your vim support it, like:
+" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use D to show documentation in preview window
+nnoremap <silent> D :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+"autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <leader>r <Plug>(coc-rename)
+
+" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Create mappings for function text object, requires document symbols feature of languageserver.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" :GoFillStruct
+" :GoKeyify
+" :GoRename
+" :GoAlternate[!]
+" :GoIfErr
+" :GoImpl <- Implement an interface
+" :GoSameIds
+" :GoSameIdsClear <- toggle on/off same names in the file
