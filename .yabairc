@@ -1,18 +1,16 @@
 #!/usr/bin/env sh
 
-# get current background color
-# cat ~/.cache/wal/colors.json | grep background | awk '{ print $2 }' | tr -d '",'
-
-# get current foreground color
-# cat ~/.cache/wal/colors.json | grep foreground | awk '{ print $2 }' | tr -d '",'
+# ! After each update run :: sudo yabai --install-sa
 
 # bar settings
 yabai -m config status_bar                   on
-yabai -m config status_bar_text_font         "Menlo:Regular:12.0"
-yabai -m config status_bar_icon_font         "Font Awsome 5 Brands:Regular:12.0"
+yabai -m config status_bar_text_font         "Menlo:Regular:14.0"
+yabai -m config status_bar_icon_font         "Font Awesome 5 Free:Solid:14.0"
 yabai -m config status_bar_background_color  0xff202020
 yabai -m config status_bar_foreground_color  0xfff9f9f4
-yabai -m config status_bar_space_icon_strip  I II III IV V VI VII VIII IX X
+yabai -m config status_bar_space_icon_strip       VI VII VIII IX X
+yabai -m config status_bar_power_icon_strip   
+yabai -m config status_bar_clock_icon        
 
 # global settings
 yabai -m config mouse_follows_focus          on

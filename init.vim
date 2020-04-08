@@ -83,7 +83,7 @@ set incsearch
 set copyindent
 set autoindent
 set foldmethod=manual
-set guicursor=n-i-v-c:block-Cursor
+set guicursor=
 set tags=tags
 set nohlsearch
 
