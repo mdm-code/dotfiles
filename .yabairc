@@ -6,8 +6,8 @@
 yabai -m config status_bar                   on
 yabai -m config status_bar_text_font         "Menlo:Regular:14.0"
 yabai -m config status_bar_icon_font         "Font Awesome 5 Free:Solid:14.0"
-yabai -m config status_bar_background_color  0xff202020
-yabai -m config status_bar_foreground_color  0xfff9f9f4
+yabai -m config status_bar_background_color  0xff282a36
+yabai -m config status_bar_foreground_color  0xfff8f8f2
 yabai -m config status_bar_space_icon_strip       VI VII VIII IX X
 yabai -m config status_bar_power_icon_strip   
 yabai -m config status_bar_clock_icon        

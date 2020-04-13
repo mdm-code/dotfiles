@@ -9,5 +9,3 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 export PATH="/usr/local/opt/openssl/bin:$PATH"
-
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"

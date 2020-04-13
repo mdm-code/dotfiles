@@ -33,7 +33,7 @@ export CLICOLOR=1
 set -o vi
 
 # Get aliases from a separate file
-source ~/.bash_aliases
+source ~/aliasesrc
 
 # Changed native command promt
 git_branch() {
