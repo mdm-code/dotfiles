@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Words per line in a LaTeX text file
+
+help_msg="Pass *.txt file"
+error_msg="File does not exist!"
+
+[ "$1" = '-h' ] && echo "$help_msg" && exit
+[ ! -f "$1" ] || [ "$#" -eq 0 ]&& echo "$error_msg" &&  exit 1 
+
+val1=$(wc -l -w -m "$1" | tr -s ' ' | cut -d ' ' -f2)
+val2=$(wc -l -w -m "$1" | tr -s ' ' | cut -d ' ' -f4)
+
+result=$((val2/$val1))
+echo "$val2 / $val1 = $result"
