@@ -4,15 +4,13 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'tpope/vim-fugitive'
 
 " Swapping words, lines, longer parts of text
-" to swap two words on sep -> cxiw
-Plug 'tommcdo/vim-exchange'
+Plug 'tommcdo/vim-exchange' " The actual collection of snippets
 
 " Code completion
 Plug 'davidhalter/jedi-vim'
+
 " New code completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Old code completion
-"Plug 'valloric/youcompleteme'
 
 " Syntax checker
 Plug 'w0rp/ale'
@@ -25,14 +23,11 @@ Plug 'vim-airline/vim-airline'
 Plug 'christoomey/vim-tmux-navigator'
 
 " Snippets (Engine)
-" Snippet expansion c-e
-Plug 'SirVer/ultisnips'
-" The actual collection of snippets
-Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' " The actual collection of snippets
+Plug 'honza/vim-snippets' " The actual collection of snippets
 
 " Align text on symbol, e.g., '='
-" Select text, type ga and type in the delimiter
-Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align' " Select text, type ga and then the delimiter
 
 " Vim sorround cs'" | ds" | ysiw"
 Plug 'tpope/vim-surround'
@@ -46,20 +41,10 @@ Plug 'dylanaraps/wal.vim'
 " Tagbar - menu bar with ctags
 Plug 'majutsushi/tagbar'
 
-
-" Go syntax and linting {{{
+" Go syntax and linting
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-" Not sure if this is still useful
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" }}}
 
 call plug#end()
-" }}}
-
-" Colors/Theme {{{
-set background=dark
-colorscheme wal
-" }}}
 
 " Basic configuration {{{
 set nocompatible
@@ -83,12 +68,17 @@ set incsearch
 set copyindent
 set autoindent
 set foldmethod=manual
-set guicursor=
 set tags=tags
 set nohlsearch
+set cursorline
+set cursorcolumn
 
 " Set leader to comma
 let mapleader = ";"
+
+" Cursor line and column color
+highlight CursorColumn ctermbg=238
+highlight CursorLine cterm=bold ctermbg=238
 
 " Python selected code {{{
 " Enters interactive mode
@@ -108,7 +98,7 @@ highlight BadWhitespace ctermbg=red guibg=red
 " Display tabs at the beginning of a line in Python mode as bad.
 au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
 " Make trailing whitespace be flagged as bad.
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h,*.tex,*.Rnw match BadWhitespace /\s\+$/
 " Wrap text after a certain number of characters
 au BufRead,BufNewFile *.py,*.pyw, set textwidth=100
 " Use UNIX (\n) line endings.
