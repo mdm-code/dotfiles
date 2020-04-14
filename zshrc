@@ -1,13 +1,20 @@
-#    ~~~ Zsh config file ~~~
-# Based on ~ Luke Smith ~ config
+###############################################################################
+#  _________  _   _    ____ ___  _   _ _____ ___ ____   _____ ___ _     _____ #
+#|__  / ___|| | | |  / ___/ _ \| \ | |  ___|_ _/ ___| |  ___|_ _| |   | ____| #
+#  / /\___ \| |_| | | |  | | | |  \| | |_   | | |  _  | |_   | || |   |  _|   #
+# / /_ ___) |  _  | | |__| |_| | |\  |  _|  | | |_| | |  _|  | || |___| |___  #
+#/____|____/|_| |_|  \____\___/|_| \_|_|   |___\____| |_|   |___|_____|_____| #
+#                                                                             #
+###############################################################################
+
 
 # Enable colors and change prompt
-autoload -U colors && colors	# Load colors
+autoload -U colors && colors  # Load colors
+setopt autocd		          # Automatically cd into typed directory
+stty stop undef		          # Disable ctrl-s to freeze terminal
 PROMPT="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%2~%{$fg[red]%}]%{$reset_color%}%b "
-setopt autocd		# Automatically cd into typed directory
-stty stop undef		# Disable ctrl-s to freeze terminal
 
-# History in cache directory:
+# History in cache directory
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.cache/zsh/history
@@ -21,18 +28,43 @@ autoload -U compinit
 zstyle ':completion:*' menu select
 zmodload zsh/complist
 compinit
-_comp_options+=(globdots)		# Include hidden files.
+_comp_options+=(globdots)  # Include hidden files
 
 # Vi mode
 bindkey -v
 export KEYTIMEOUT=1
 
-# Use vim keys in tab complete menu
+# Enable searching through history
+bindkey '^R' history-incremental-pattern-search-backward
+
+# Edit line in vim with ctrl-e
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^v' edit-command-line
+
+# Vim keys in tab complete menu
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
+
+# Vim ci", ci', ci`, di", etc
+autoload -U select-quoted
+zle -N select-quoted
+for m in visual viopp; do
+  for c in {a,i}{\',\",\`}; do
+    bindkey -M $m $c select-quoted
+  done
+done
+
+# Vim ci{, ci(, ci<, di{, etc
+autoload -U select-bracketed
+zle -N select-bracketed
+for m in visual viopp; do
+  for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+    bindkey -M $m $c select-bracketed
+  done
+done
 
 # Use lf to switch directories and bind it to ctrl-o
 lfcd () {
@@ -44,18 +76,11 @@ lfcd () {
         [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
     fi
 }
-bindkey -s '^o' 'lfcd\n' # open and navigate dir in lf
 
-bindkey -s '^a' 'bc -l\n' # Arithmetics
-
-bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n' # open dir in fzf
-
-bindkey '^[[P' delete-char
-
-# Edit line in vim with ctrl-e:
-autoload edit-command-line; zle -N edit-command-line
-bindkey '^e' edit-command-line
+# Program bindings
+bindkey -s '^o' 'lfcd\n'   # Open and navigate dir in lf
+bindkey -s '^a' 'bc -l\n'  # Arithmetics on command line
+bindkey -s "^l" "clear\n"  # Clear bind for tmux
 
 # Load zsh-syntax-highlighting; should be last.
-# source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
