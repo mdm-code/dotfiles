@@ -1,19 +1,12 @@
 call plug#begin('~/.config/nvim/plugged')
 
-" Git integration
-Plug 'tpope/vim-fugitive'
-
 " Swapping words, lines, longer parts of text
 Plug 'tommcdo/vim-exchange' " The actual collection of snippets
 
 " Code completion
-Plug 'davidhalter/jedi-vim'
-
-" New code completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Syntax checker
-Plug 'w0rp/ale'
+Plug 'davidhalter/jedi-vim'  " Necessary for Python to work right
+Plug 'w0rp/ale'  " Proper Python syntax checker
 
 " Coloured parenthesis
 Plug 'kien/rainbow_parentheses.vim'
@@ -35,29 +28,22 @@ Plug 'tpope/vim-surround'
 " Comment out line with gcc / selection or motion with gc
 Plug 'tpope/vim-commentary'
 
-" Pywal color schemes for vim
-Plug 'dylanaraps/wal.vim'
-
 " Tagbar - menu bar with ctags
 Plug 'majutsushi/tagbar'
 
-" Go syntax and linting
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Multiple cursors
+Plug 'terryma/vim-multiple-cursors'
 
 call plug#end()
 
-" Basic configuration {{{
-set nocompatible
-filetype off
-filetype indent on
-filetype plugin on
+" Basic configuration
+filetype plugin indent on
+syntax on
 set path+=**
-set wildmenu
-set splitbelow
+set wildmode=longest:list,full
+set splitbelow splitright
 set nu rnu
-set incsearch
-set title
-set noswapfile
+set mouse=a
 set encoding=utf-8
 set tabstop=4
 set shiftwidth=4
@@ -68,7 +54,6 @@ set incsearch
 set copyindent
 set autoindent
 set foldmethod=manual
-set tags=tags
 set nohlsearch
 set cursorline
 set cursorcolumn
@@ -80,91 +65,64 @@ let mapleader = ";"
 highlight CursorColumn ctermbg=238
 highlight CursorLine cterm=bold ctermbg=238
 
-" Python selected code {{{
 " Enters interactive mode
 autocmd FileType python xnoremap <leader>p :w! \| :sp \| :term python -i % <CR>
-" }}}
 
-" {{{ Code competion uses Python binaries from Conda environment.
+" Code competion uses Python binaries from Conda environment
 let $VIRTUAL_ENV = $CONDA_PREFIX
-" }}}
 
 " Set path to python
 let g:python3_host_prog = '/Users/michal/Documents/python/miniconda3/bin/python3'
 
-" PEP-8 / PYTHON {{{
-" Use the below highlight group when displaying bad whitespace is desired.
-highlight BadWhitespace ctermbg=red guibg=red
-" Display tabs at the beginning of a line in Python mode as bad.
-au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
-" Make trailing whitespace be flagged as bad.
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h,*.tex,*.Rnw match BadWhitespace /\s\+$/
-" Wrap text after a certain number of characters
-au BufRead,BufNewFile *.py,*.pyw, set textwidth=100
-" Use UNIX (\n) line endings.
-au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
-" For full syntax highlighting:
-let python_highlight_all=1
-syntax on
-" }}}
-
-" Latex {{{
- let g:tex_flavor='latex'
-" Latex identify .Rnw files as .tex
+" Latex
+let g:tex_flavor='latex'
 augroup filetypedetect
-    au BufRead,BufNewFile *.Rnw set filetype=tex
+    au BufRead,BufNewFile *.Rnw set filetype=tex  " Latex identify .Rnw files as .tex
 augroup END
-" Latex text folding on 120 characters
-au BufRead,BufNewFile *.tex,*.Rnw, setlocal textwidth=120
-au BufRead,BufNewFile *.md setlocal textwidth=70
-" }}}
+au BufRead,BufNewFile *.tex,*.Rnw, setlocal textwidth=120  " Latex text folding on 120 characters
 
-" Terminal Mode Configuration {{{
+" Terminal mode configuration
 tnoremap <Esc> <C-\><C-n>
-" }}}
 
-" Navigations between splits {{{
-let g:BASH_Ctrl_j = 'off'
+" Navigations between splits
 nnoremap <C-j> <C-w><C-j>
 nnoremap <C-k> <C-w><C-k>
 nnoremap <C-l> <C-w><C-l>
 nnoremap <C-h> <C-w><C-h>
-" }}}
 
-" Brackets and quotation autocompletion {{{
+" Brackets and quotation autocompletion
 ino " ""<left>
 ino ' ''<left>
 ino ( ()<left>
 ino { {}<left>
 ino [ []<left>
-" }}}
 
-" Netwr configuration {{{
+" Netwr configuration
 let g:netrw_liststyle = 3
 let g:netrw_banner = 0
-"  }}}
 
-" EasyAlign {{{
-" Start interactive EasyAlign in visual mode (e.g. vipga)
+" EasyAlign
 xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
-" }}}
 
-" Snippets {{{
+" Snippets
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-" }}}
 
-" colourful parantheses {{{
+" colourful parantheses
 autocmd VimEnter * RainbowParenthesesToggle
 autocmd Syntax * RainbowParenthesesLoadRound
 autocmd Syntax * RainbowParenthesesLoadSquare
 autocmd Syntax * RainbowParenthesesLoadBraces
-" }}}
 
-" MELD tags shortcuts {{{
+" Vertically center document when entering insert mode
+autocmd InsertEnter * norm zz
+
+" Ctags bar - toggle/untoggle the bar
+nmap gt :TagbarToggle<CR>
+
+" MELD tags shortcuts
 function! Input()
   call inputsave()
   let text = input('> ')
@@ -172,33 +130,15 @@ function! Input()
   call inputrestore()
   return text
 endfunction
-
 autocmd FileType text inoremap <leader><Space><Space> <Esc>/<++><Enter>"_c4l
 autocmd FileType text inoremap <c-t> <Esc>viwgUdiwa<<Esc>pa></<Esc>pa><Space><++><Esc>F>cit
 autocmd FileType text inoremap <c-g> <Esc>viwgUdiwa<<Esc>pa></<Esc>pa><Space><++><Esc>F>cit<c-r>=Input()<cr>
 autocmd FileType text inoremap <c-f> <Esc>viwgUdiwa<<Esc>pa>
-
-" Tilde ~ vim remap
 autocmd FileType text inoremap <leader><tab> ~
-" }}}
-
-" Open bibliography file in a separate split {{{
 autocmd FileType tex map <leader>b :vsp<Space>$BIB<CR>
-" }}}
-
-" R markdown compilation {{{
-autocmd FileType rmd map <c-c> <Esc>:!echo<space> "require(rmarkdown);<space>render('<c-r>%')"<space>\|<space>R<space>--vanilla<enter>
-" }}}
-
-" Vertically center document when entering insert mode {{{
-autocmd InsertEnter * norm zz
-" }}}
-
-" Ctags bar - toggle/untoggle the bar {{{
-nmap gt :TagbarToggle<CR>
-" }}}
 
 " ------COC SETTINGS------
+
 " prettier command for coc
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 let g:coc_global_extensions = [
@@ -206,6 +146,7 @@ let g:coc_global_extensions = [
   \ 'coc-pairs',
   \ 'coc-prettier',
   \ 'coc-json',
+  \ 'coc-go',
   \ 'coc-python',
   \ 'coc-texlab'
   \ ]
@@ -302,12 +243,3 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" :GoFillStruct
-" :GoKeyify
-" :GoRename
-" :GoAlternate[!]
-" :GoIfErr
-" :GoImpl <- Implement an interface
-" :GoSameIds
-" :GoSameIdsClear <- toggle on/off same names in the file

@@ -12,16 +12,15 @@
 autoload -U colors && colors  # Load colors
 setopt autocd		          # Automatically cd into typed directory
 stty stop undef		          # Disable ctrl-s to freeze terminal
-PROMPT="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%2~%{$fg[red]%}]%{$reset_color%}%b "
+PROMPT="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%2~%{$fg[red]%}]%{$reset_color%}$%b "
 
 # History in cache directory
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.cache/zsh/history
 
-# Load aliases and shortcuts if exist
+# Load aliases if exist
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/aliasesrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/aliasesrc"
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/codingrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/codingrc"
 
 # Basic auto/tab complete
 autoload -U compinit
