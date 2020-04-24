@@ -34,6 +34,10 @@ Plug 'majutsushi/tagbar'
 " Multiple cursors
 Plug 'terryma/vim-multiple-cursors'
 
+" Writing
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+
 call plug#end()
 
 " Basic configuration
@@ -121,6 +125,11 @@ autocmd InsertEnter * norm zz
 
 " Ctags bar - toggle/untoggle the bar
 nmap gt :TagbarToggle<CR>
+
+" Writing config
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_ctermfg = 240
+let g:goyo_width = 150
 
 " MELD tags shortcuts
 function! Input()
