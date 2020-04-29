@@ -101,6 +101,12 @@ ino ( ()<left>
 ino { {}<left>
 ino [ []<left>
 
+" Resizing splits
+nnoremap <Up> :resize +2<CR>
+nnoremap <Down> :resize -2<CR>
+nnoremap <Left> :vertical resize +2<CR>
+nnoremap <Right> :vertical resize -2<CR>
+
 " Netwr configuration
 let g:netrw_liststyle = 3
 let g:netrw_banner = 0
