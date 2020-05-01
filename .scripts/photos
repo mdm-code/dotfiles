@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Open dir with MSS photos in fzf and open the selected file
-for n in $(find ~/Documents/_files/_research/monograph/material/transcripts/photos -maxdepth 1 -type f -name "*.jpg" | fzf -m | sort -r)
+for n in $(find ~/Documents/_files/_research/monograph/material/transcripts/photos -maxdepth 1 -type f -iname "*.jpg" | fzf -m | sort -r)
 do
     open "$n"
     sleep 0.6
