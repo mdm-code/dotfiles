@@ -34,9 +34,9 @@ Plug 'majutsushi/tagbar'
 " Multiple cursors
 Plug 'terryma/vim-multiple-cursors'
 
-" Writing
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
+" Quick line navigation for f/F
+Plug 'unblevable/quick-scope'
+
 
 call plug#end()
 
