@@ -5,7 +5,7 @@ path=("/usr/local/opt/openssl/bin"
       "/Users/michal/Documents/python/miniconda3/bin"
       "/Users/michal/.go/goroot/current/bin"
       "/Users/michal/.go/gopath/bin"
-      "/Users/michal/.scripts"
+      "/Users/michal/.dotfiles/scripts"
       "$path[@]")
 export PATH
 
