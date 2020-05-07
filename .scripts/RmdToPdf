@@ -1,0 +1,9 @@
+#!/bin/sh
+
+! [ -f "$1.rmd" ] && echo "Pass an Rmarkdown file as an argument." && exit 1
+
+# R package 'reticulate' allows to call python variables in R
+# The syntax is `r py$var`
+Rscript -e "require(knitr); require(markdown); require(reticulate); knit('$1.rmd', '$1.md')"
+pandoc -t pdf "$1.md" > "$1.pdf"
+[ -f "$1.md" ] && rm "$1.md" && echo "Removed $1.md"
