@@ -16,7 +16,7 @@ colors:
 
   # Cursor colors
   cursor:
-    text: '0x44475a'
+    text:   '0x44475a'
     cursor: '0xf8f8f2'
 
   # Normal colors
@@ -48,6 +48,6 @@ colors:
     green:   '0x1ef956'
     yellow:  '0xebf85b'
     blue:    '0x4d5b86'
-    magenta: '0xff46b0'
+    magenta: '0xff79c6'
     cyan:    '0x59dffc'
     white:   '0xe6e6d1'
