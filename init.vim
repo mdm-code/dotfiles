@@ -37,6 +37,9 @@ Plug 'terryma/vim-multiple-cursors'
 " Quick line navigation for f/F
 Plug 'unblevable/quick-scope'
 
+" Colors and color schemes
+Plug 'rrethy/vim-hexokinase', {'do': 'make hexokinase'} " Display colours in the file
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 call plug#end()
 
@@ -61,6 +64,8 @@ set foldmethod=manual
 set nohlsearch
 set cursorline
 set cursorcolumn
+set termguicolors
+colorscheme dracula
 
 " Set leader to comma
 let mapleader = ";"
@@ -132,10 +137,19 @@ autocmd InsertEnter * norm zz
 " Ctags bar - toggle/untoggle the bar
 nmap gt :TagbarToggle<CR>
 
-" Writing config
-let g:limelight_conceal_ctermfg = 'gray'
-let g:limelight_conceal_ctermfg = 240
-let g:goyo_width = 150
+" Hexokinase configuration
+let g:Hexokinase_refreshEvents = ['InsertLeave']
+let g:Hexokinase_optInPatterns = [
+\     'full_hex',
+\     'triple_hex',
+\     'rgb',
+\     'rgba',
+\     'hsl',
+\     'hsla',
+\     'colour_names'
+\ ]
+let g:Hexokinase_highlighters = ['backgroundfull']
+autocmd VimEnter * HexokinaseTurnOn " Reenable hexokinase on enter
 
 " MELD tags shortcuts
 function! Input()
