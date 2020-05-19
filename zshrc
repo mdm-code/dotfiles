@@ -8,11 +8,17 @@
 ###############################################################################
 
 
+# Version control information
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats '%b'
+
 # Enable colors and change prompt
 autoload -U colors && colors  # Load colors
 setopt autocd		          # Automatically cd into typed directory
 stty stop undef		          # Disable ctrl-s to freeze terminal
-PROMPT="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%2~%{$fg[red]%}]%{$reset_color%}$%b "
+setopt PROMPT_SUBST
+PROMPT='%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%2~%{$fg[red]%} ${vcs_info_msg_0_}]%{$reset_color%}$%b '
 
 # History in cache directory
 HISTSIZE=10000
