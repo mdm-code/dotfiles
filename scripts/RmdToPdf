@@ -1,9 +1,30 @@
 #!/bin/sh
 
-! [ -f "$1.rmd" ] && echo "Pass an Rmarkdown file as an argument." && exit 1
+# Check if the program is installed; otherwise abort.
+program_installed() {
+    type "$1" >/dev/null 2>&1 || {
+        printf "I require %s but it's not installed. Aborting...\n" "$1"
+        exit 1
+    }
+}
+
+# Script execution
+program_installed "Rscript"
+program_installed "pandoc"
+
+! [ -f "$1" ] && echo "Pass an Rmarkdown file as an argument." && exit 1
+filename="${1%%.*}" # Get the name of the file without the extension
 
 # R package 'reticulate' allows to call python variables in R
 # The syntax is `r py$var`
-Rscript -e "require(knitr); require(markdown); require(reticulate); knit('$1.rmd', '$1.md')"
-pandoc -t pdf "$1.md" > "$1.pdf"
-[ -f "$1.md" ] && rm "$1.md" && echo "Removed $1.md"
+Rscript -e "require(knitr); require(markdown); require(reticulate); knit('$1', '$filename.md')" || {
+    echo "Something went wrong while compiling Rmarkdown to Markdown."
+    exit 2
+}
+
+pandoc -t pdf "$filename.md" > "$filename.pdf" || {
+    echo "Something went wrong while converting Markdown middle file to PDF."
+    exit 3
+}
+
+[ -f "$filename.md" ] && rm "$filename.md" && echo "Removed $filename.md"
