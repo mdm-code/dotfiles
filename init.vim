@@ -113,6 +113,9 @@ nnoremap <Right> :vertical resize -2<CR>
 " Moving visual selection vertically
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
+"
+" Vertically center document when entering insert mode
+autocmd InsertEnter * norm zz
 
 " Netwr configuration
 let g:netrw_liststyle = 3
@@ -132,9 +135,6 @@ autocmd VimEnter * RainbowParenthesesToggle
 autocmd Syntax * RainbowParenthesesLoadRound
 autocmd Syntax * RainbowParenthesesLoadSquare
 autocmd Syntax * RainbowParenthesesLoadBraces
-
-" Vertically center document when entering insert mode
-autocmd InsertEnter * norm zz
 
 " Ctags bar - toggle/untoggle the bar
 nmap gt :TagbarToggle<CR>
