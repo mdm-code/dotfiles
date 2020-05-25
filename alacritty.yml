@@ -1,11 +1,27 @@
 window:
   decorations: none
+  padding:
+    x: 5
+    y: 5
 
 scrolling:
   history: 1000
+  multiplier: 10
 
 font:
   size: 14
+  normal:
+    family: "Hack"
+    style: Regular
+  bold:
+    family: "Hack"
+    style: Bold
+  italic:
+    family: "Hack"
+    style: Italic
+  bold_italic:
+    family: "Hack"
+    style: Bold Italic
 
 # Colors (Dracula)
 colors:
@@ -51,3 +67,17 @@ colors:
     magenta: '0xff79c6'
     cyan:    '0x59dffc'
     white:   '0xe6e6d1'
+
+selection:
+  semantic_escape_chars: ',│`|:"'' ()[]{}<>'
+  save_to_clipboard: true
+
+key_bindings:
+  - { key: V, mods: Control|Shift, action: Paste }
+  - { key: C, mods: Control|Shift, action: Copy }
+  - { key: Key0, mods: Control, action: ResetFontSize }
+  - { key: Equals, mods: Control, action: IncreaseFontSize }
+  - { key: Add, mods: Control, action: IncreaseFontSize }
+  - { key: Subtract, mods: Control, action: DecreaseFontSize }
+  - { key: Minus, mods: Control, action: DecreaseFontSize }
+  - { key: N, mods: Control, action: SpawnNewInstance }
