@@ -38,6 +38,7 @@ Plug 'unblevable/quick-scope'
 " Colors and color schemes
 Plug 'rrethy/vim-hexokinase', {'do': 'make hexokinase'} " Display colours in the file
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'ryanoasis/vim-devicons' " the beauty of devicons
 
 call plug#end()
 
