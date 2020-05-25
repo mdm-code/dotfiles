@@ -4,6 +4,8 @@ window:
     x: 5
     y: 5
 
+background_opacity: 1
+
 scrolling:
   history: 1000
   multiplier: 10
