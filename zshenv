@@ -1,8 +1,14 @@
 # Export modified PATH
 typeset -U PATH path
-path=("/usr/local/opt/openssl/bin"
+
+# Pyenv and Poetry setup
+export PYENV_ROOT="$HOME/.pyenv/bin"
+export POETRY_ROOT="$HOME/.poetry/bin"
+
+path=("$PYENV_ROOT"
+      "$POETRY_ROOT"
+      "/usr/local/opt/openssl/bin"
       "/usr/local/homebrew"
-      "/Users/michal/Documents/python/miniconda3/bin"
       "/Users/michal/.go/goroot/current/bin"
       "/Users/michal/.go/gopath/bin"
       "/Users/michal/.dotfiles/scripts"

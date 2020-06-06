@@ -44,6 +44,9 @@ Plug 'terryma/vim-multiple-cursors'
 " Quick line navigation for f/F
 Plug 'unblevable/quick-scope'
 
+" Codi.vim for asonchrynous Python execution
+Plug 'ChristianChiarulli/codi.vim'
+
 " Colors and color schemes
 Plug 'rrethy/vim-hexokinase', {'do': 'make hexokinase'} " Display colours in the file
 Plug 'dracula/vim', { 'as': 'dracula' }
@@ -85,11 +88,8 @@ highlight CursorLine cterm=bold ctermbg=238
 " Enters interactive mode
 autocmd FileType python xnoremap <leader>p :w! \| :sp \| :term python -i % <CR>
 
-" Code competion uses Python binaries from Conda environment
-let $VIRTUAL_ENV = $CONDA_PREFIX
-
 " Set path to python
-let g:python3_host_prog = '/Users/michal/Documents/python/miniconda3/bin/python3'
+let g:python3_host_prog = '/usr/local/bin/python3'
 
 " Latex
 let g:tex_flavor='latex'
