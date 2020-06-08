@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script for setting up working environment.
+# Script for setting up working environment
 
 set -eou pipefail
 
@@ -18,21 +18,28 @@ case "$1" in
         echo "Setting up the environment..."
         brew services start yabai
         brew services start skhd
-        sudo launchctl load "/Library/LaunchDaemons/karabiner/org.pqrs.karabiner.karabiner_grabber.plist" 2>/dev/null
-        sudo launchctl load "/Library/LaunchDaemons/karabiner/org.pqrs.karabiner.karabiner_observer.plist" 2>/dev/null
+
+        # Depends on /private/etc/sudoers.d/karabiner-sudoers
+        sudo launchctl load "/Library/LaunchDaemons/org.pqrs.karabiner.karabiner_grabber.plist" 2>/dev/null
+        sudo launchctl load "/Library/LaunchDaemons/org.pqrs.karabiner.karabiner_observer.plist" 2>/dev/null
+
         launchctl enable gui/"$UID"/org.pqrs.karabiner.karabiner_console_user_server
         launchctl bootstrap gui/"$UID" /Library/LaunchAgents/org.pqrs.karabiner.karabiner_console_user_server.plist 2>/dev/null
         launchctl enable gui/"$UID"/org.pqrs.karabiner.karabiner_console_user_server
-        echo "Set up completed."
+        echo "🐣 Set up completed"
         ;;
     "stop")
         echo "Tearing down the environment..." 
         brew services stop yabai
         brew services stop skhd
+
+        # launchctl bootout gui/"$UID" /Library/LaunchAgents/org.pqrs.karabiner.karabiner_console_user_server.plist
         launchctl disable gui/"$UID"/org.pqrs.karabiner.karabiner_console_user_server
-        sudo launchctl unload "/Library/LaunchDaemons/karabiner/org.pqrs.karabiner.karabiner_grabber.plist" 2>/dev/null
-        sudo launchctl unload "/Library/LaunchDaemons/karabiner/org.pqrs.karabiner.karabiner_observer.plist" 2>/dev/null
-        echo "Tear down completed."
+
+        # Depends on /private/etc/sudoers.d/karabiner-sudoers
+        sudo launchctl unload "/Library/LaunchDaemons/org.pqrs.karabiner.karabiner_observer.plist" 2>/dev/null
+        sudo launchctl unload "/Library/LaunchDaemons/org.pqrs.karabiner.karabiner_grabber.plist" 2>/dev/null
+        echo "💀 Teardown completed"
         ;;
     *) echo "$USAGE"
 esac
