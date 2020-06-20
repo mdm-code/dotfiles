@@ -47,6 +47,9 @@ Plug 'unblevable/quick-scope'
 " Codi.vim for asonchrynous Python execution
 Plug 'ChristianChiarulli/codi.vim'
 
+" Set up your own Wiki in Vim
+Plug 'vimwiki/vimwiki'
+
 " Colors and color schemes
 Plug 'rrethy/vim-hexokinase', {'do': 'make hexokinase'} " Display colours in the file
 Plug 'dracula/vim', { 'as': 'dracula' }
@@ -123,9 +126,6 @@ nnoremap <Right> :vertical resize -2<CR>
 " Moving visual selection vertically
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
-"
-" Vertically center document when entering insert mode
-autocmd InsertEnter * norm zz
 
 " Netwr configuration
 let g:netrw_liststyle = 3
@@ -136,9 +136,9 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " Snippets
-let g:UltiSnipsExpandTrigger="<cr>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsExpandTrigger="<c-e>"
+let g:UltiSnipsJumpForwardTrigger="<c-u>"
+let g:UltiSnipsJumpBackwardTrigger="<c-d>"
 
 " colourful parantheses
 autocmd VimEnter * RainbowParenthesesToggle
@@ -163,6 +163,9 @@ let g:Hexokinase_optInPatterns = [
 let g:Hexokinase_highlighters = ['backgroundfull']
 autocmd VimEnter * HexokinaseTurnOn " Reenable hexokinase on enter
 
+" Vimwiki
+let g:vimwiki_list = [{'path': '~/.config/nvim/vimwiki/', 'path_html': '~/.config/nvim/vimwiki_html/'}]
+
 " MELD tags shortcuts
 function! Input()
   call inputsave()
@@ -179,3 +182,6 @@ autocmd FileType text inoremap <leader><tab> ~
 autocmd FileType tex map <leader>b :vsp<Space>$BIB<CR>
 
 source $HOME/.dotfiles/coc-config.vim " Source config file for CoC code completion
+
+" Vertically center document when entering insert mode
+autocmd InsertEnter * norm zz

@@ -19,4 +19,4 @@ export PATH
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home"
 
 # Bibliography file
-export BIB='~/Documents/_files/_research/monograph/body/thesis/local_bibliography.bib'
+export BIB='/Users/michal/Documents/_files/_research/monograph/body/thesis/local_bibliography.bib'
