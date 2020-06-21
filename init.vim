@@ -97,6 +97,7 @@ highlight CursorLine cterm=bold ctermbg=238
 
 " Enters interactive mode
 autocmd FileType python xnoremap <leader>p :w! \| :sp \| :term python -i % <CR>
+autocmd FileType python xnoremap <leader>P :w! \| :sp \| :term poetry run python -i % <CR>
 
 " Set path to python
 let g:python3_host_prog = '$HOME/.pyenv/bin/shims/python3'

@@ -86,6 +86,10 @@ bindkey -s '^o' 'lfcd\n'   # Open and navigate dir in lf
 bindkey -s '^a' 'bc -l\n'  # Arithmetics on command line
 bindkey -s "^l" "clear\n"  # Clear bind for tmux
 
+# Pyenv Python version setup
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 # Codi.vim for anonchrynous code execution in shell
 codi() {
    local syntax="${1:-python}"
@@ -99,10 +103,6 @@ codi() {
      hi NonText ctermfg=0 |\
      Codi $syntax" "$@"
 }
-
-# Pyenv Python version setup
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
 
 # Load zsh-syntax-highlighting; should be last.
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
