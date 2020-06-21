@@ -15,6 +15,12 @@ Plug 'tommcdo/vim-exchange' " The actual collection of snippets
 " Code completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" Asynchronous Python linting
+Plug 'dense-analysis/ale'
+
+" Better semantic highlighting for Python
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+
 " Coloured parenthesis
 Plug 'kien/rainbow_parentheses.vim'
 
@@ -58,6 +64,7 @@ Plug 'ryanoasis/vim-devicons' " the beauty of devicons
 call plug#end()
 
 " Basic configuration
+set nocompatible
 filetype plugin indent on
 syntax on
 set path+=**
@@ -92,7 +99,7 @@ highlight CursorLine cterm=bold ctermbg=238
 autocmd FileType python xnoremap <leader>p :w! \| :sp \| :term python -i % <CR>
 
 " Set path to python
-let g:python3_host_prog = '/usr/local/bin/python3'
+let g:python3_host_prog = '$HOME/.pyenv/bin/shims/python3'
 
 " Latex
 let g:tex_flavor='latex'
@@ -164,7 +171,7 @@ let g:Hexokinase_highlighters = ['backgroundfull']
 autocmd VimEnter * HexokinaseTurnOn " Reenable hexokinase on enter
 
 " Vimwiki
-let g:vimwiki_list = [{'path': '~/.config/nvim/vimwiki/', 'path_html': '~/.config/nvim/vimwiki_html/'}]
+let g:vimwiki_list = [{'path': '~/.config/nvim/vimwiki/', 'syntax': 'default'}]
 
 " MELD tags shortcuts
 function! Input()
@@ -174,6 +181,7 @@ function! Input()
   call inputrestore()
   return text
 endfunction
+
 autocmd FileType text inoremap <leader><Space><Space> <Esc>/<++><Enter>"_c4l
 autocmd FileType text inoremap <c-t> <Esc>viwgUdiwa<<Esc>pa></<Esc>pa><Space><++><Esc>F>cit
 autocmd FileType text inoremap <c-g> <Esc>viwgUdiwa<<Esc>pa></<Esc>pa><Space><++><Esc>F>cit<c-r>=Input()<cr>
