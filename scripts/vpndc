@@ -1,0 +1,3 @@
+#!/bin/sh
+
+osascript -e "tell application \"/Applications/Tunnelblick.app\"" -e "disconnect \"vl-config\"" -e "end tell"

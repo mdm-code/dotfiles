@@ -56,6 +56,9 @@ Plug 'ChristianChiarulli/codi.vim'
 " Set up your own Wiki in Vim
 Plug 'vimwiki/vimwiki'
 
+" Fuzzy finder in Vim
+Plug 'ctrlpvim/ctrlp.vim' 
+
 " Colors and color schemes
 Plug 'rrethy/vim-hexokinase', {'do': 'make hexokinase'} " Display colours in the file
 Plug 'dracula/vim', { 'as': 'dracula' }
@@ -111,12 +114,6 @@ au BufRead,BufNewFile *.tex,*.Rnw, setlocal textwidth=120  " Latex text folding 
 
 " Terminal mode configuration
 tnoremap <Esc> <C-\><C-n>
-
-" Navigations between splits
-nnoremap <C-j> <C-w><C-j>
-nnoremap <C-k> <C-w><C-k>
-nnoremap <C-l> <C-w><C-l>
-nnoremap <C-h> <C-w><C-h>
 
 " Brackets and quotation autocompletion
 ino " ""<left>

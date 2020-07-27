@@ -19,7 +19,7 @@ alias \
 # Coding aliases
 alias \
     cdd='cd ~/Documents/python/dev/' \
-    cdg='cd ~/.go'
+    cdg='cd ~/.go/gopath/src'
 
 # Git aliases
 alias \
