@@ -2,7 +2,7 @@
 typeset -U PATH path
 
 # Pyenv and Poetry setup
-export PYENV_ROOT="$HOME/.pyenv/bin"
+export PYENV_ROOT="$HOME/.pyenv"
 export POETRY_ROOT="$HOME/.poetry/bin"
 
 path=("$PYENV_ROOT"
@@ -20,3 +20,11 @@ export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Ho
 
 # Bibliography file
 export BIB='/Users/michal/Documents/_files/_research/monograph/body/thesis/local_bibliography.bib'
+
+# Scikit-learn C compilation env variables
+export CC=/usr/bin/clang
+export CXX=/usr/bin/clang++
+export CPPFLAGS="$CPPFLAGS -Xpreprocessor -fopenmp"
+export CFLAGS="$CFLAGS -I/usr/local/opt/libomp/include"
+export CXXFLAGS="$CXXFLAGS -I/usr/local/opt/libomp/include"
+export LDFLAGS="$LDFLAGS -Wl,-rpath,/usr/local/opt/libomp/lib -L/usr/local/opt/libomp/lib -lomp"
