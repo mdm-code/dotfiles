@@ -13,7 +13,8 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'tommcdo/vim-exchange' " The actual collection of snippets
 
 " Code completion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+:Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
 
 " Asynchronous Python linting
 Plug 'dense-analysis/ale'
@@ -49,9 +50,6 @@ Plug 'terryma/vim-multiple-cursors'
 
 " Quick line navigation for f/F
 Plug 'unblevable/quick-scope'
-
-" Codi.vim for asonchrynous Python execution
-Plug 'ChristianChiarulli/codi.vim'
 
 " Set up your own Wiki in Vim
 Plug 'vimwiki/vimwiki'
@@ -103,7 +101,7 @@ autocmd FileType python xnoremap <leader>p :w! \| :sp \| :term python -i % <CR>
 autocmd FileType python xnoremap <leader>P :w! \| :sp \| :term poetry run python -i % <CR>
 
 " Set path to python
-let g:python3_host_prog = '$HOME/.pyenv/bin/shims/python3'
+let g:python3_host_prog = '$HOME/.pyenv/shims/python3'
 
 " Latex
 let g:tex_flavor='latex'
@@ -131,6 +129,9 @@ nnoremap <Right> :vertical resize -2<CR>
 " Moving visual selection vertically
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
+
+" Write shortcuts
+nnoremap <leader>u :update<CR>
 
 " Netwr configuration
 let g:netrw_liststyle = 3
@@ -187,7 +188,23 @@ autocmd FileType text inoremap <c-f> <Esc>viwgUdiwa<<Esc>pa>
 autocmd FileType text inoremap <leader><tab> ~
 autocmd FileType tex map <leader>b :vsp<Space>$BIB<CR>
 
-source $HOME/.dotfiles/coc-config.vim " Source config file for CoC code completion
-
 " Vertically center document when entering insert mode
 autocmd InsertEnter * norm zz
+
+" LSP config
+set completeopt=menuone,noinsert,noselect
+let g:completion_mathching_strategy_list = ['exact', 'substring', 'fuzzy']
+lua require'nvim_lsp'.pyls.setup{on_attach=require'completion'.on_attach}
+lua require'nvim_lsp'.gopls.setup{on_attach=require'completion'.on_attach}
+
+" LSP key bindings
+autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
