@@ -10,24 +10,17 @@
 call plug#begin('~/.config/nvim/plugged')
 
 " Swapping words, lines, longer parts of text
-Plug 'tommcdo/vim-exchange' " The actual collection of snippets
+Plug 'tommcdo/vim-exchange'
 
 " Code completion
-:Plug 'neovim/nvim-lspconfig'
+Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 
 " Asynchronous Python linting
 Plug 'dense-analysis/ale'
 
-" Better semantic highlighting for Python
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-
 " Coloured parenthesis
 Plug 'kien/rainbow_parentheses.vim'
-
-" Vim, tmux and airline theme
-Plug 'vim-airline/vim-airline'
-Plug 'christoomey/vim-tmux-navigator'
 
 " Snippets (Engine)
 Plug 'SirVer/ultisnips' " The actual collection of snippets
@@ -58,8 +51,6 @@ Plug 'vimwiki/vimwiki'
 Plug 'ctrlpvim/ctrlp.vim' 
 
 " Colors and color schemes
-Plug 'rrethy/vim-hexokinase', {'do': 'make hexokinase'} " Display colours in the file
-Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'ryanoasis/vim-devicons' " the beauty of devicons
 
 call plug#end()
@@ -86,8 +77,6 @@ set foldmethod=manual
 set nohlsearch
 set cursorline
 set cursorcolumn
-set termguicolors
-colorscheme dracula
 
 " Set leader to comma
 let mapleader = ";"
@@ -133,9 +122,8 @@ vnoremap K :m '<-2<CR>gv=gv
 " Write shortcuts
 nnoremap <leader>u :update<CR>
 
-" Netwr configuration
-let g:netrw_liststyle = 3
-let g:netrw_banner = 0
+" Vertically center document when entering insert mode
+autocmd InsertEnter * norm zz
 
 " EasyAlign
 xmap ga <Plug>(EasyAlign)
@@ -146,28 +134,8 @@ let g:UltiSnipsExpandTrigger="<c-e>"
 let g:UltiSnipsJumpForwardTrigger="<c-u>"
 let g:UltiSnipsJumpBackwardTrigger="<c-d>"
 
-" colourful parantheses
-autocmd VimEnter * RainbowParenthesesToggle
-autocmd Syntax * RainbowParenthesesLoadRound
-autocmd Syntax * RainbowParenthesesLoadSquare
-autocmd Syntax * RainbowParenthesesLoadBraces
-
 " Ctags bar - toggle/untoggle the bar
 nmap gt :TagbarToggle<CR>
-
-" Hexokinase configuration
-let g:Hexokinase_refreshEvents = ['InsertLeave']
-let g:Hexokinase_optInPatterns = [
-\     'full_hex',
-\     'triple_hex',
-\     'rgb',
-\     'rgba',
-\     'hsl',
-\     'hsla',
-\     'colour_names'
-\ ]
-let g:Hexokinase_highlighters = ['backgroundfull']
-autocmd VimEnter * HexokinaseTurnOn " Reenable hexokinase on enter
 
 " Vimwiki
 let g:vimwiki_list = [{'path': '~/.config/nvim/vimwiki/', 'syntax': 'default'}]
@@ -188,17 +156,37 @@ autocmd FileType text inoremap <c-f> <Esc>viwgUdiwa<<Esc>pa>
 autocmd FileType text inoremap <leader><tab> ~
 autocmd FileType tex map <leader>b :vsp<Space>$BIB<CR>
 
-" Vertically center document when entering insert mode
-autocmd InsertEnter * norm zz
-
 " LSP config
+autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
+autocmd Filetype go setlocal omnifunc=v:lua.vim.lsp.omnifunc
 set completeopt=menuone,noinsert,noselect
 let g:completion_mathching_strategy_list = ['exact', 'substring', 'fuzzy']
 lua require'nvim_lsp'.pyls.setup{on_attach=require'completion'.on_attach}
 lua require'nvim_lsp'.gopls.setup{on_attach=require'completion'.on_attach}
+lua require'nvim_lsp'.texlab.setup{on_attach=require'completion'.on_attach}
+
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Trigger completion with <Tab>
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ completion#trigger_completion()
+
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
+" Add snippets
+let g:completion_enable_snippet = 'UltiSnips'
 
 " LSP key bindings
-autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.implementation()<CR>
