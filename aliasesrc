@@ -11,8 +11,8 @@ alias \
 # PhD folders aliases
 alias \
     cdth='cd ~/Documents/_files/_research/monograph/body/thesis' \
-    cdtr='cd ~/Documents/_files/_research/monograph/material/transcripts/transcript/transcript' \
-    cdp='cd ~/Documents/_files/_research/monograph/material/transcripts/photos' \
+    cdtr='cd ~/Documents/_files/_research/monograph/material/transcript' \
+    cdp='cd ~/Documents/_files/_research/monograph/material/photos' \
     cdr='cd ~/Documents/_files/_research/monograph/phd_references' \
     bib='vim ~/Documents/_files/_research/monograph/body/thesis/local_bibliography.bib'
 
