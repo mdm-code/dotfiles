@@ -16,6 +16,7 @@ fi
 case "$1" in
     "start")
         echo "Setting up the environment..."
+        brew services start spacebar
         brew services start yabai
         brew services start skhd
 
@@ -30,6 +31,7 @@ case "$1" in
         ;;
     "stop")
         echo "Tearing down the environment..." 
+        brew services stop spacebar
         brew services stop yabai
         brew services stop skhd
 
