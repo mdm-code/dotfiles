@@ -52,6 +52,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 
 " Colors and color schemes
 Plug 'ryanoasis/vim-devicons' " the beauty of devicons
+Plug 'agude/vim-eldar'
 
 call plug#end()
 
@@ -77,6 +78,7 @@ set foldmethod=manual
 set nohlsearch
 set cursorline
 set cursorcolumn
+colorscheme eldar
 
 " Set leader to comma
 let mapleader = ";"
