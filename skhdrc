@@ -1,8 +1,12 @@
 # open terminal, blazingly fast compared to iTerm/Hyper
 cmd - return : open -na ~/../../Applications/_essentials/Alacritty.app
 
-# open qutebrowser
+# open Waterfox
 cmd + shift - return : open -na "~/../../Applications/_essentials/Waterfox Current.app"
+
+# Open dmenu-like program on mac
+# I might want to disable Spotlight indexing because of its power consumption.
+cmd - space : open ~/../../Applications/dmenu-mac.app
 
 # focus window
 alt - h : yabai -m window --focus west
