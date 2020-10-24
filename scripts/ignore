@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# Grep all the untracked files and add them to .gitignore
-echo "$(git status --porcelain | grep "^??.*" | cut -c4-)" >> .gitignore

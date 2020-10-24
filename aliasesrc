@@ -19,7 +19,8 @@ alias \
 # Coding aliases
 alias \
     cdd='cd ~/Documents/python/dev/' \
-    cdg='cd ~/.go/gopath/src'
+    cdg='cd ~/.go/gopath/src' \
+    cdj='cd ~/Documents/journal'  # My coding journal
 
 # Git aliases
 alias \
