@@ -52,7 +52,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 
 " Colors and color schemes
 Plug 'ryanoasis/vim-devicons' " the beauty of devicons
-Plug 'agude/vim-eldar'
+Plug 'morhetz/gruvbox' " Mmm... classy.
 
 call plug#end()
 
@@ -78,7 +78,7 @@ set foldmethod=manual
 set nohlsearch
 set cursorline
 set cursorcolumn
-colorscheme eldar
+colorscheme gruvbox
 
 " Set leader to comma
 let mapleader = ";"
@@ -138,9 +138,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-d>"
 
 " Ctags bar - toggle/untoggle the bar
 nmap gt :TagbarToggle<CR>
-
-" Vimwiki
-let g:vimwiki_list = [{'path': '~/.config/nvim/vimwiki/', 'syntax': 'default'}]
 
 " MELD tags shortcuts
 function! Input()
