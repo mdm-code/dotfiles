@@ -16,6 +16,10 @@ Plug 'tommcdo/vim-exchange'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 
+" Go coding
+Plug 'tweekmonster/gofmt.vim' " Format code on save
+Plug 'mattn/vim-goimports' " Manage imports on save
+
 " Asynchronous Python linting
 Plug 'dense-analysis/ale'
 
@@ -44,9 +48,6 @@ Plug 'terryma/vim-multiple-cursors'
 " Quick line navigation for f/F
 Plug 'unblevable/quick-scope'
 
-" Set up your own Wiki in Vim
-Plug 'vimwiki/vimwiki'
-
 " Fuzzy finder in Vim
 Plug 'ctrlpvim/ctrlp.vim' 
 
@@ -69,7 +70,6 @@ set encoding=utf-8
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-set expandtab
 set backspace=indent,eol,start
 set incsearch
 set copyindent
@@ -86,6 +86,12 @@ let mapleader = ";"
 " Cursor line and column color
 highlight CursorColumn ctermbg=238
 highlight CursorLine cterm=bold ctermbg=238
+
+" Highlight TABS (for Go)
+set list listchars=nbsp:¬,tab:»·,trail:·,extends:>
+
+"  Tab expansion for Python code files
+autocmd Filetype python setlocal expandtab
 
 " Enters interactive mode
 autocmd FileType python xnoremap <leader>p :w! \| :sp \| :term python -i % <CR>
@@ -126,6 +132,7 @@ nnoremap <leader>u :update<CR>
 
 " Vertically center document when entering insert mode
 autocmd InsertEnter * norm zz
+"
 
 " EasyAlign
 xmap ga <Plug>(EasyAlign)
@@ -140,20 +147,11 @@ let g:UltiSnipsJumpBackwardTrigger="<c-d>"
 nmap gt :TagbarToggle<CR>
 
 " MELD tags shortcuts
-function! Input()
-  call inputsave()
-  let text = input('> ')
-  let text = '<' . toupper(text) . '>'
-  call inputrestore()
-  return text
-endfunction
-
-autocmd FileType text inoremap <leader><Space><Space> <Esc>/<++><Enter>"_c4l
-autocmd FileType text inoremap <c-t> <Esc>viwgUdiwa<<Esc>pa></<Esc>pa><Space><++><Esc>F>cit
-autocmd FileType text inoremap <c-g> <Esc>viwgUdiwa<<Esc>pa></<Esc>pa><Space><++><Esc>F>cit<c-r>=Input()<cr>
-autocmd FileType text inoremap <c-f> <Esc>viwgUdiwa<<Esc>pa>
-autocmd FileType text inoremap <leader><tab> ~
 autocmd FileType tex map <leader>b :vsp<Space>$BIB<CR>
+
+" Go plugin settings
+let g:goimports=1
+let g:gofmt_on_save=1
 
 " LSP config
 autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
@@ -195,3 +193,4 @@ nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+
