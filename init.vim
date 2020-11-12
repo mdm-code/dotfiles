@@ -90,7 +90,7 @@ highlight CursorLine cterm=bold ctermbg=238
 " Highlight TABS (for Go)
 set list listchars=nbsp:¬,tab:»·,trail:·,extends:>
 
-"  Tab expansion for Python code files
+" Tab expansion for Python code files
 autocmd Filetype python setlocal expandtab
 
 " Enters interactive mode
@@ -112,7 +112,6 @@ tnoremap <Esc> <C-\><C-n>
 
 " Brackets and quotation autocompletion
 ino " ""<left>
-ino ' ''<left>
 ino ( ()<left>
 ino { {}<left>
 ino [ []<left>
