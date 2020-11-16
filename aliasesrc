@@ -20,7 +20,8 @@ alias \
 alias \
     cdd='cd ~/Documents/python/dev/' \
     cdg='cd ~/.go/gopath/src' \
-    cdj='cd ~/Documents/journal'  # My coding journal
+    cdj='cd ~/Documents/journal' \
+    tje='touch "$(date +%Y/%b/%d)"'  # Create a fresh journal file entry
 
 # Git aliases
 alias \
