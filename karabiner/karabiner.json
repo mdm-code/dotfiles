@@ -130,6 +130,33 @@
                                 "type": "basic"
                             }
                         ]
+                    },
+                    {
+                        "description": "Post Tab if Tab is tapped, left Shift if held.",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "tab",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_shift",
+                                        "lazy": true
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "tab"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
                     }
                 ]
             },
@@ -271,6 +298,14 @@
                     },
                     "to": {
                         "key_code": "left_control"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "fn"
+                    },
+                    "to": {
+                        "key_code": "left_shift"
                     }
                 }
             ],
