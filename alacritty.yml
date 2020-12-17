@@ -90,7 +90,7 @@ gruvbox_light: &light
       cyan:    '#427b58'
       white:   '#3c3836'
 
-colors: *light
+colors: *dark
 
 selection:
   semantic_escape_chars: ',│`|:"'' ()[]{}<>'

@@ -61,7 +61,9 @@ call plug#end()
 set nocompatible
 filetype plugin indent on
 syntax on
-set path+=**
+set hidden
+set noswapfile
+set path+=**  " all the children dirs of the cwd
 set wildmode=longest:list,full
 set splitbelow splitright
 set nu rnu
@@ -92,13 +94,15 @@ set list listchars=nbsp:¬,tab:»·,trail:·,extends:>
 
 " Tab expansion for Python code files
 autocmd Filetype python setlocal expandtab
+autocmd Filetype python setlocal colorcolumn=80  " Add a column showing 80 line length
 
 " Enters interactive mode
 autocmd FileType python xnoremap <leader>p :w! \| :sp \| :term python -i % <CR>
 autocmd FileType python xnoremap <leader>P :w! \| :sp \| :term poetry run python -i % <CR>
 
 " Set path to python
-let g:python3_host_prog = '$HOME/.pyenv/shims/python3'
+" let g:python3_host_prog = '$HOME/.pyenv/shims/python3'
+let g:python3_host_prog = '/usr/bin/python3'
 
 " Latex
 let g:tex_flavor='latex'

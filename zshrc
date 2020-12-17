@@ -90,18 +90,12 @@ bindkey -s "^l" "clear\n"  # Clear bind for tmux
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-# Codi.vim for anonchrynous code execution in shell
-codi() {
-   local syntax="${1:-python}"
-   shift
-   nvim -c \
-     "let g:startify_disable_at_vimenter = 1 |\
-     set bt=nofile ls=0 rnu |\
-     hi CodiVirtualText guifg=red
-     hi ColorColumn ctermbg=NONE |\
-     hi VertSplit ctermbg=NONE |\
-     hi NonText ctermfg=0 |\
-     Codi $syntax" "$@"
+# Lynx
+duck () {
+# lynx "duckduckgo.com/lite?q=$*"
+	lynx -cfg="$XDG_CONFIG_HOME/lynx/lynx.cfg" \
+		-lss="$XDG_CONFIG_HOME/lynx/lynx.lss" \
+		"duckduckgo.com/lite?kd=-1&kp=-1&q=$*"
 }
 
 # Load zsh-syntax-highlighting; should be last.

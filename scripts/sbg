@@ -7,8 +7,8 @@ config="$HOME/.dotfiles/alacritty.yml"
 cur="$(grep -E '^colors' "$config")"
 
 case "$cur" in
-	*light) sed -iE "s/\*light/\*dark/g" "$config" ;;
-	*dark)  sed -iE "s/\*dark/\*light/g" "$config" ;;
+	*light) sed -i "" "s/\*light/\*dark/g" "$config" ;;
+	*dark)  sed -i "" "s/\*dark/\*light/g" "$config" ;;
 	*) printf "Check the \"colors\" paramter in %s\n" "$config"
 esac
 

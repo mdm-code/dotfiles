@@ -2,7 +2,7 @@
 cmd - return : open -na ~/../../Applications/_essentials/Alacritty.app
 
 # open Waterfox
-cmd + shift - return : open -na "~/../../Applications/_essentials/Waterfox Current.app"
+cmd + shift - return : open -na "~/../../Applications/_essentials/Waterfox.app"
 
 # Open dmenu-like program on mac
 # I might want to disable Spotlight indexing because of its power consumption.

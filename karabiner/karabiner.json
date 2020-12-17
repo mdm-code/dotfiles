@@ -299,14 +299,6 @@
                     "to": {
                         "key_code": "left_control"
                     }
-                },
-                {
-                    "from": {
-                        "key_code": "fn"
-                    },
-                    "to": {
-                        "key_code": "left_shift"
-                    }
                 }
             ],
             "virtual_hid_keyboard": {
