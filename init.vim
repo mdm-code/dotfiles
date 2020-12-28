@@ -135,7 +135,6 @@ nnoremap <leader>u :update<CR>
 
 " Vertically center document when entering insert mode
 autocmd InsertEnter * norm zz
-"
 
 " EasyAlign
 xmap ga <Plug>(EasyAlign)
@@ -157,43 +156,55 @@ let g:goimports=1
 let g:gofmt_on_save=1
 
 " LSP config
-autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
-autocmd Filetype go setlocal omnifunc=v:lua.vim.lsp.omnifunc
+:lua << EOF
+  local nvim_lsp = require('nvim_lsp')
+
+  local on_attach = function(_, bufnr)
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    require'completion'.on_attach()
+
+    -- Mappings.
+    local opts = { noremap=true, silent=true }
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
+  end
+  local servers = {'pyls', 'gopls', 'texlab'}
+  for _, lsp in ipairs(servers) do
+    nvim_lsp[lsp].setup {
+      on_attach = on_attach,
+    }
+end
+EOF
+
 set completeopt=menuone,noinsert,noselect
 let g:completion_mathching_strategy_list = ['exact', 'substring', 'fuzzy']
-lua require'nvim_lsp'.pyls.setup{on_attach=require'completion'.on_attach}
-lua require'nvim_lsp'.gopls.setup{on_attach=require'completion'.on_attach}
-lua require'nvim_lsp'.texlab.setup{on_attach=require'completion'.on_attach}
+
+" Add snippets
+let g:completion_enable_snippet = 'UltiSnips'
+let g:completion_enable_fuzzy_match = 1
+let g:diagnostic_enable_virtual_text = 1
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" Trigger completion with <Tab>
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
+ " Trigger completion with <Tab>
+ function! s:check_back_space() abort
+     let col = col('.') - 1
+     return !col || getline('.')[col - 1]  =~ '\s'
+ endfunction
 
-inoremap <silent><expr> <TAB>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ completion#trigger_completion()
+ inoremap <silent><expr> <TAB>
+   \ pumvisible() ? "\<C-n>" :
+   \ <SID>check_back_space() ? "\<TAB>" :
+   \ completion#trigger_completion()
 
-" Avoid showing message extra message when using completion
-set shortmess+=c
-
-" Add snippets
-let g:completion_enable_snippet = 'UltiSnips'
-
-" LSP key bindings
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-
+ " Avoid showing message extra message when using completion
+ set shortmess+=c
