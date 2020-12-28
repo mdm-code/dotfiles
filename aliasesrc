@@ -1,6 +1,7 @@
 # General aliases
 alias \
     vim='nvim' \
+    tmux='tmux -f $HOME/.dotfiles/tmux.conf' \
     e="$EDITOR" \
     '?'="duck" \
     ctags="/usr/local/bin/ctags" \
