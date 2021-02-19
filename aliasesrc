@@ -8,7 +8,8 @@ alias \
     lock='pmset displaysleepnow' \
     ls='ls -G' \
     ll='ls -laG' \
-    yt='youtube-viewer'
+    yt='youtube-viewer' \
+    tb='tunnelblickctl'
 
 # PhD folders aliases
 alias \
@@ -23,7 +24,8 @@ alias \
     cdd='cd ~/Documents/python/dev/' \
     cdg='cd ~/.go/gopath/src' \
     cdj='cd ~/Documents/journal' \
-    tje='touch "$(date +%Y/%b/%d)"'  # Create a fresh journal file entry
+    tje='touch "$(date +%Y/%b/%d)"' \
+    cdm='cd /Users/michal/Documents/_files/other/maths'
 
 # Git aliases
 alias \
