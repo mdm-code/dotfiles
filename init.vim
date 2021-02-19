@@ -157,11 +157,11 @@ let g:gofmt_on_save=1
 
 " LSP config
 :lua << EOF
-  local nvim_lsp = require('nvim_lsp')
+  local nvim_lsp = require('lspconfig')
 
   local on_attach = function(_, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-    require'completion'.on_attach()
+    require('completion').on_attach()
 
     -- Mappings.
     local opts = { noremap=true, silent=true }
