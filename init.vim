@@ -8,7 +8,6 @@
 
 
 call plug#begin('~/.config/nvim/plugged')
-
 " Swapping words, lines, longer parts of text
 Plug 'tommcdo/vim-exchange'
 
@@ -19,9 +18,6 @@ Plug 'nvim-lua/completion-nvim'
 " Go coding
 Plug 'tweekmonster/gofmt.vim' " Format code on save
 Plug 'mattn/vim-goimports' " Manage imports on save
-
-" Asynchronous Python linting
-Plug 'dense-analysis/ale'
 
 " Coloured parenthesis
 Plug 'kien/rainbow_parentheses.vim'
@@ -54,7 +50,6 @@ Plug 'ctrlpvim/ctrlp.vim'
 " Colors and color schemes
 Plug 'ryanoasis/vim-devicons' " the beauty of devicons
 Plug 'morhetz/gruvbox' " Mmm... classy.
-
 call plug#end()
 
 " Basic configuration
@@ -156,12 +151,15 @@ let g:goimports=1
 let g:gofmt_on_save=1
 
 " LSP config
+" There is one issue with 'handlers' parameter in the completion module
+" Make sure to rename handlers to callbacks in case you get the error with
+" autocompletion on. 
 :lua << EOF
   local nvim_lsp = require('lspconfig')
 
   local on_attach = function(_, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-    require('completion').on_attach()
+    require'completion'.on_attach()
 
     -- Mappings.
     local opts = { noremap=true, silent=true }
@@ -171,7 +169,7 @@ let g:gofmt_on_save=1
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
   end
