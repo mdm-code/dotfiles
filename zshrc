@@ -87,8 +87,8 @@ bindkey -s '^a' 'bc -l\n'  # Arithmetics on command line
 bindkey -s "^l" "clear\n"  # Clear bind for tmux
 
 # Pyenv Python version setup
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
 
 # Lynx
 duck () {
@@ -97,6 +97,14 @@ duck () {
 		-lss="$XDG_CONFIG_HOME/lynx/lynx.lss" \
 		"duckduckgo.com/lite?kd=-1&kp=-1&q=$*"
 }
+
+# Basic calculator
+"=" () {
+	echo "$@" | bc
+}
+
+# Load journal configuration and functions
+[ -f "$HOME/.dotfiles/journalrc" ] && source "$HOME/.dotfiles/journalrc"
 
 # Load zsh-syntax-highlighting; should be last.
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
