@@ -1,0 +1,20 @@
+# This is a journal config file
+
+# Journal base directory
+export JOURNAL="$HOME/Documents/journal"
+
+# Make new journal entry
+entry () {
+	mkdir -p "$JOURNAL/$(date +%Y/%b/)"
+	touch "$_$(date +%d)"
+	e "$_"
+}
+
+# Create new short entry
+short () {
+	read name"?name: "
+	mkdir -p "$JOURNAL/shorts"
+	touch "$JOURNAL/shorts/$name"
+	e "$_"
+}
+
