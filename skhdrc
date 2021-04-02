@@ -2,13 +2,13 @@
 cmd - return : open -na ~/../../Applications/_essentials/Alacritty.app
 
 # open Waterfox
-cmd + shift - return : open -na "~/../../Applications/_essentials/Waterfox.app"
+cmd + shift - return : open -Fn "~/../../Applications/_essentials/Waterfox.app"
 
 # Open dmenu-like program on mac
 # I might want to disable Spotlight indexing because of its power consumption.
 # The program gets strangely attached to the desktop and runs in the background
 # when called from the command prompt. This is where this strange command originates in.
-cmd - space : pkill dmenu; open -F "~/../../Applications/dmenu-mac.app"; open -F "~/../../Applications/dmenu-mac.app"
+cmd - space : open -F "~/../../Applications/dmenu-mac.app"
 
 # focus window
 alt - h : yabai -m window --focus west
