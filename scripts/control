@@ -6,7 +6,7 @@ set -eou pipefail
 
 trap "echo 'Terminated execution.' && exit 1" SIGTERM
 
-USAGE="Usage: $0 start|stop"
+USAGE="Usage: $0 start|stop|restart"
 
 if [ $# = 0 ]; then
     echo "$USAGE"
@@ -43,5 +43,11 @@ case "$1" in
         sudo launchctl unload "/Library/LaunchDaemons/org.pqrs.karabiner.karabiner_grabber.plist" 2>/dev/null
         echo "💀 Teardown completed"
         ;;
+	"restart")
+        echo "Restating spacebar, yabai and skhd..."
+		launchctl kickstart -k "gui/${UID}/homebrew.mxcl.spacebar"
+		launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+		launchctl kickstart -k "gui/${UID}/homebrew.mxcl.skhd"
+		;;
     *) echo "$USAGE"
 esac
