@@ -5,6 +5,7 @@
 # and loaded permanently using `sudo launchctl load -w /Library/LaunchAgents/com.startup.plist`.
 # To stop the service from running on startup, replace `load` with `unload` in the command above.
 
+sudo yabai --load-sa
 brew services start spacebar
 brew services start yabai
 brew services start skhd
