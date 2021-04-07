@@ -9,11 +9,14 @@ path=("$PYENV_ROOT"
       "$POETRY_ROOT"
       "/usr/local/opt/openssl/bin"
       "/usr/local/homebrew"
-      "/Users/michal/.go/goroot/current/bin"
-      "/Users/michal/.go/gopath/bin"
       "/Users/michal/.dotfiles/scripts"
       "$path[@]")
 export PATH
+
+source "$HOME/.dotfiles/shell.d/goenv.sh"
+
+# This is my Git user
+export GITUSER="Michal-Adamczyk"
 
 # Added Java home path
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home"
@@ -28,3 +31,6 @@ export CPPFLAGS="$CPPFLAGS -Xpreprocessor -fopenmp"
 export CFLAGS="$CFLAGS -I/usr/local/opt/libomp/include"
 export CXXFLAGS="$CXXFLAGS -I/usr/local/opt/libomp/include"
 export LDFLAGS="$LDFLAGS -Wl,-rpath,/usr/local/opt/libomp/lib -L/usr/local/opt/libomp/lib -lomp"
+
+# Make it stop!
+export PYTHONDONTWRITEBYTECODE=1
