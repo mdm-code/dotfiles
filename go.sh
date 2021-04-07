@@ -12,16 +12,13 @@ set -e
 #
 # This setup lets you easily add other versions of Go
 # and switch between them by changing the `current` symlink.
-#
-# After running the script remember to set up PATH:
-# 1. goroot/current/bin
-# 2. gopath/bin
-# 3. set `go env -w "GOPATH=gopath`"
+
 
 DEFAULT_VER="1.16"
 VERSION="${1:-$DEFAULT_VER}"
 DEFAULT_DIR="$HOME/go"
 TARGET_DIR="${2:-$DEFAULT_DIR}"
+ENV_FILE="${2:-$DEFAULT_DIR}/goenv.sh"
 OS="$(uname -s)"
 ARCH="$(uname -m)"
 
@@ -73,4 +70,43 @@ mv "$GOROOT/go" "$GOROOT/$VERSION"
 ln -sf "$GOROOT/$VERSION" "$GOROOT/current"
 mkdir -p "${GOPATH}/"{src,pkg,bin}
 rm -f "$TEMP_DIRECTORY/go.tar.gz"
+
+# ==== SET GO ENVIRONMENTAL VARIABLES AND GO BIN ON PATH ====
+if [ -e "$HOME/.dotfiles/shell.d/goenv.sh" ]; then
+	echo "Replace the contents of $HOME/.dotfiles/shell.d/goenv.sh with:\n"
+	cat <<EOL
+typeset -U PATH path
+path=("$GOROOT/current/bin"
+	"$GOPATH/bin"
+	"\$path[@]"
+)
+export PATH
+
+export GOPRIVATE="gitlab.com/$GITUSER/*,github.com/$GITUSER/*"
+export GOPATH="$GOPATH"
+export GOROOT="$GOROOT/current"
+export GOBIN="$GOPATH/bin"
+export GOPROXY="direct"
+export CGO_ENABLED=0
+
+EOL
+else
+	touch "$ENV_FILE"
+	cat > "$ENV_FILE" <<EOL
+typeset -U PATH path
+path=("$GOROOT/current/bin"
+	"$GOPATH/bin"
+	"\$path[@]"
+)
+export PATH
+
+export GOPRIVATE="gitlab.com/$GITUSER/*,github.com/$GITUSER/*"
+export GOPATH="$GOPATH"
+export GOROOT="$GOROOT/current"
+export GOBIN="$GOPATH/bin"
+export GOPROXY="direct"
+export CGO_ENABLED=0
+EOL
+	cp "$ENV_FILE" "$HOME/.dotfiles/shell.d"
+fi
 
