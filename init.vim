@@ -44,9 +44,6 @@ Plug 'terryma/vim-multiple-cursors'
 " Quick line navigation for f/F
 Plug 'unblevable/quick-scope'
 
-" Fuzzy finder in Vim
-Plug 'ctrlpvim/ctrlp.vim' 
-
 " Colors and color schemes
 Plug 'ryanoasis/vim-devicons' " the beauty of devicons
 Plug 'morhetz/gruvbox' " Mmm... classy.
@@ -58,6 +55,7 @@ filetype plugin indent on
 syntax on
 set hidden
 set noswapfile
+set lazyredraw
 set path+=**  " all the children dirs of the cwd
 set wildmode=longest:list,full
 set splitbelow splitright
@@ -93,10 +91,8 @@ autocmd Filetype python setlocal colorcolumn=80  " Add a column showing 80 line 
 
 " Enters interactive mode
 autocmd FileType python xnoremap <leader>p :w! \| :sp \| :term python -i % <CR>
-autocmd FileType python xnoremap <leader>P :w! \| :sp \| :term poetry run python -i % <CR>
 
 " Set path to python
-" let g:python3_host_prog = '$HOME/.pyenv/shims/python3'
 let g:python3_host_prog = '/usr/bin/python3'
 
 " Latex
@@ -130,6 +126,9 @@ nnoremap <leader>u :update<CR>
 
 " Vertically center document when entering insert mode
 autocmd InsertEnter * norm zz
+
+" Make command for Go, integrated with quickfix list
+autocmd FileType go setlocal makeprg=golint\ %\ &&\ go\ build\ %
 
 " EasyAlign
 xmap ga <Plug>(EasyAlign)
