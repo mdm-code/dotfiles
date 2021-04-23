@@ -127,9 +127,6 @@ nnoremap <leader>u :update<CR>
 " Vertically center document when entering insert mode
 autocmd InsertEnter * norm zz
 
-" Make command for Go, integrated with quickfix list
-autocmd FileType go setlocal makeprg=golint\ %\ &&\ go\ build\ %
-
 " EasyAlign
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
@@ -181,6 +178,20 @@ EOF
 
 set completeopt=menuone,noinsert,noselect
 let g:completion_mathching_strategy_list = ['exact', 'substring', 'fuzzy']
+
+" Quickfix: list LSP hook
+fun! LspLocationList()
+    lua vim.lsp.diagnostic.set_loclist({open_loclist = false})
+endfun
+
+" Quickfix: avoid reread of the command
+augroup LSP_AUTO
+    autocmd!
+    autocmd! BufWrite,BufEnter,InsertLeave * :call LspLocationList()
+augroup END
+
+" Quickfix: shortcut
+nnoremap gl :call LspLocationList()<CR>
 
 " Add snippets
 let g:completion_enable_snippet = 'UltiSnips'
