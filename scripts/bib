@@ -1,0 +1,3 @@
+#!/bin/sh
+
+nvim ~/Documents/_files/_research/monograph/body/thesis/local_bibliography.bib
