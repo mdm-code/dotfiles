@@ -1,0 +1,32 @@
+--cask alacritty
+--cask dbeaver-community
+--cask dmenu-mac
+--cask keycastr
+--cask vscodium
+--cask waterfox
+--cask qgis
+fzf
+gh
+git
+git-flow
+htop
+lynx
+mpd
+mpv
+ncmpcpp
+neovim --HEAD
+pandoc
+pass
+postgresql
+skhd
+spacebar
+stow
+texlab
+tmux
+tree
+tunnelblickctl
+yabai
+youtube-dl
+youtube-viewer
+zsh-autosuggestions
+zsh-syntax-highlighting

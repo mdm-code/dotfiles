@@ -60,12 +60,12 @@ set path+=**  " all the children dirs of the cwd
 set wildmode=longest:list,full
 set splitbelow splitright
 set nu rnu
-set mouse=a
 set encoding=utf-8
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set backspace=indent,eol,start
+set nowrap
 set incsearch
 set copyindent
 set autoindent
@@ -100,7 +100,7 @@ let g:tex_flavor='latex'
 augroup filetypedetect
     au BufRead,BufNewFile *.Rnw set filetype=tex  " Latex identify .Rnw files as .tex
 augroup END
-au BufRead,BufNewFile *.tex,*.Rnw, setlocal textwidth=120  " Latex text folding on 120 characters
+au BufRead,BufNewFile *.tex,*.Rnw, setlocal textwidth=80  " Latex text folding on 80 characters
 
 " Terminal mode configuration
 tnoremap <Esc> <C-\><C-n>
@@ -139,8 +139,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-d>"
 " Ctags bar - toggle/untoggle the bar
 nmap gt :TagbarToggle<CR>
 
-" MELD tags shortcuts
-autocmd FileType tex map <leader>b :vsp<Space>$BIB<CR>
 
 " Go plugin settings
 let g:goimports=1
@@ -168,7 +166,7 @@ let g:gofmt_on_save=1
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
   end
-  local servers = {'pyls', 'gopls', 'texlab'}
+  local servers = {'pyright', 'gopls', 'texlab'}
   for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
       on_attach = on_attach,
@@ -178,6 +176,7 @@ EOF
 
 set completeopt=menuone,noinsert,noselect
 let g:completion_mathching_strategy_list = ['exact', 'substring', 'fuzzy']
+let g:completion_trigger_on_delete=1
 
 " Quickfix: list LSP hook
 fun! LspLocationList()
@@ -197,21 +196,6 @@ nnoremap gl :call LspLocationList()<CR>
 let g:completion_enable_snippet = 'UltiSnips'
 let g:completion_enable_fuzzy_match = 1
 let g:diagnostic_enable_virtual_text = 1
-
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
- " Trigger completion with <Tab>
- function! s:check_back_space() abort
-     let col = col('.') - 1
-     return !col || getline('.')[col - 1]  =~ '\s'
- endfunction
-
- inoremap <silent><expr> <TAB>
-   \ pumvisible() ? "\<C-n>" :
-   \ <SID>check_back_space() ? "\<TAB>" :
-   \ completion#trigger_completion()
 
  " Avoid showing message extra message when using completion
  set shortmess+=c

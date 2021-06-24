@@ -25,7 +25,7 @@ trap "echo Terminated execution.' && exit 3" SIGTERM
 
 if [[ "$#" -eq 1 ]]; then
 # Biber takes the filename without the file extension and Knitr needs the RNW file
-Rscript -e "library(knitr); require(reticulate); knit('$1.Rnw')" &&  pdflatex "$1" && biber "$1" && makeglossaries "$1" && pdflatex "$1"
+pdflatex "$1" && biber "$1" && makeglossaries "$1" && pdflatex "$1"
 elif [[ "$2" = "-o" ]]; then
     pdflatex "$1" && biber "$1" && makeglossaries "$1" && pdflatex "$1" 
 else

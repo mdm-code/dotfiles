@@ -1,21 +1,19 @@
 # General aliases
 alias \
     vim='nvim' \
-    tmux='tmux -f $HOME/.dotfiles/tmux.conf' \
+    tmux='tmux -f $HOME/.dotfiles/tmux/tmux.conf' \
+    mpd='mpd $HOME/.config/mpd/mpd.conf' \
     e="$EDITOR" \
     '?'="duck" \
-    ctags="/usr/local/bin/ctags" \
-    lock='pmset displaysleepnow' \
     ls='ls -G' \
     ll='ls -laG' \
-    yt='youtube-viewer' \
+    rm='rm -i' \
     tb='tunnelblickctl'
 
 # PhD folders aliases
 alias \
     cdth='cd ~/Documents/_files/_research/monograph/body/thesis' \
     cdtr='cd ~/Documents/_files/_research/monograph/material/transcript' \
-    cdp='cd ~/Documents/_files/_research/monograph/material/photos' \
     cdr='cd ~/Documents/_files/_research/monograph/phd_references' \
 
 # Coding aliases

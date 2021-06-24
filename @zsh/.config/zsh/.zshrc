@@ -1,7 +1,7 @@
-#         ______ _____ _   _     ______  _____ 
+#         ______ _____ _   _     ______  _____
 #        |___  //  ___| | | |    | ___ \/  __ \
 #           / / \ `--.| |_| |    | |_/ /| /  \/
-#          / /   `--. \  _  |    |    / | |    
+#          / /   `--. \  _  |    |    / | |
 #        ./ /___/\__/ / | | |    | |\ \ | \__/\
 #        \_____/\____/\_| |_/    \_| \_| \____/
 
@@ -16,8 +16,20 @@ zstyle ':vcs_info:git:*' formats '%b'
 autoload -U colors && colors  # Load colors
 setopt autocd                 # Automatically cd into typed directory
 stty stop undef               # Disable ctrl-s to freeze terminal
+
+# Prompt setup
 setopt PROMPT_SUBST
-PROMPT='%B%{$fg[cyan]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}bsd %{$fg[magenta]%}%2~%{$fg[cyan]%} ${vcs_info_msg_0_}]%{$reset_color%}$%b '
+PROMPT='%B%{$fg[cyan]%}%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}bsd %{$fg[magenta]%}%2~%{$fg[cyan]%} ${vcs_info_msg_0_}%{$reset_color%}$%b '
+
+zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
++vi-git-untracked(){
+    if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
+        git status --porcelain | grep '??' &> /dev/null ; then
+        hook_com[staged]+='!'
+    fi
+}
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:git:*' formats "%{$fg[blue]%}(%{$fg[red]%}%m%u%c%{$fg[yellow]%}%{$fg[green]%} %b%{$fg[blue]%})"
 
 # History in cache directory
 HISTSIZE=10000
@@ -25,7 +37,10 @@ SAVEHIST=10000
 HISTFILE=~/.cache/zsh/history
 
 # Load aliases if exist
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/aliasesrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/aliasesrc"
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config/}/zsh/aliases" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/aliases"
+
+# Load journal configuration and functions
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config/}/jrnl/.jrnlrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config/}/jrnl/.jrnlrc"
 
 # Basic auto/tab complete
 autoload -U compinit
@@ -86,10 +101,6 @@ bindkey -s '^o' 'lfcd\n'   # Open and navigate dir in lf
 bindkey -s '^a' 'bc -l\n'  # Arithmetics on command line
 bindkey -s "^l" "clear\n"  # Clear bind for tmux
 
-# Pyenv Python version setup
-# eval "$(pyenv init -)"
-# eval "$(pyenv virtualenv-init -)"
-
 # Lynx
 duck () {
 # lynx "duckduckgo.com/lite?q=$*"
@@ -103,8 +114,17 @@ duck () {
 	echo "$@" | bc
 }
 
-# Load journal configuration and functions
-[ -f "$HOME/.dotfiles/journalrc" ] && source "$HOME/.dotfiles/journalrc"
+# Lock screen
+lock () {
+	pmset displaysleepnow
+}
+
+yt () {
+	youtube-viewer "$@"
+}
+
+# Load automatic suggestions
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 
 # Load zsh-syntax-highlighting; should be last.
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null

@@ -10,7 +10,7 @@
     <key>Label</key>
     <string>com.startup</string>
     <key>Program</key>
-    <string>/Users/michal/.dotfiles/startup.sh</string>
+	string>/Users/michal/.dotfiles/startup/startup.sh</string>
     <key>RunAtLoad</key>
     <true/>
     <key>KeepAlive</key>
