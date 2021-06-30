@@ -1,0 +1,13 @@
+#!/bin/sh
+
+msg="ds-out [ -help | true | false ]
+
+Disable writing .DS_store files on MacOS.
+"
+
+[ $1 = "-help" ] && echo "$msg" && exit 0
+
+[ $1 = "true" ] || [ $1 = "false" ] ||\
+	echo \`$1\` "is not a valid argument" && exit 1
+
+defaults write com.apple.desktopservices DSDontWriteNetworkStores "$1"
