@@ -2,9 +2,12 @@
 --cask dbeaver-community
 --cask dmenu-mac
 --cask keycastr
+--cask qgis
 --cask vscodium
 --cask waterfox
---cask qgis
+--cask mactex-no-gui
+bluetutil
+ctags
 fzf
 gh
 git
