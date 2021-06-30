@@ -73,6 +73,7 @@ set foldmethod=manual
 set nohlsearch
 set cursorline
 set cursorcolumn
+set backupcopy=yes
 colorscheme gruvbox
 
 " Set leader to comma
