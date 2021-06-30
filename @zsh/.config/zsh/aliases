@@ -4,6 +4,7 @@ alias \
     tmux='tmux -f $HOME/.dotfiles/tmux/tmux.conf' \
     mpd='mpd $HOME/.config/mpd/mpd.conf' \
     e="$EDITOR" \
+    ctags="/usr/local/bin/ctags" \
     '?'="duck" \
     ls='ls -G' \
     ll='ls -laG' \
