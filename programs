@@ -22,6 +22,7 @@ neovim --HEAD
 pandoc
 pass
 postgresql
+pre-commit
 skhd
 spacebar
 stow
