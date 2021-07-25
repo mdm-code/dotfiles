@@ -1,3 +1,0 @@
-#!/bin/sh
-
-find "$JOURNAL"/shorts -maxdepth 2 -type f | fzf | xargs -I {} nvim "{}"

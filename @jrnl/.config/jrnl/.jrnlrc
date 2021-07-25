@@ -11,10 +11,12 @@ entry () {
 }
 
 # Create new short entry
-short () {
+zettel () {
 	read name"?name: "
-	mkdir -p "$JOURNAL/shorts"
-	touch "$JOURNAL/shorts/$name"
+	d=$(date "+%Y%m%d%H%M%S")
+	dir="$JOURNAL/zettel"
+	mkdir -p "$dir"
+	touch "$dir/$d-$name"
 	e "$_"
 }
 
