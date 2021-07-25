@@ -12,19 +12,6 @@ alias \
     tb='tunnelblickctl'\
     c='clear'
 
-# PhD folders aliases
-alias \
-    cdth='cd ~/Documents/_files/_research/monograph/body/thesis' \
-    cdtr='cd ~/Documents/_files/_research/monograph/material/transcript' \
-    cdr='cd ~/Documents/_files/_research/monograph/phd_references' \
-
-# Coding aliases
-alias \
-    cdd='cd ~/Documents/python/dev/' \
-    cdg='cd ~/.go/gopath/src' \
-    cdj='cd ~/Documents/journal' \
-    cdm='cd /Users/michal/Documents/_files/other/maths'
-
 # Git aliases
 alias \
     g='git' \

@@ -7,6 +7,8 @@ path=("/usr/local/opt/openssl/bin"
       "$path[@]")
 export PATH
 
+export CDPATH="$HOME:$HOME/Documents"
+
 source "${XDG_CONFIG_HOME:-$HOME/.config}/shell.d/.goenv"
 
 # This is my Git user
