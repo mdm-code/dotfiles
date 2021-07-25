@@ -54,7 +54,11 @@ bindkey -v
 export KEYTIMEOUT=1
 
 # Enable searching through history
-bindkey '^R' history-incremental-pattern-search-backward
+bindkey -M vicmd "/" vi-history-search-backward
+bindkey -M vicmd "?" history-search-forward
+bindkey -M vicmd "n" vi-repeat-search
+bindkey -M vicmd "N" vi-rev-repeat-search
+
 
 # Edit line in vim with ctrl-e
 autoload edit-command-line; zle -N edit-command-line
@@ -99,7 +103,6 @@ lfcd () {
 # Program bindings
 bindkey -s '^o' 'lfcd\n'   # Open and navigate dir in lf
 bindkey -s '^a' 'bc -l\n'  # Arithmetics on command line
-bindkey -s "^l" "clear\n"  # Clear bind for tmux
 
 # Lynx
 duck () {

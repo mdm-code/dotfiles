@@ -9,7 +9,8 @@ alias \
     ls='ls -G' \
     ll='ls -laG' \
     rm='rm -i' \
-    tb='tunnelblickctl'
+    tb='tunnelblickctl'\
+    c='clear'
 
 # PhD folders aliases
 alias \
