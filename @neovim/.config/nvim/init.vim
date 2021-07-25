@@ -134,8 +134,6 @@ nmap ga <Plug>(EasyAlign)
 
 " Snippets
 let g:UltiSnipsExpandTrigger="<c-e>"
-let g:UltiSnipsJumpForwardTrigger="<c-u>"
-let g:UltiSnipsJumpBackwardTrigger="<c-d>"
 
 " Ctags bar - toggle/untoggle the bar
 nmap gt :TagbarToggle<CR>
