@@ -1,8 +1,7 @@
 #!/bin/sh
 
 # Switch between light and dark background in Alacritty.
-
-config="$HOME/.dotfiles/alacritty.yml"
+config="$HOME/.dotfiles/@alacritty/.config/alacritty/alacritty.yml"
 
 cur="$(grep -E '^colors' "$config")"
 
