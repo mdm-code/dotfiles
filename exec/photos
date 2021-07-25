@@ -1,8 +1,0 @@
-#!/bin/sh
-
-# Open dir with MSS photos in fzf and open the selected file
-for n in $(find ~/Documents/_files/_research/monograph/material/photos -maxdepth 1 -type f -iname "*.jp[e]*g" | fzf -m | sort -r)
-do
-    open "$n"
-    sleep 0.6
-done
