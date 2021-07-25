@@ -15,6 +15,7 @@ git-flow
 htop
 jq
 lf
+lolcat
 lynx
 mpd
 mpv
@@ -28,6 +29,7 @@ skhd
 spacebar
 stow
 texlab
+the_silver_searcher
 tmux
 tree
 tunnelblickctl
