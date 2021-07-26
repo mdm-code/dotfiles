@@ -1,3 +1,0 @@
-#!/bin/sh
-
-find "$JOURNAL"/zettel -maxdepth 2 -type f | fzf | xargs -I {} nvim "{}"

@@ -9,14 +9,3 @@ entry () {
 	touch "$_$(date +%d)"
 	e "$_"
 }
-
-# Create new short entry
-zettel () {
-	read name"?name: "
-	d=$(date "+%Y%m%d%H%M%S")
-	dir="$JOURNAL/zettel"
-	mkdir -p "$dir"
-	touch "$dir/$d-$name"
-	e "$_"
-}
-
