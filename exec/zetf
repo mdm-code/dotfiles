@@ -1,0 +1,57 @@
+#!/bin/sh
+
+###################################################
+#                || DISCLAIMER ||                 #
+#  This multicommand script works on hard links.  #
+#  The path of the execution relies on the name   #
+#               of the executable.                #
+#                                                 #
+#  Make sure you `ln zet [zetf, zetp zetg]` and   #
+#        have these files on the $PATH.           #
+###################################################
+
+editor="${ED:-vi}"
+zettel_dir="${JOURNAL:-$HOME}/zettel"
+
+create_entry () {
+	printf "Enter a name: "; read -r name
+	test -z "$name" && echo 'name cannot be empty' && exit 1
+	d=$(date "+%Y%m%d%H%M%S")
+	mkdir -p "$zettel_dir"
+	file="$zettel_dir/$d-$name"
+	touch "$file"
+	"$editor" "$file"
+}
+
+paste_links() {
+	if [ "$#" -gt 0 ]; then
+		for arg in "$@"; do
+			find "$zettel_dir" -maxdepth 2 -type f\
+				| grep "$arg"
+		done
+	else
+		while read -r line; do
+			for arg in $line; do
+				find "$zettel_dir" -maxdepth 2 -type f\
+					| grep "$arg"
+			done
+		done < "/dev/stdin"
+	fi
+}
+
+test "${0##*/}" = zetp && paste_links "$@" && exit 0
+
+test "${0##*/}" = zet && create_entry
+
+test "${0##*/}" = zetf && \
+	find "$zettel_dir" -maxdepth 2 -type f\
+		| fzf\
+		| xargs -I {} "$editor" "{}"\
+		&& exit 0
+
+test "${0##*/}" = zetg && \
+	for arg in "$@"; do
+		find "$zettel_dir" -maxdepth 2 -type f -exec grep -l "$arg" {} +\
+		&& exit 0
+	done
+
