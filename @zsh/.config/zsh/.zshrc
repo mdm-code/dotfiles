@@ -102,7 +102,6 @@ lfcd () {
 
 # Program bindings
 bindkey -s '^o' 'lfcd\n'   # Open and navigate dir in lf
-bindkey -s '^a' 'bc -l\n'  # Arithmetics on command line
 
 # Lynx
 duck () {
