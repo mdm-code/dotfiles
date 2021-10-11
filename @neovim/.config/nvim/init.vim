@@ -44,6 +44,10 @@ Plug 'terryma/vim-multiple-cursors'
 " Quick line navigation for f/F
 Plug 'unblevable/quick-scope'
 
+" Telescope
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
 " Colors and color schemes
 Plug 'ryanoasis/vim-devicons' " the beauty of devicons
 Plug 'morhetz/gruvbox' " Mmm... classy.
@@ -80,6 +84,7 @@ colorscheme gruvbox
 let mapleader = ";"
 
 " Cursor line and column color
+" DISABLE Background in Vim :: highlight! Normal ctermbg=NONE
 highlight CursorColumn ctermbg=238
 highlight CursorLine cterm=bold ctermbg=238
 
@@ -138,6 +143,10 @@ let g:UltiSnipsExpandTrigger="<c-e>"
 " Ctags bar - toggle/untoggle the bar
 nmap gt :TagbarToggle<CR>
 
+" Gsnip macro interface
+" Press @w to change the placeholder under the cursor
+" Press n/N to move forward and backward between placeholders
+noremap gs !!gsnip<CR>:let @w='cf}'<CR>/\${[0-9]\+:\w*}<CR>
 
 " Go plugin settings
 let g:goimports=1
@@ -177,24 +186,15 @@ set completeopt=menuone,noinsert,noselect
 let g:completion_mathching_strategy_list = ['exact', 'substring', 'fuzzy']
 let g:completion_trigger_on_delete=1
 
-" Quickfix: list LSP hook
-fun! LspLocationList()
-    lua vim.lsp.diagnostic.set_loclist({open_loclist = false})
-endfun
-
-" Quickfix: avoid reread of the command
-augroup LSP_AUTO
-    autocmd!
-    autocmd! BufWrite,BufEnter,InsertLeave * :call LspLocationList()
-augroup END
-
-" Quickfix: shortcut
-nnoremap gl :call LspLocationList()<CR>
-
 " Add snippets
 let g:completion_enable_snippet = 'UltiSnips'
 let g:completion_enable_fuzzy_match = 1
 let g:diagnostic_enable_virtual_text = 1
+
+" Telescope commands
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
  " Avoid showing message extra message when using completion
  set shortmess+=c
