@@ -144,7 +144,7 @@ nmap gt :TagbarToggle<CR>
 " Gsnip macro interface
 " Press @w to change the placeholder under the cursor
 " Press n/N to move forward and backward between placeholders
-noremap gs !!gsnip<CR>:let @w='cf}'<CR>/\${[0-9]\+:\w*}<CR>
+noremap gs !!gsnip file<CR>:let @w='cf}'<CR>/\${[0-9]\+:\w*}<CR>
 
 " Go plugin settings
 let g:goimports=1
