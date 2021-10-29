@@ -19,9 +19,6 @@ Plug 'nvim-lua/completion-nvim'
 Plug 'tweekmonster/gofmt.vim' " Format code on save
 Plug 'mattn/vim-goimports' " Manage imports on save
 
-" Coloured parenthesis
-Plug 'kien/rainbow_parentheses.vim'
-
 " Snippets (Engine)
 Plug 'SirVer/ultisnips' " The actual collection of snippets
 Plug 'honza/vim-snippets' " The actual collection of snippets
@@ -78,6 +75,7 @@ set nohlsearch
 set cursorline
 set cursorcolumn
 set backupcopy=yes
+set clipboard=unnamed
 colorscheme gruvbox
 
 " Set leader to comma
@@ -165,14 +163,12 @@ let g:gofmt_on_save=1
 
     -- Mappings.
     local opts = { noremap=true, silent=true }
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>d', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>r', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>n', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   end
   local servers = {'pyright', 'gopls', 'texlab'}
   for _, lsp in ipairs(servers) do
@@ -181,6 +177,7 @@ let g:gofmt_on_save=1
     }
 end
 EOF
+
 
 set completeopt=menuone,noinsert,noselect
 let g:completion_mathching_strategy_list = ['exact', 'substring', 'fuzzy']
