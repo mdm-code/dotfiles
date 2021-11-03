@@ -6,8 +6,6 @@ alias \
     e="$EDITOR" \
     ctags="/usr/local/bin/ctags" \
     '?'="duck" \
-    ls='ls -G' \
-    ll='ls -laG' \
     rm='rm -i' \
     tb='tunnelblickctl'\
     c='clear'
