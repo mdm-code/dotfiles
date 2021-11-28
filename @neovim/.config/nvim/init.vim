@@ -89,12 +89,16 @@ highlight CursorLine cterm=bold ctermbg=238
 " Highlight TABS (for Go)
 set list listchars=nbsp:¬,tab:»·,trail:·,extends:>
 
+" Go make & format commands.
+autocmd BufNewFile,BufRead *.go set formatprg=gofmt\ %
+autocmd BufNewFile,BufRead *.go set makeprg=go\ build\ %
+
 " Tab expansion for Python code files
 autocmd Filetype python setlocal expandtab
 autocmd Filetype python setlocal colorcolumn=80  " Add a column showing 80 line length
 
 " Enters interactive mode
-autocmd FileType python xnoremap <leader>p :w! \| :sp \| :term python -i % <CR>
+autocmd FileType python xnoremap <leader>p :w! \| :sp \| :term python3 -i % <CR>
 
 " Set path to python
 let g:python3_host_prog = '/usr/bin/python3'
@@ -144,7 +148,7 @@ nmap gt :TagbarToggle<CR>
 " Gsnip macro interface
 " Press @w to change the placeholder under the cursor
 " Press n/N to move forward and backward between placeholders
-noremap gs !!gsnip file<CR>:let @w='cf}'<CR>/\${[0-9]\+:\w*}<CR>
+noremap gs !!gsnip find<CR>:let @w='cf}'<CR>/\${[0-9]\+:\w*}<CR>
 
 " Go plugin settings
 let g:goimports=1
@@ -177,7 +181,6 @@ let g:gofmt_on_save=1
     }
 end
 EOF
-
 
 set completeopt=menuone,noinsert,noselect
 let g:completion_mathching_strategy_list = ['exact', 'substring', 'fuzzy']
