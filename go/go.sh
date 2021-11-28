@@ -14,9 +14,9 @@ set -e
 # and switch between them by changing the `current` symlink.
 
 
-DEFAULT_VER="1.16"
+DEFAULT_VER="1.17"
 VERSION="${1:-$DEFAULT_VER}"
-DEFAULT_DIR="$HOME/go"
+DEFAULT_DIR="$HOME/.go"
 TARGET_DIR="${2:-$DEFAULT_DIR}"
 ENV_FILE="${2:-$DEFAULT_DIR}/goenv.sh"
 OS="$(uname -s)"
@@ -68,7 +68,7 @@ mkdir -p "$GOROOT/go" || echo "Target directory already exists"
 tar -C "$GOROOT/go" --strip-components=1 -xzf "$TMPDIR/go.tar.gz"
 mv "$GOROOT/go" "$GOROOT/$VERSION"
 ln -sf "$GOROOT/$VERSION" "$GOROOT/current"
-mkdir -p "${GOPATH}/"{src,pkg,bin}
+mkdir -p "${GOPATH}/"{src,pkg,bin} || echo "directories already exist"
 rm -f "$TEMP_DIRECTORY/go.tar.gz"
 
 # ==== SET GO ENVIRONMENTAL VARIABLES AND GO BIN ON PATH ====
