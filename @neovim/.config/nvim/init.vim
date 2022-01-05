@@ -109,7 +109,9 @@ let g:tex_flavor='latex'
 augroup filetypedetect
     au BufRead,BufNewFile *.Rnw set filetype=tex  " Latex identify .Rnw files as .tex
 augroup END
-au BufRead,BufNewFile *.tex,*.Rnw, setlocal textwidth=80  " Latex text folding on 80 characters
+autocmd BufRead,BufNewFile *.tex setlocal textwidth=80  " Latex text folding on 80 characters
+autocmd BufRead,BufNewFile *.tex set makeprg=pdflatex\ %
+autocmd FileType tex map <leader>o :! open $(echo % \| sed 's/tex$/pdf/') & disown <CR>
 
 " Terminal mode configuration
 tnoremap <Esc> <C-\><C-n>
