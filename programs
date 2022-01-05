@@ -35,7 +35,7 @@ tmux
 tree
 tunnelblickctl
 wget
-yabai
+yabai --HEAD
 youtube-dl
 youtube-viewer
 zsh-autosuggestions
