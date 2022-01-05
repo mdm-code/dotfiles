@@ -18,6 +18,7 @@ Plug 'nvim-lua/completion-nvim'
 " Go coding
 Plug 'tweekmonster/gofmt.vim' " Format code on save
 Plug 'mattn/vim-goimports' " Manage imports on save
+Plug 'sebdah/vim-delve' " Deleve Go debugger
 
 " Snippets (Engine)
 Plug 'SirVer/ultisnips' " The actual collection of snippets
