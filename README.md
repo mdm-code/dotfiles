@@ -36,6 +36,28 @@ brew list | xargs brew uninstall --force
 ```
 
 
+## Loading launch agents on MacOS
+
+To make sure that server daemons run at the system startup for a specific user,
+there is launchctl that lets you execute a given program at startup. There
+are two launch agents in the `startup` directory that has to be copied to
+`$HOME/Library/LaunchAgents` and loaded with this command:
+
+```sh
+launchctl load -w ~/Library/LaunchAgents/com.gsnipd.plist
+```
+
+The `-w` flag makes sure it is loaded on each startup.
+
+Here is how to unload an agent:
+
+```sh
+launchctl unload -w ~/Library/LaunchAgents/com.gsnipd.plist
+```
+
+You can use `launchctl list` to peek at loaded agents.
+
+
 ## The Go programming language installation
 
 In the `go/` directory there is `go.sh` script that takes care of the Go
