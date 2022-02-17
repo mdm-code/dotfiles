@@ -91,7 +91,6 @@ highlight CursorLine cterm=bold ctermbg=238
 set list listchars=nbsp:¬,tab:»·,trail:·,extends:>
 
 " Go make & format commands.
-autocmd BufNewFile,BufRead *.go set formatprg=gofmt\ %
 autocmd BufNewFile,BufRead *.go set makeprg=go\ build\ %
 
 " Tab expansion for Python code files
@@ -148,11 +147,6 @@ let g:UltiSnipsExpandTrigger="<c-e>"
 " Ctags bar - toggle/untoggle the bar
 nmap gt :TagbarToggle<CR>
 
-" Gsnip macro interface
-" Press @w to change the placeholder under the cursor
-" Press n/N to move forward and backward between placeholders
-noremap gs !!gsnip find<CR>:let @w='cf}'<CR>/\${[0-9]\+:\w*}<CR>
-
 " Go plugin settings
 let g:goimports=1
 let g:gofmt_on_save=1
@@ -183,7 +177,28 @@ let g:gofmt_on_save=1
       on_attach = on_attach,
     }
 end
+
+-- This is gsnip-based completion running on efm-langserver
+nvim_lsp['efm'].setup({
+  on_attach = on_attach,
+  init_options = { completion = true },
+  settings = {
+    languages = {
+	  ["="] = {
+        {
+		  completionCommand = "gsnip list | grep -v '^$' |  cut -f1 -d$\'\t\' | sort -u",
+          completionStdin = true
+        },
+      },
+    },
+  },
+})
 EOF
+
+" Gsnip lsp completion expand trigger
+" Press @w to change the placeholder under the cursor
+" Press n/N to move forward and backward between placeholders
+inoremap <c-x>g <esc>!!gsnip find<CR>:let @w='cf}'<CR>/\${[0-9]\+:\w*}<CR>
 
 set completeopt=menuone,noinsert,noselect
 let g:completion_mathching_strategy_list = ['exact', 'substring', 'fuzzy']
