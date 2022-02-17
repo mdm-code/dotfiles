@@ -2,11 +2,12 @@
 --cask dbeaver-community
 --cask dmenu-mac
 --cask keycastr
+--cask mactex-no-gui
 --cask qgis
 --cask vscodium
 --cask waterfox
---cask mactex-no-gui
 bluetutil
+brew install efm-langserver
 ctags
 fzf
 gh
