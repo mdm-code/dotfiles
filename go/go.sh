@@ -14,7 +14,7 @@ set -e
 # and switch between them by changing the `current` symlink.
 
 
-DEFAULT_VER="1.17"
+DEFAULT_VER="1.18"
 VERSION="${1:-$DEFAULT_VER}"
 DEFAULT_DIR="$HOME/.go"
 TARGET_DIR="${2:-$DEFAULT_DIR}"
