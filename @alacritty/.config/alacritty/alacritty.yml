@@ -1,10 +1,9 @@
 window:
   decorations: none
+  opacity: 0.95
   padding:
     x: 5
     y: 5
-
-background_opacity: 0.95
 
 scrolling:
   history: 1000
