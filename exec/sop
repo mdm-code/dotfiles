@@ -2,7 +2,7 @@
 
 # Adjust background opacity in Alacritty
 config="$HOME/.dotfiles/@alacritty/.config/alacritty/alacritty.yml"
-line=$(grep -E "^background_opacity" "$config")
+line=$(grep -E "^  opacity" "$config")
 value=$(echo "$line" | sed -E 's/(.*) (.*)/\2/' | sed "s/\./\\\./g")
 target=${1:-"0\.95"}
 
