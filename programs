@@ -9,6 +9,7 @@
 bluetutil
 brew install efm-langserver
 ctags
+entr
 fzf
 gh
 git
