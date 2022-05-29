@@ -27,6 +27,7 @@ pandoc
 pass
 postgresql
 pre-commit
+sdcv
 shellcheck
 skhd
 spacebar
