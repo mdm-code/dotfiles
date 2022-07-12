@@ -111,20 +111,6 @@ duck () {
 		"duckduckgo.com/lite?kd=-1&kp=-1&q=$*"
 }
 
-# Basic calculator
-"=" () {
-	echo "$@" | bc
-}
-
-# Lock screen
-lock () {
-	pmset displaysleepnow
-}
-
-yt () {
-	youtube-viewer "$@"
-}
-
 # Load automatic suggestions
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 
