@@ -91,7 +91,7 @@ highlight CursorLine cterm=bold ctermbg=238
 set list listchars=nbsp:¬,tab:»·,trail:·,extends:>
 
 " Go make & format commands.
-autocmd BufNewFile,BufRead *.go set makeprg=go\ build\ %
+autocmd BufNewFile,BufRead *.go set makeprg=go\ run\ %
 
 " Tab expansion for Python code files
 autocmd Filetype python setlocal expandtab
