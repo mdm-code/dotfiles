@@ -50,5 +50,8 @@ yabai -m rule --add app="^App Store$" manage=off layer=above sticky=on
 yabai -m rule --add app="^DBeaver.*" sticky=on layer=above manage=off
 yabai -m rule --add app="^Finder$" manage=off layer=above sticky=on
 yabai -m rule --add app="^QGIS$" sticky=on layer=above manage=off
+yabai -m rule --add app="^QGIS$" sticky=on layer=above manage=off
+yabai -m rule --add app="^ELAN.*$" sticky=on layer=above manage=off
+
 
 echo "yabai configuration loaded.."
