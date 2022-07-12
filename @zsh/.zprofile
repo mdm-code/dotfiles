@@ -3,6 +3,7 @@ export LC_ALL=en_US.UTF-8
 
 # Default programs
 export EDITOR="nvim"
+export PAGER="less"
 
 # Config file directories
 export XDG_CONFIG_HOME="$HOME/.config"
