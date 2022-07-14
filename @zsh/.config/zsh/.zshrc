@@ -13,6 +13,7 @@ precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats '%b'
 
 # Enable colors and change prompt
+TERM=xterm-256color
 autoload -U colors && colors  # Load colors
 setopt autocd                 # Automatically cd into typed directory
 stty stop undef               # Disable ctrl-s to freeze terminal
@@ -45,6 +46,9 @@ HISTFILE=~/.cache/zsh/history
 # Basic auto/tab complete
 autoload -U compinit
 zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors ''           # color menu items
+zstyle ':completion:*' special-dirs true        # show dot files and folders
+zstyle ':completion:*' group-name ''            # don't group menu items
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)  # Include hidden files
@@ -111,8 +115,17 @@ duck () {
 		"duckduckgo.com/lite?kd=-1&kp=-1&q=$*"
 }
 
+# Added movement control options
+setopt AUTO_CD # automatically cd when directory path entered
+setopt AUTO_PUSHD # pushd after cd
+
 # Load automatic suggestions
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 
 # Load zsh-syntax-highlighting; should be last.
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+
+# Syntax highlighting changes
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=cyan,bold'
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=cyan,bold'
+ZSH_HIGHLIGHT_STYLES[redirection]='fg=green,bold'
