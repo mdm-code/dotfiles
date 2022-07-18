@@ -216,3 +216,11 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
  " Avoid showing message extra message when using completion
  set shortmess+=c
+
+" Go Delve shortcuts
+nnoremap <leader>Gd :DlvDebug<cr>
+nnoremap <leader>Gc :DlvClearAll<cr>
+nnoremap <leader>Gab :DlvAddBreakpoint<cr>
+nnoremap <leader>Gat :DlvAddTracepoint<cr>
+nnoremap <leader>Grb :DlvRemoveBreakpoint<cr>
+nnoremap <leader>Grt :DlvRemoveTracepoint<cr>
