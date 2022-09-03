@@ -42,6 +42,10 @@ Plug 'terryma/vim-multiple-cursors'
 " Quick line navigation for f/F
 Plug 'unblevable/quick-scope'
 
+" Treesitter
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter-context'
+
 " Telescope
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -67,6 +71,8 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set backspace=indent,eol,start
+set signcolumn=yes
+set scrolloff=8
 set nowrap
 set incsearch
 set copyindent
@@ -77,6 +83,9 @@ set cursorline
 set cursorcolumn
 set backupcopy=yes
 set clipboard=unnamed
+set updatetime=50
+set termguicolors
+set smartindent
 colorscheme gruvbox
 
 " Set leader to comma
@@ -95,7 +104,7 @@ autocmd BufNewFile,BufRead *.go set makeprg=go\ run\ %
 
 " Tab expansion for Python code files
 autocmd Filetype python setlocal expandtab
-autocmd Filetype python setlocal colorcolumn=80  " Add a column showing 80 line length
+autocmd Filetype python,go setlocal colorcolumn=80  " Add a column showing 80 line length
 
 " Enters interactive mode
 autocmd FileType python xnoremap <leader>p :w! \| :sp \| :term python3 -i % <CR>
@@ -151,11 +160,12 @@ nmap gt :TagbarToggle<CR>
 let g:goimports=1
 let g:gofmt_on_save=1
 
-" LSP config
-" There is one issue with 'handlers' parameter in the completion module
-" Make sure to rename handlers to callbacks in case you get the error with
-" autocompletion on. 
+" LUA configuration
 :lua << EOF
+-- LSP config
+-- There is one issue with 'handlers' parameter in the completion module
+-- Make sure to rename handlers to callbacks in case you get the error with
+-- autocompletion on.
   local nvim_lsp = require('lspconfig')
 
   local on_attach = function(_, bufnr)
@@ -193,6 +203,44 @@ nvim_lsp['efm'].setup({
     },
   },
 })
+
+-- Treesitter and Treesitter-context configuration
+require'nvim-treesitter.configs'.setup {
+    ensure_installed = "all",
+    sync_install = false,
+
+    highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+    },
+}
+
+function ContextSetup(show_all_context)
+    require("treesitter-context").setup({
+        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+        throttle = true, -- Throttles plugin updates (may improve performance)
+        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+        show_all_context = show_all_context,
+        patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+            -- For all filetypes
+            -- Note that setting an entry here replaces all other patterns for this entry.
+            -- By setting the 'default' entry below, you can control which nodes you want to
+            -- appear in the context window.
+            default = {
+                "function",
+                "method",
+                "for",
+                "while",
+                "if",
+                "switch",
+                "case",
+                "class_declaration",
+            },
+        },
+    })
+end
+
+ContextSetup(true)
 EOF
 
 " Gsnip lsp completion expand trigger
@@ -216,11 +264,3 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
  " Avoid showing message extra message when using completion
  set shortmess+=c
-
-" Go Delve shortcuts
-nnoremap <leader>Gd :DlvDebug<cr>
-nnoremap <leader>Gc :DlvClearAll<cr>
-nnoremap <leader>Gab :DlvAddBreakpoint<cr>
-nnoremap <leader>Gat :DlvAddTracepoint<cr>
-nnoremap <leader>Grb :DlvRemoveBreakpoint<cr>
-nnoremap <leader>Grt :DlvRemoveTracepoint<cr>
