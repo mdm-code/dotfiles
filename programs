@@ -22,11 +22,12 @@ lynx
 mpd
 mpv
 ncmpcpp
-neovim --HEAD
+neovim
 pandoc
 pass
 postgresql
 pre-commit
+ripgrep
 sdcv
 shellcheck
 skhd
@@ -41,5 +42,6 @@ wget
 yabai --HEAD
 youtube-dl
 youtube-viewer
+yq
 zsh-autosuggestions
 zsh-syntax-highlighting
