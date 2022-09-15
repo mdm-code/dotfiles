@@ -7,3 +7,10 @@ path=("$GOROOT_BIN"
       "$GOPATH_BIN"
       "$path[@]")
 export PATH
+
+export GOPRIVATE="gitlab.com/$GITUSER/*,github.com/$GITUSER/*"
+export GOPATH="$GOPATH"
+export GOROOT="$GOROOT/current"
+export GOBIN="$GOPATH/bin"
+export GOPROXY="direct"
+export CGO_ENABLED=0

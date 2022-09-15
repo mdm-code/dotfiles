@@ -9,7 +9,7 @@ export PATH
 
 export CDPATH="$HOME:$HOME/Documents"
 
-source "${XDG_CONFIG_HOME:-$HOME/.config}/shell.d/.goenv"
+. "${XDG_CONFIG_HOME:-$HOME/.config}/shell.d/.goenv"
 
 # This is my Git user
 export GITUSER="mdm-code"
