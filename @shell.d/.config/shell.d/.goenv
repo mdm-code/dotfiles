@@ -9,8 +9,8 @@ path=("$GOROOT_BIN"
 export PATH
 
 export GOPRIVATE="gitlab.com/$GITUSER/*,github.com/$GITUSER/*"
-export GOPATH="$GOPATH"
-export GOROOT="$GOROOT/current"
+export GOPATH="$(go env GOPATH)"
+export GOROOT="$(go env GOROOT)"
 export GOBIN="$GOPATH/bin"
 export GOPROXY="direct"
 export CGO_ENABLED=0
