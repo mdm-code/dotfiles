@@ -10,6 +10,7 @@ export PATH
 export CDPATH="$HOME:$HOME/Documents"
 
 . "${XDG_CONFIG_HOME:-$HOME/.config}/shell.d/.goenv"
+. "${XDG_CONFIG_HOME:-$HOME/.config}/shell.d/.rustenv"
 
 # This is my Git user
 export GITUSER="mdm-code"
