@@ -7,7 +7,7 @@
 --cask vscodium
 --cask waterfox
 bluetutil
-brew install efm-langserver
+efm-langserver
 ctags
 entr
 fzf
