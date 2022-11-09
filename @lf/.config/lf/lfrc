@@ -1,3 +1,4 @@
 cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
 map <c-n> push :mkdir<space>
 map V push :!vim<space>
+map . set hidden!
