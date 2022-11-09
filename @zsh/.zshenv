@@ -1,10 +1,12 @@
 # Export modified PATH
 typeset -U PATH path
 
-path=("/usr/local/opt/openssl/bin"
-      "/usr/local/homebrew"
-      "/Users/michal/.dotfiles/exec"
-      "$path[@]")
+path=(
+	"$path[@]"
+	"/usr/local/opt/openssl/bin"
+	"/usr/local/homebrew"
+	"/Users/michal/.dotfiles/exec"
+)
 export PATH
 
 export CDPATH="$HOME:$HOME/Documents"

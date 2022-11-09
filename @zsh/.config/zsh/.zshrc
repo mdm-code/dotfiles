@@ -33,9 +33,9 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:git:*' formats "%{$fg[blue]%}(%{$fg[red]%}%m%u%c%{$fg[yellow]%}%{$fg[green]%} %b%{$fg[blue]%})"
 
 # History in cache directory
-HISTSIZE=10000
-SAVEHIST=10000
-HISTFILE=~/.cache/zsh/history
+export HISTSIZE=10000
+export SAVEHIST=10000
+export HISTFILE=~/.cache/zsh/history
 
 # Load aliases if exist
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config/}/zsh/aliases" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/aliases"
