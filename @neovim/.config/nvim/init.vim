@@ -11,10 +11,6 @@ call plug#begin('~/.config/nvim/plugged')
 " Swapping words, lines, longer parts of text
 Plug 'tommcdo/vim-exchange'
 
-" Code completion
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
-
 " Go coding
 Plug 'tweekmonster/gofmt.vim' " Format code on save
 Plug 'mattn/vim-goimports' " Manage imports on save
@@ -22,7 +18,16 @@ Plug 'sebdah/vim-delve' " Deleve Go debugger
 
 " Snippets (Engine)
 Plug 'SirVer/ultisnips' " The actual collection of snippets
-Plug 'honza/vim-snippets' " The actual collection of snippets
+Plug 'honza/vim-snippets'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+
+" Code completion
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
 
 " Align text on symbol, e.g., '='
 Plug 'junegunn/vim-easy-align' " Select text, type ga and then the delimiter
@@ -86,6 +91,7 @@ set clipboard=unnamed
 set updatetime=50
 set termguicolors
 set smartindent
+set completeopt=menuone,noinsert,noselect
 colorscheme gruvbox
 
 " Set leader to comma
@@ -150,9 +156,6 @@ autocmd InsertEnter * norm zz
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
-" Snippets
-let g:UltiSnipsExpandTrigger="<c-e>"
-
 " Ctags bar - toggle/untoggle the bar
 nmap gt :TagbarToggle<CR>
 
@@ -166,30 +169,61 @@ let g:gofmt_on_save=1
 -- There is one issue with 'handlers' parameter in the completion module
 -- Make sure to rename handlers to callbacks in case you get the error with
 -- autocompletion on.
-  local nvim_lsp = require('lspconfig')
+  local lspconfig = require('lspconfig')
+  local cmp = require('cmp')
 
-  local on_attach = function(_, bufnr)
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+  cmp.setup({
+      snippet = {
+      expand = function(args)
+        vim.fn['UtiSnips#Anon'](args.body)
+      end,
+    },
+	mapping = cmp.mapping.preset.insert({
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+      ['<C-j>'] = cmp.mapping.confirm({ select = true }),
+      ['<C-x><C-o>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'ultisnips' },
+      { name = 'buffer' },
+    }),
+	completion = cmp.mapping.preset.insert({
+      autocomplete = {
+        cmp.TriggerEvent.TextChanged,
+        cmp.TriggerEvent.InsertEnter,
+      },
+        completeopt = "menuone,noinsert,noselect",
+    }),
+  })
+
+  local on_attach = function(clnt, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-    require'completion'.on_attach()
 
-    -- Mappings.
     local opts = { noremap=true, silent=true }
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>d', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>r', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>n', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>vca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   end
   local servers = {'pyright', 'gopls', 'texlab'}
   for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
+    lspconfig[lsp].setup {
+      capabilities = capabilities,
       on_attach = on_attach,
     }
 end
 
 -- This is gsnip-based completion running on efm-langserver
-nvim_lsp['efm'].setup({
+lspconfig['efm'].setup({
   on_attach = on_attach,
   init_options = { completion = true },
   settings = {
@@ -247,15 +281,6 @@ EOF
 " Press @w to change the placeholder under the cursor
 " Press n/N to move forward and backward between placeholders
 inoremap <c-x>g <esc>!!gsnip find<CR>:let @w='cf}'<CR>/\${[0-9]\+:\w*}<CR>
-
-set completeopt=menuone,noinsert,noselect
-let g:completion_mathching_strategy_list = ['exact', 'substring', 'fuzzy']
-let g:completion_trigger_on_delete=1
-
-" Add snippets
-let g:completion_enable_snippet = 'UltiSnips'
-let g:completion_enable_fuzzy_match = 1
-let g:diagnostic_enable_virtual_text = 1
 
 " Telescope commands
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
