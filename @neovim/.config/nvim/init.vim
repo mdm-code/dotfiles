@@ -176,6 +176,12 @@ let g:gofmt_on_save=1
   capabilities.textDocument.completion.completionItem.snippetSupport = true
   capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
+  cmp.setup.cmdline(':', {
+    sources = cmp.config.sources({
+      { name = 'path' },
+      { name = 'cmdline' },
+    })
+  })
   cmp.setup({
       snippet = {
       expand = function(args)
@@ -183,10 +189,12 @@ let g:gofmt_on_save=1
       end,
     },
 	mapping = cmp.mapping.preset.insert({
+      ['<C-x><C-o>'] = cmp.mapping.complete(),
+	  ['<C-space>'] = cmp.mapping.confirm( { select = true }),
       ['<CR>'] = cmp.mapping.confirm({ select = true }),
       ['<C-j>'] = cmp.mapping.confirm({ select = true }),
-      ['<C-x><C-o>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.abort(),
+      ['<C-c>'] = cmp.mapping.close(),
     }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
