@@ -185,12 +185,12 @@ let g:gofmt_on_save=1
   cmp.setup({
       snippet = {
       expand = function(args)
-        vim.fn['UtiSnips#Anon'](args.body)
+        vim.fn['UltiSnips#Anon'](args.body)
       end,
     },
 	mapping = cmp.mapping.preset.insert({
       ['<C-x><C-o>'] = cmp.mapping.complete(),
-	  ['<C-space>'] = cmp.mapping.confirm( { select = true }),
+	  ['<C-space>'] = cmp.mapping.confirm({ select = true }),
       ['<CR>'] = cmp.mapping.confirm({ select = true }),
       ['<C-j>'] = cmp.mapping.confirm({ select = true }),
       ['<C-e>'] = cmp.mapping.abort(),
