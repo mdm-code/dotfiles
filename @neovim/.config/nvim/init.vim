@@ -191,9 +191,7 @@ let g:gofmt_on_save=1
     },
 	mapping = cmp.mapping.preset.insert({
       ['<C-x><C-o>'] = cmp.mapping.complete(),
-	  ['<C-space>'] = cmp.mapping.confirm({ select = true }),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
-      ['<C-j>'] = cmp.mapping.confirm({ select = true }),
+      ['<C-space>'] = cmp.mapping.confirm(),
       ['<C-e>'] = cmp.mapping.abort(),
       ['<C-c>'] = cmp.mapping.close(),
     }),
