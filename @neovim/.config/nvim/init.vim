@@ -225,7 +225,7 @@ let g:gofmt_on_save=1
     vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
     vim.keymap.set("n", "<leader>gd", function() vim.diagnostic.open_float() end, opts)
   end
-  local servers = {'pyright', 'gopls', 'texlab'}
+  local servers = {"pyright", "gopls", "texlab", "lua_ls"}
   for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
       capabilities = capabilities,
