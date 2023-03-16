@@ -110,6 +110,7 @@ autocmd BufNewFile,BufRead *.go set makeprg=go\ run\ %
 
 " Tab expansion for Python code files
 autocmd Filetype python setlocal expandtab
+autocmd FileType lua,js,css,html setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 autocmd Filetype python,go setlocal colorcolumn=80  " Add a column showing 80 line length
 
 " Enters interactive mode
