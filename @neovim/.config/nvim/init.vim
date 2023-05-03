@@ -117,7 +117,7 @@ autocmd Filetype python,go setlocal colorcolumn=80  " Add a column showing 80 li
 autocmd FileType python xnoremap <leader>p :w! \| :sp \| :term python3 -i % <CR>
 
 " Set path to python
-let g:python3_host_prog = '/usr/bin/python3'
+let g:python3_host_prog = "/usr/local/bin/python3"
 
 " Latex
 let g:tex_flavor='latex'
