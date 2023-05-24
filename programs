@@ -1,5 +1,4 @@
 --cask alacritty
---cask dbeaver-community
 --cask dmenu-mac
 --cask keycastr
 --cask mactex-no-gui
@@ -7,8 +6,8 @@
 --cask vscodium
 --cask waterfox
 bluetutil
-efm-langserver
 ctags
+efm-langserver
 entr
 fzf
 gh
@@ -16,6 +15,8 @@ git
 git-flow
 htop
 jq
+kind
+kubectl
 lf
 lolcat
 lynx
