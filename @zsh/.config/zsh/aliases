@@ -8,7 +8,9 @@ alias \
     '?'="duck" \
     rm='rm -i' \
     tb='tunnelblickctl'\
-    c='clear'
+    c='clear' \
+    pd="podman"
+
 
 # Git aliases
 alias \
