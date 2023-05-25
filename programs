@@ -26,6 +26,8 @@ ncmpcpp
 neovim
 pandoc
 pass
+podman
+podman-compose
 postgresql
 pre-commit
 ripgrep
