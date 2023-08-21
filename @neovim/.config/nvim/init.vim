@@ -56,8 +56,8 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
 " Colors and color schemes
-Plug 'ryanoasis/vim-devicons' " the beauty of devicons
-Plug 'morhetz/gruvbox' " Mmm... classy.
+Plug 'ryanoasis/vim-devicons'
+Plug 'morhetz/gruvbox'
 call plug#end()
 
 " Basic configuration
@@ -192,7 +192,7 @@ let g:gofmt_on_save=1
         vim.fn['UltiSnips#Anon'](args.body)
       end,
     },
-	mapping = cmp.mapping.preset.insert({
+    mapping = cmp.mapping.preset.insert({
       ['<C-x><C-o>'] = cmp.mapping.complete(),
       ['<C-space>'] = cmp.mapping.confirm(),
       ['<C-e>'] = cmp.mapping.abort(),
@@ -203,7 +203,7 @@ let g:gofmt_on_save=1
       { name = 'ultisnips' },
       { name = 'buffer' },
     }),
-	completion = cmp.mapping.preset.insert({
+    completion = cmp.mapping.preset.insert({
       autocomplete = {
         cmp.TriggerEvent.TextChanged,
         cmp.TriggerEvent.InsertEnter,
@@ -223,7 +223,7 @@ let g:gofmt_on_save=1
     vim.keymap.set("n", "<leader>rr", function() vim.lsp.buf.references() end, opts)
     vim.keymap.set("n", "<leader>n", function() vim.diagnostic.goto_next() end, opts)
     vim.keymap.set("n", "<leader>p", function() vim.diagnostic.goto_prev() end, opts)
-    vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
+	vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
     vim.keymap.set("n", "<leader>gd", function() vim.diagnostic.open_float() end, opts)
   end
   local servers = {"pyright", "gopls", "texlab", "tsserver"}
@@ -240,9 +240,9 @@ lspconfig['efm'].setup({
   init_options = { completion = true },
   settings = {
     languages = {
-	  ["="] = {
+      ["="] = {
         {
-		  completionCommand = "gsnip list | grep -v '^$' |  cut -f1 -d$\'\t\' | sort -u",
+          completionCommand = "gsnip list | grep -v '^$' |  cut -f1 -d$\'\t\' | sort -u",
           completionStdin = true
         },
       },
@@ -252,38 +252,38 @@ lspconfig['efm'].setup({
 
 -- Treesitter and Treesitter-context configuration
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = "all",
-    sync_install = false,
+  ensure_installed = "all",
+  sync_install = false,
 
-    highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-    },
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
 }
 
 function ContextSetup(show_all_context)
-    require("treesitter-context").setup({
-        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-        throttle = true, -- Throttles plugin updates (may improve performance)
-        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-        show_all_context = show_all_context,
-        patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
-            -- For all filetypes
-            -- Note that setting an entry here replaces all other patterns for this entry.
-            -- By setting the 'default' entry below, you can control which nodes you want to
-            -- appear in the context window.
-            default = {
-                "function",
-                "method",
-                "for",
-                "while",
-                "if",
-                "switch",
-                "case",
-                "class_declaration",
-            },
-        },
-    })
+  require("treesitter-context").setup({
+    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+    throttle = true, -- Throttles plugin updates (may improve performance)
+    max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+    show_all_context = show_all_context,
+    patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+      -- For all filetypes
+      -- Note that setting an entry here replaces all other patterns for this entry.
+      -- By setting the 'default' entry below, you can control which nodes you want to
+      -- appear in the context window.
+      default = {
+        "function",
+        "method",
+        "for",
+        "while",
+        "if",
+        "switch",
+        "case",
+        "class_declaration",
+      },
+    },
+  })
 end
 
 ContextSetup(true)
@@ -293,6 +293,7 @@ EOF
 " Press @w to change the placeholder under the cursor
 " Press n/N to move forward and backward between placeholders
 inoremap <c-x>g <esc>!!gsnip find<CR>:let @w='cf}'<CR>/\${[0-9]\+:\w*}<CR>
+
 
 " Telescope commands
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
