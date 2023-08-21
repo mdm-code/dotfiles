@@ -110,7 +110,7 @@ autocmd BufNewFile,BufRead *.go set makeprg=go\ run\ %
 
 " Tab expansion for Python code files
 autocmd Filetype python setlocal expandtab
-autocmd FileType lua,js,css,html setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+autocmd FileType lua,javascript,typescript,css,html setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 autocmd Filetype python,go setlocal colorcolumn=80  " Add a column showing 80 line length
 
 " Enters interactive mode
@@ -127,6 +127,9 @@ augroup END
 autocmd BufRead,BufNewFile *.tex setlocal textwidth=80  " Latex text folding on 80 characters
 autocmd BufRead,BufNewFile *.tex set makeprg=pdflatex\ %
 autocmd FileType tex map <leader>o :! open $(echo % \| sed 's/tex$/pdf/') & disown <CR>
+
+" Newtrw :Explore key binding
+nnoremap <leader>e :Explore<CR>
 
 " Terminal mode configuration
 tnoremap <Esc> <C-\><C-n>
