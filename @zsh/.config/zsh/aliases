@@ -8,7 +8,6 @@ alias \
     '?'="duck" \
     rm='rm -i' \
     tb='tunnelblickctl'\
-    c='clear' \
     pd="podman"
 
 
