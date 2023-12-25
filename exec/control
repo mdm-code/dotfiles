@@ -15,10 +15,9 @@ fi
 
 case "$1" in
     "start")
-        echo "Setting up the environment..."
         brew services start spacebar
-        brew services start yabai
-        brew services start skhd
+        yabai --start-service
+        skhd --start-service
 
         # Depends on /private/etc/sudoers.d/karabiner-sudoers
         sudo launchctl load "/Library/LaunchDaemons/org.pqrs.karabiner.karabiner_grabber.plist" 2>/dev/null
@@ -27,13 +26,11 @@ case "$1" in
         launchctl enable gui/"$UID"/org.pqrs.karabiner.karabiner_console_user_server
         launchctl bootstrap gui/"$UID" /Library/LaunchAgents/org.pqrs.karabiner.karabiner_console_user_server.plist 2>/dev/null
         launchctl enable gui/"$UID"/org.pqrs.karabiner.karabiner_console_user_server
-        echo "🐣 Set up completed"
         ;;
     "stop")
-        echo "Tearing down the environment..." 
         brew services stop spacebar
-        brew services stop yabai
-        brew services stop skhd
+        yabai --stop-service
+        skhd --stop-service
 
         # launchctl bootout gui/"$UID" /Library/LaunchAgents/org.pqrs.karabiner.karabiner_console_user_server.plist
         launchctl disable gui/"$UID"/org.pqrs.karabiner.karabiner_console_user_server
@@ -41,13 +38,11 @@ case "$1" in
         # Depends on /private/etc/sudoers.d/karabiner-sudoers
         sudo launchctl unload "/Library/LaunchDaemons/org.pqrs.karabiner.karabiner_observer.plist" 2>/dev/null
         sudo launchctl unload "/Library/LaunchDaemons/org.pqrs.karabiner.karabiner_grabber.plist" 2>/dev/null
-        echo "💀 Teardown completed"
         ;;
 	"restart")
-        echo "Restating spacebar, yabai and skhd..."
 		launchctl kickstart -k "gui/${UID}/homebrew.mxcl.spacebar"
-		launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
-		launchctl kickstart -k "gui/${UID}/homebrew.mxcl.skhd"
+        yabai --restart-service
+        skhd --restart-service
 		;;
     *) echo "$USAGE"
 esac
