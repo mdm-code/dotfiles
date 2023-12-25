@@ -7,9 +7,9 @@
 # command above.
 
 brew services start spacebar
-brew services start yabai
+yabai --start-service
 sudo yabai --load-sa
-brew services start skhd
+skhd --start-service
 
 sudo launchctl load \
 	"/Library/LaunchDaemons/org.pqrs.karabiner.karabiner_grabber.plist" \
@@ -29,4 +29,3 @@ launchctl bootstrap \
 
 launchctl enable \
 	gui/"$UID"/org.pqrs.karabiner.karabiner_console_user_server
-
