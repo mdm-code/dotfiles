@@ -15,4 +15,4 @@ export GOPATH="$(go env GOPATH)"
 export GOROOT="$(go env GOROOT)"
 export GOBIN="$GOPATH/bin"
 export GOPROXY="direct"
-export CGO_ENABLED=1
+export CGO_ENABLED=0
