@@ -1,14 +1,11 @@
-typeset -U PATH path
-
 export GOROOT_BIN="/Users/michal/.go/goroot/current/bin"
 export GOPATH_BIN="/Users/michal/.go/gopath/bin"
 
 path=(
-	"$path[@]"
 	"$GOROOT_BIN"
 	"$GOPATH_BIN"
 )
-export PATH
+export PATH="$( IFS=":" ; echo "${path[*]}" ):$PATH"
 
 export GOPRIVATE="gitlab.com/$GITUSER/*,github.com/$GITUSER/*"
 export GOPATH="$(go env GOPATH)"
