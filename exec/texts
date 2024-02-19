@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# Open dir with MSS photos in fzf and open the selected file
-find ~/Documents/_files/_research/monograph/material/transcript -maxdepth 2 -type f -name "*.txt" | fzf | xargs -I {} nvim "{}"
