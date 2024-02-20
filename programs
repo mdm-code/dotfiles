@@ -2,6 +2,7 @@
 --cask keycastr
 --cask vscodium
 --cask waterfox
+bash-completion
 ctags
 efm-langserver
 entr
@@ -9,12 +10,14 @@ fzf
 gh
 git
 git-flow
+goreleaser
 htop
 jq
 kind
 kubectl
 lf
 lynx
+minikube
 neovim
 nvm
 pandoc
