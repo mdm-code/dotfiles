@@ -1,11 +1,7 @@
 --cask alacritty
---cask dmenu-mac
 --cask keycastr
---cask mactex-no-gui
---cask qgis
 --cask vscodium
 --cask waterfox
-bluetutil
 ctags
 efm-langserver
 entr
@@ -18,34 +14,18 @@ jq
 kind
 kubectl
 lf
-lolcat
 lynx
-mpd
-mpv
-ncmpcpp
 neovim
 nvm
 pandoc
 pass
-podman
-podman-compose
 postgresql
-pre-commit
 ripgrep
-sdcv
 shellcheck
-skhd
-spacebar
 stow
-texlab
 the_silver_searcher
 tmux
 tree
-tunnelblickctl
 wget
-yabai --HEAD
 youtube-dl
-youtube-viewer
 yq
-zsh-autosuggestions
-zsh-syntax-highlighting
