@@ -6,11 +6,6 @@
 # service from running on startup, replace `load` with `unload` in the
 # command above.
 
-brew services start spacebar
-yabai --start-service
-sudo yabai --load-sa
-skhd --start-service
-
 sudo launchctl load \
 	"/Library/LaunchDaemons/org.pqrs.karabiner.karabiner_grabber.plist" \
 	2>/dev/null
