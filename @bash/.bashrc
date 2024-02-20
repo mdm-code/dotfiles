@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #    ______  ___   _____ _   _ ______  _____
 #    | ___ \/ _ \ /  ___| | | || ___ \/  __ \
 #    | |_/ / /_\ \\ `--.| |_| || |_/ /| /  \/
@@ -5,6 +7,12 @@
 #    | |_/ / | | |/\__/ / | | || |\ \ | \__/\
 #    \____/\_| |_/\____/\_| |_/\_| \_| \____/
 
+
+# IF NOT RUNNING AN INTERACTIVE SHELL, DON'T DO ANYTHING.
+case $- in
+	*i*) ;;
+	  *) return;;
+esac
 
 
 # ENVIRONMENTAL VARIABLES ================================ #
@@ -44,6 +52,7 @@ shopt -s globstar
 shopt -s dotglob
 shopt -s extglob
 shopt -s histappend
+stty stop undef
 
 
 # PROMPT ================================================= #
@@ -60,14 +69,13 @@ function __ps1 {
 		AT='@' \
 		HOST="$HOST" \
 		DIR="${PWD##*/}" \
-		X="\[\e[0m\]"
 		BRANCH=$(git branch --show-current 2>/dev/null) \
 		P='$'
 
 	[ -n "$DIR" ] || DIR="/"
 	[ -n "$BRANCH" ] && BRANCH="($BRANCH)"
 
-	PS1="$YELLOW$USER$GREEN$AT$BLUE$HOST $MAGENTA$DIR $GREEN$BRANCH$RESET$P$RESET "
+	PS1="$YELLOW$USER$GREEN$AT$BLUE$HOST $MAGENTA$DIR $GREEN$BRANCH$RESET$P "
 }
 
 PROMPT_COMMAND="__ps1"
@@ -110,6 +118,21 @@ alias \
 	gstat='git status'
 
 
+# COMPLETIONS ============================================ #
+
+# OSX doesn't have Bash completions installed by default.
+shopt -q progcomp && [ -r "/usr/local/etc/profile.d/bash_completion.sh" ] && \
+	source "/usr/local/etc/profile.d/bash_completion.sh"
+
+__exists() { type "$1" &>/dev/null; }
+
+__exists gh && source <(gh completion -s bash)
+__exists docker && source <(docker completion bash)
+__exists kind && source <(kind completion bash)
+__exists kubectl && source <(kubectl completion bash 2>/dev/null)
+__exists minikube && source <(docker completion bash)
+
+
 # LYNX =================================================== #
 duck () {
 	lynx -cfg="$XDG_CONFIG_HOME/lynx/lynx.cfg" \
@@ -138,12 +161,4 @@ export NVM_DIR="$HOME/.nvm"
 	[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] \
 	&& \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # Load bash completions
 	nvm "$@"
-}
-
-
-# JOURNAL ================================================ #
-entry () {
-	mkdir -p "$JOURNAL/$(date +%Y/%b/)"
-	touch "$_$(date +%d)"
-	e "$_"
 }
