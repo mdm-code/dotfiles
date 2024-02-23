@@ -2,7 +2,8 @@
 --cask keycastr
 --cask vscodium
 --cask waterfox
-bash-completion
+bash
+bash-completion@2
 ctags
 efm-langserver
 entr
