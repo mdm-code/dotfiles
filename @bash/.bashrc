@@ -130,7 +130,7 @@ __exists gh && source <(gh completion -s bash)
 __exists docker && source <(docker completion bash)
 __exists kind && source <(kind completion bash)
 __exists kubectl && source <(kubectl completion bash 2>/dev/null)
-__exists minikube && source <(docker completion bash)
+__exists minikube && source <(minikube completion bash)
 
 
 # LYNX =================================================== #
