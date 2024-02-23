@@ -155,10 +155,8 @@ lfcd () {
 
 # NVM ==================================================== #
 nvm() {
-export NVM_DIR="$HOME/.nvm"
-	[ -s "/usr/local/opt/nvm/nvm.sh" ] \
-	&& \. "/usr/local/opt/nvm/nvm.sh"  # Load nvm
-	[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] \
-	&& \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # Load bash completions
+	export NVM_DIR="$HOME/.nvm"
+	[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+	[ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
 	nvm "$@"
 }
