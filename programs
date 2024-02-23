@@ -32,3 +32,5 @@ tree
 wget
 youtube-dl
 yq
+pyenv
+pyenv-virtualenv
