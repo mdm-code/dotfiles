@@ -160,3 +160,9 @@ nvm() {
 	[ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
 	nvm "$@"
 }
+
+
+# PYENV ================================================== #
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
