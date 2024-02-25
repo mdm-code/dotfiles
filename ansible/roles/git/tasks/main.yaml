@@ -1,0 +1,4 @@
+- name: Install git on MacOS with Homebrew
+  import_tasks: macos.yaml
+  when: ansible_distribution == "MacOSX"
+  tags: git
