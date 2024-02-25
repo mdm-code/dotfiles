@@ -26,7 +26,6 @@ export USER="${USER:-$(whoami)}"
 export HOST="$(hostname)"
 export GITUSER="mdm-code"
 export TERM=xterm-256color
-export JOURNAL="$HOME/Documents/journal"
 export PYTHONDONTWRITEBYTECODE=2
 
 

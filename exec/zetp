@@ -1,7 +1,7 @@
 #!/bin/sh
 
 editor="${EDITOR:-vi}"
-zettel_dir="${JOURNAL:-$HOME}/zettel"
+zettel_dir="$HOME/zettel"
 fuzzy="fzf"
 usage='USAGE:
 	zet [-h]
