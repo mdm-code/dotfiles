@@ -70,11 +70,12 @@ function __ps1 {
 		HOST="$HOST" \
 		DIR="${PWD##*/}" \
 		BRANCH=$(git branch --show-current 2>/dev/null) \
-		VENV="${VIRTUAL_ENV##*/}"
+		VENV="${VIRTUAL_ENV##*/}" \
 		P='$'
 
 	[ -n "$DIR" ] || DIR="/"
-	[ -n "$BRANCH" ] && BRANCH="($BRANCH)"
+	[ "$(pwd)" = "$HOME" ] && DIR="~"
+	[ -n "$BRANCH" ] && BRANCH="($BRANCH) "
 	[ -n "$VENV" ] && VENV="($VENV) "
 
 	PS1="$VENV$YELLOW$USER$GREEN$AT$BLUE$HOST $MAGENTA$DIR $GREEN$BRANCH$RESET$P "
