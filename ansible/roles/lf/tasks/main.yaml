@@ -8,7 +8,7 @@
   ansible.builtin.file:
     path: "{{ lf_config_dir }}"
     state: directory
-    mode: u+rwx,g-w,o-w
+    mode: u=+rwx,g=+r-wx,o=+r-wx
     recurse: yes
   tags: lf
 
@@ -17,5 +17,5 @@
   ansible.builtin.copy:
     src: "files/lfrc"
     dest: "{{ lf_config_dir }}/lfrc"
-    mode: u+rw,g-wx,o-wx
+    mode: u=+rw-x,g=+r-wx,o=+r-wx
   tags: lf
