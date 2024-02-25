@@ -119,15 +119,6 @@ autocmd FileType python xnoremap <leader>p :w! \| :sp \| :term python3 -i % <CR>
 " Set path to python
 let g:python3_host_prog = "~/.pyenv/versions/neovim/bin/python3"
 
-" Latex
-let g:tex_flavor='latex'
-augroup filetypedetect
-    au BufRead,BufNewFile *.Rnw set filetype=tex  " Latex identify .Rnw files as .tex
-augroup END
-autocmd BufRead,BufNewFile *.tex setlocal textwidth=80  " Latex text folding on 80 characters
-autocmd BufRead,BufNewFile *.tex set makeprg=pdflatex\ %
-autocmd FileType tex map <leader>o :! open $(echo % \| sed 's/tex$/pdf/') & disown <CR>
-
 " Newtrw :Explore key binding
 nnoremap <leader>e :Explore<CR>
 
@@ -226,7 +217,7 @@ let g:gofmt_on_save=1
 	vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
     vim.keymap.set("n", "<leader>gd", function() vim.diagnostic.open_float() end, opts)
   end
-  local servers = {"pyright", "gopls", "texlab", "tsserver"}
+  local servers = {"pyright", "gopls", "tsserver"}
   for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
       capabilities = capabilities,
