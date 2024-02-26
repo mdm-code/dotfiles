@@ -1,6 +1,5 @@
-- name: Install lf with Homebrew
-  become_user: "{{ user }}"
-  community.general.homebrew:
+- name: Install Lf with Homebrew
+  homebrew:
     name:
       - lf
     state: present

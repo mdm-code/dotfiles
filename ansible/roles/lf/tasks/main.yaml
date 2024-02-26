@@ -1,21 +1,20 @@
-- name: Install lf on MacOS with Homebrew
-  import_tasks: macos.yaml
-  when: ansible_distribution == "MacOSX"
+- name: Install Lf
   tags: lf
-
-- name: Ensure lf config directory is present
   become_user: "{{ user }}"
-  ansible.builtin.file:
-    path: "{{ lf_config_dir }}"
-    state: directory
-    mode: u=+rwx,g=+r-wx,o=+r-wx
-    recurse: yes
-  tags: lf
+  block:
+    - name: Install Lf on MacOS with Homebrew
+      import_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
 
-- name: Ensure lf config file is available
-  become_user: "{{ user }}"
-  ansible.builtin.copy:
-    src: "files/lfrc"
-    dest: "{{ lf_config_dir }}/lfrc"
-    mode: u=+rw-x,g=+r-wx,o=+r-wx
-  tags: lf
+    - name: Ensure Lf configuration directory is present
+      file:
+        path: "{{ lf_config_dir }}"
+        state: directory
+        mode: u=+rwx,g=+r-wx,o=+r-wx
+        recurse: yes
+
+    - name: Ensure Lf configuration file is available
+      copy:
+        src: "files/lfrc"
+        dest: "{{ lf_config_dir }}/lfrc"
+        mode: u=+rw-x,g=+r-wx,o=+r-wx
