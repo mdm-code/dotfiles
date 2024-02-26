@@ -27,7 +27,7 @@ ansible hosts -i inventory.yaml -m ping
 Here is how to run it:
 
 ```sh
-ansible-playbook setup.yaml -i inventory.yaml
+ansible-playbook setup.yaml -i inventory.yaml --ask-vault-pass
 ```
 
 It's possible to use `--tags` and `--limit` to narrow down the scope of planned
