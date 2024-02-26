@@ -1,6 +1,5 @@
-- name: Install git with Homebrew
-  become_user: "{{ user }}"
-  community.general.homebrew:
+- name: Install Git with Homebrew
+  homebrew:
     name:
       - git
     state: present
