@@ -36,5 +36,5 @@ changes to apply.
 
 ## Environmental variables used in Ansible setup
 
-- $HOME
-- $USER
+- `$HOME`
+- `$USER`
