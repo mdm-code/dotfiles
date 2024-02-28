@@ -93,7 +93,7 @@ export HISTCONTROL=ignoreboth
 alias \
 	ls='ls -h --color' \
 	vim='nvim' \
-	tmux='tmux -f $HOME/.dotfiles/tmux/tmux.conf' \
+	tmux='tmux -f $HOME/.config/tmux/tmux.conf' \
 	e="$EDITOR" \
 	'?'="duck" \
 	rm='rm -i' \
