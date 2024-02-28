@@ -5,7 +5,6 @@
 
 - `lynx`
 - `bash`
-- `exec` scripts
 
 
 ## Install Ansible
