@@ -1,0 +1,20 @@
+- name: Install Tmux
+  tags: tmux
+  become_user: "{{ user }}"
+  block:
+    - name: Install Tmux on MacOS with Homebrew
+      import_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+
+    - name: Ensure Tmux configuration directory is present
+      file:
+        path: "{{ tmux_config_dir }}"
+        state: directory
+        mode: u=+rwx,g=+r-wx,o=+r-wx
+        recurse: yes
+
+    - name: Ensure Tmux configuration file is available
+      template:
+        src: templates/tmux.j2
+        dest: "{{ tmux_config_file_path }}"
+        mode: u=+rw-x,g=+r-wx,o=+r-wx
