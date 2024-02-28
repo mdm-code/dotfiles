@@ -32,7 +32,6 @@ export PYTHONDONTWRITEBYTECODE=2
 # PATH =================================================== #
 path=(
 	"/usr/local/homebrew"
-	"$HOME/.dotfiles/exec"
 )
 
 export PATH="$( IFS=":" ; echo "${path[*]}" ):$PATH"
