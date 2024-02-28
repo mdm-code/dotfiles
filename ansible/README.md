@@ -1,6 +1,13 @@
 # Ansible
 
 
+# TODO
+
+- `lynx`
+- `bash`
+- `exec` scripts
+
+
 ## Install Ansible
 
 Check the Python interpreter path to verify if the target Ansible interpreter
