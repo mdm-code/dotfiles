@@ -5,6 +5,7 @@
 
 - `lynx`
 - `bash`
+- `zet` -- installation
 
 
 ## Install Ansible
