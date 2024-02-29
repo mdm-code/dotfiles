@@ -27,14 +27,19 @@ bind-key C-t last-window
 bind-key -n C-y send-prefix
 
 # More intuitive splits, same as modern screen
+unbind c
+bind c new-window -c "#{pane_current_path}"
 unbind |
-bind | split-window -h
-bind '\' split-window -h
-bind 'C-\' split-window -h
+bind | split-window -h -c "#{pane_current_path}"
+bind '\' split-window -h -c "#{pane_current_path}"
+unbind %
+bind % split-window -h -c "#{pane_current_path}"
 unbind -
-bind - split-window -v
+bind - split-window -v -c "#{pane_current_path}"
 unbind _
-bind _ split-window -v
+bind _ split-window -v -c "#{pane_current_path}"
+unbind '"'
+bind '"' split-window -v -c "#{pane_current_path}"
 
 # form vim/tmux d/y buffer sync
 set -g focus-events on
