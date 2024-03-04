@@ -1,0 +1,16 @@
+- name: Setup Go programming language
+  tags: go
+  become_user: "{{ user }}"
+  block:
+    - name: Ensure Go configuration directory is present
+      file:
+        path: "{{ go_config_dir }}"
+        state: directory
+        mode: u=+rwx,g=+r-wx,o=+r-wx
+        recurse: yes
+
+    - name: Ensure Go file with environmental variables is available
+      template:
+        src: templates/goenv.j2
+        dest: "{{ go_env_file_path }}"
+        mode: u=+rwx,g=+r-wx,o=+r-wx

@@ -1,0 +1,4 @@
+user: "$USER"
+home: "$HOME"
+go_config_dir: "{{ home }}/.config/go"
+go_env_file_path: "{{ go_config_dir }}/goenv"
