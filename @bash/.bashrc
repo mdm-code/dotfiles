@@ -36,7 +36,7 @@ path=(
 
 export PATH="$( IFS=":" ; echo "${path[*]}" ):$PATH"
 
-source "${XDG_CONFIG_HOME:-$HOME/.config}/shell.d/.goenv"
+source "${XDG_CONFIG_HOME:-$HOME/.config}/go/goenv"
 source "${XDG_CONFIG_HOME:-$HOME/.config}/shell.d/.rustenv"
 
 export CDPATH=".:$HOME:$HOME/Documents"
