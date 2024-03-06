@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+set -x
 
 #  _____                    _
 # |  __ \                  | |
@@ -14,54 +15,56 @@ set -e
 # changing the `current` symlink.
 
 
-DEFAULT_VER="{{ go_version }}"
-VERSION="${1:-$DEFAULT_VER}"
-DEFAULT_DIR="{{ go_default_dir }}"
-TARGET_DIR="${2:-$DEFAULT_DIR}"
-OS="$(uname -s)"
-ARCH="$(uname -m)"
+default_ver="{{ go_version }}"
+version="${1:-$default_ver}"
+default_dir="{{ go_default_dir }}"
+target_dir="${2:-$default_dir}"
+os="$(uname -s)"
+arch="$(uname -m)"
 
-case $OS in
+case $os in
 	"Darwin")
-		PLATFORM="darwin-amd64"
+		platform="darwin-amd64"
 	;;
 	"Linux")
-		case $ARCH in
+		case $arch in
 		"x86_64")
-			ARCH=amd64
+			arch=amd64
 			;;
 		"aarch64")
-			ARCH=arm64
+			arch=arm64
 			;;
 		"armv6" | "armv7l")
-			ARCH=armv6l
+			arch=armv6l
 			;;
 		"armv8")
-			ARCH=arm64
+			arch=arm64
 			;;
 		.*386.*)
-			ARCH=386
+			arch=386
 			;;
 			esac
-        PLATFORM="linux-$ARCH"
+        platform="linux-$arch"
 esac
 
-[ -z "$PLATFORM" ] && echo "Platform unsupported: $OS $ARCH" && exit 1
+[ -z "$platform" ] && echo "Platform unsupported: $os $arch" && exit 1
 
-PKG="go$VERSION.$PLATFORM.tar.gz"
-TMPDIR="$(mktemp -d)"
-TARBALL="$TMPDIR/go.tar.gz"
-curl -o "$TARBALL" "https://storage.googleapis.com/golang/$PKG"
+pkg="go$version.$platform.tar.gz"
+tmpdir="$(mktemp -d)"
+tarball="$tmpdir/go.tar.gz"
+curl -o "$tarball" "https://storage.googleapis.com/golang/$pkg"
 
-[ $? -ne 0 ] && echo "Failed to download: $PKG" && exit 1
+[ $? -ne 0 ] && echo "Failed to download: $pkg" && exit 1
 
-GOROOT="$TARGET_DIR/goroot"
-GOPATH="$TARGET_DIR/gopath"
+goroot="$target_dir/goroot"
+gopath="$target_dir/gopath"
 
-[ ! -d "$GOROOT/$VERSION" ] && \
-	mkdir -p "$GOROOT/$VERSION" && \
-	tar -C "$GOROOT/go" --strip-components=1 -xzf "$TARBALL"
+version_dir="$goroot/$version"
 
-ln -sfn "$GOROOT/$VERSION" "$GOROOT/current"
-mkdir -p "${GOPATH}/"{src,pkg,bin}
-rm -f "$TARBALL"
+[ ! -d "$version_dir" ] && \
+	mkdir -p "$version_dir" && \
+	tar -C "$version_dir" --strip-components=1 -xzf "$tarball"
+
+ln -sfn "$version_dir" "$goroot/current"
+mkdir -p "${gopath}/"{src,pkg,bin}
+rm -f "$tarball"
