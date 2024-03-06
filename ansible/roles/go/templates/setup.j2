@@ -58,9 +58,10 @@ curl -o "$TARBALL" "https://storage.googleapis.com/golang/$PKG"
 GOROOT="$TARGET_DIR/goroot"
 GOPATH="$TARGET_DIR/gopath"
 
-mkdir -p "$GOROOT/go"
-tar -C "$GOROOT/go" --strip-components=1 -xzf "$TARBALL"
-mv "$GOROOT/go" "$GOROOT/$VERSION"
+[ ! -d "$GOROOT/$VERSION" ] && \
+	mkdir -p "$GOROOT/$VERSION" && \
+	tar -C "$GOROOT/go" --strip-components=1 -xzf "$TARBALL"
+
 ln -sfn "$GOROOT/$VERSION" "$GOROOT/current"
 mkdir -p "${GOPATH}/"{src,pkg,bin}
 rm -f "$TARBALL"
