@@ -1,0 +1,25 @@
+---
+- name: Ensure Nvm installation temporary directory exists
+  tempfile:
+    state: directory
+    suffix: nvm
+  register: nvm_installation_temp_dir
+
+- name: Download Nvm installation script
+  get_url:
+    dest: "{{ nvm_installation_temp_dir }}"
+    url: "https://raw.githubusercontent.com/{{ nvm_repository_name }}/{{ nvm_latest_version }}/install.sh"
+    mode: u=+rwx,g=+r-wx,o=+r-wx
+
+- name: Run Nvm installation script
+  command: "bash {{ nvm_installation_temp_dir }}/install.sh"
+  args:
+    chdir: "{{ nvm_installation_temp_dir }}"
+  changed_when: true
+
+- name: Delete Nvm installation temporary directory
+  file:
+    path: "{{ nvm_installation_temp_dir }}"
+    state: absent
+  when: nvm_installation_temp_dir is defined
+

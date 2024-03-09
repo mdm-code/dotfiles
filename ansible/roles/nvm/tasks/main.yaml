@@ -1,0 +1,36 @@
+---
+
+- name: Install Nvm
+  tags: nvm
+  become_user: "{{ user }}"
+  block:
+    - name: Check if Nvm default directory already exists
+      stat:
+        path: "{{ nvm_default_dir }}"
+      register: nvm_default_dir_stats
+      changed_when: false
+
+    - name: Register the installed Nvm revision with Git
+      shell: "git rev-list --tags --max-count=1"
+      args:
+        chdir: "{{ nvm_default_dir }}"
+      register: nvm_revision
+      when: nvm_default_dir_stats.stat.exists
+      changed_when: false
+
+    - name: Register the installed Nvm version with Git
+      shell: "git describe --tags {{ nvm_revision.stdout }}"
+      args:
+        chdir: "{{ nvm_default_dir }}"
+      register: nvm_installed_version
+      when: nvm_default_dir_stats.stat.exists
+      changed_when: false
+
+    - name: Check if the latest Nvm version is running
+      set_fact:
+        nvm_version_match: "{{ nvm_installed_version.stdout == nvm_latest_version }}"
+      when: nvm_default_dir_stats.stat.exists
+
+    - name: Install Nvm with with the shell script
+      include_tasks: install.yml
+      when: not nvm_default_dir_stats.stat.exists or not nvm_version_match

@@ -1,0 +1,5 @@
+user: "$USER"
+home: "$HOME"
+nvm_default_dir: "{{ home }}/.nvm"
+nvm_repository_name: "nvm-sh/nvm"
+nvm_latest_version: "v0.39.7"
