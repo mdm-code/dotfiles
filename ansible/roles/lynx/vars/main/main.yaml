@@ -1,0 +1,6 @@
+user: "$USER"
+home: "$HOME"
+lynx_config_dir: "{{ home }}/.config/lynx"
+lynx_config_files:
+  - "lynx.cfg"
+  - "lynx.lss"
