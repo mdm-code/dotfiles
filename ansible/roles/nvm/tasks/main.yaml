@@ -32,5 +32,5 @@
       when: nvm_default_dir_stats.stat.exists
 
     - name: Install Nvm with with the shell script
-      include_tasks: install.yml
+      include_tasks: install.yaml
       when: not nvm_default_dir_stats.stat.exists or not nvm_version_match
