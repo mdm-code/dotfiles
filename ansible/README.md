@@ -3,9 +3,10 @@
 
 # TODO
 
-- `lynx`
 - `bash`
 - `zet` -- installation
+- `neovim`
+- other programs from the list
 
 
 ## Install Ansible
