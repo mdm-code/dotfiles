@@ -1,0 +1,9 @@
+---
+- hosts: hosts
+  roles:
+    - git
+    - lf
+    - tmux
+    - exec
+    - go
+    - nvm

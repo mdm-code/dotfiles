@@ -1,0 +1,70 @@
+#!/bin/bash
+set -e
+set -x
+
+#  _____                    _
+# |  __ \                  | |
+# | |  \/ ___      ___  ___| |_ _   _ _ __
+# | | __ / _ \    / __|/ _ \ __| | | | '_ \
+# | |_\ \ (_) |   \__ \  __/ |_| |_| | |_) |
+#  \____/\___/    |___/\___|\__|\__,_| .__/
+#                                    | |
+#                                    |_|
+#
+# This script lets you add multiple versions of Go and switch between them by
+# changing the `current` symlink.
+
+
+default_ver="{{ go_version }}"
+version="${1:-$default_ver}"
+default_dir="{{ go_default_dir }}"
+target_dir="${2:-$default_dir}"
+os="$(uname -s)"
+arch="$(uname -m)"
+
+case $os in
+	"Darwin")
+		platform="darwin-amd64"
+	;;
+	"Linux")
+		case $arch in
+		"x86_64")
+			arch=amd64
+			;;
+		"aarch64")
+			arch=arm64
+			;;
+		"armv6" | "armv7l")
+			arch=armv6l
+			;;
+		"armv8")
+			arch=arm64
+			;;
+		.*386.*)
+			arch=386
+			;;
+			esac
+        platform="linux-$arch"
+esac
+
+[ -z "$platform" ] && echo "Platform unsupported: $os $arch" && exit 1
+
+pkg="go$version.$platform.tar.gz"
+tmpdir="$(mktemp -d)"
+tarball="$tmpdir/go.tar.gz"
+curl -o "$tarball" "https://storage.googleapis.com/golang/$pkg"
+
+[ $? -ne 0 ] && echo "Failed to download: $pkg" && exit 1
+
+goroot="$target_dir/goroot"
+gopath="$target_dir/gopath"
+
+version_dir="$goroot/$version"
+
+[ ! -d "$version_dir" ] && \
+	mkdir -p "$version_dir" && \
+	tar -C "$version_dir" --strip-components=1 -xzf "$tarball"
+
+ln -sfn "$version_dir" "$goroot/current"
+mkdir -p "${gopath}/"{src,pkg,bin}
+rm -f "$tarball"

@@ -1,0 +1,3 @@
+user: "$USER"
+home: "$HOME"
+lf_config_dir: "{{ home }}/.config/lf"

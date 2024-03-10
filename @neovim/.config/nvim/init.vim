@@ -89,7 +89,6 @@ set cursorcolumn
 set backupcopy=yes
 set clipboard=unnamed
 set updatetime=50
-set termguicolors
 set smartindent
 set completeopt=menuone,noinsert,noselect
 colorscheme gruvbox

@@ -19,7 +19,6 @@ esac
 export LC_ALL=en_US.UTF-8
 export EDITOR="nvim"
 export PAGER="less"
-export DOTFILES="$HOME/.dotfiles"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export USER="${USER:-$(whoami)}"
@@ -32,12 +31,11 @@ export PYTHONDONTWRITEBYTECODE=2
 # PATH =================================================== #
 path=(
 	"/usr/local/homebrew"
-	"$HOME/.dotfiles/exec"
 )
 
 export PATH="$( IFS=":" ; echo "${path[*]}" ):$PATH"
 
-source "${XDG_CONFIG_HOME:-$HOME/.config}/shell.d/.goenv"
+source "${XDG_CONFIG_HOME:-$HOME/.config}/go/goenv"
 source "${XDG_CONFIG_HOME:-$HOME/.config}/shell.d/.rustenv"
 
 export CDPATH=".:$HOME:$HOME/Documents"
@@ -93,7 +91,7 @@ export HISTCONTROL=ignoreboth
 alias \
 	ls='ls -h --color' \
 	vim='nvim' \
-	tmux='tmux -f $HOME/.dotfiles/tmux/tmux.conf' \
+	tmux='tmux -f $HOME/.config/tmux/tmux.conf' \
 	e="$EDITOR" \
 	'?'="duck" \
 	rm='rm -i' \
@@ -157,9 +155,9 @@ lfcd () {
 
 # NVM ==================================================== #
 nvm() {
-	export NVM_DIR="$HOME/.nvm"
-	[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
-	[ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
+	export NVM_DIR="$HOME/.config/nvm"
+	[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+	[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 	nvm "$@"
 }
 

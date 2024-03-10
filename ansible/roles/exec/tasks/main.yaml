@@ -1,0 +1,10 @@
+- name: Include custom shell executables
+  tags: exec
+  become_user: "{{ user }}"
+  block:
+    - name: Copy custom executables to the target bin directory
+      copy:
+        src: "{{ item }}"
+        dest: "{{ dest_dir }}"
+        mode: u=+rwx,g=+rx-w,o=+rx-w
+      loop: "{{ query('fileglob', 'files/*') }}"

@@ -1,0 +1,13 @@
+- name: Install Git
+  tags: git
+  become_user: "{{ user }}"
+  block:
+    - name: Install Git on MacOS with Homebrew
+      import_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+
+    - name: Ensure Git configuration file is available
+      template:
+        src: templates/gitconfig.j2
+        dest: "{{ git_config_dir }}/.gitconfig"
+        mode: u=+rw-x,g=+r-wx,o=+r-wx

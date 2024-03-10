@@ -1,0 +1,5 @@
+- name: Install Lf with Homebrew
+  homebrew:
+    name:
+      - lf
+    state: present
