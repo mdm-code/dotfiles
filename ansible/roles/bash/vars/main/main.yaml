@@ -1,0 +1,5 @@
+user: "$USER"
+home: "$HOME"
+bash_default_dir: "{{ home }}"
+bash_paths:
+  - "/usr/local/homebrew"
