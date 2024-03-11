@@ -1,0 +1,23 @@
+---
+
+- name: Install Bash
+  tags: bash
+  become_user: "{{ user }}"
+  block:
+    - name: Install recent Bash version on MacOS
+      include_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+
+    - name: Ensure Bash configuration file is present
+      template:
+        src: templates/bashrc.j2
+        dest: "{{ bash_default_dir }}/.bashrc"
+        mode: u=+rwx,g=+r-wx,o=+r-wx
+      changed_when: false
+
+    - name: Ensure Bash profile file is present
+      copy:
+        src: files/profile
+        dest: "{{ bash_default_dir }}/.profile"
+        mode: u=+rwx,g=+r-wx,o=+r-wx
+      changed_when: false
