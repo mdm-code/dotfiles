@@ -3,7 +3,7 @@
 
 # TODO
 
-- `bash`
+- `pyenv`
 - `zet` -- installation
 - `neovim`
 - other programs from the list
