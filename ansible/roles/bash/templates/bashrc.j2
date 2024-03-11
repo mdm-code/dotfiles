@@ -32,7 +32,7 @@ export PYTHONDONTWRITEBYTECODE=2
 path=(
 {% if bash_paths is defined %}
 {% for path in bash_paths %}
-	{{ path }}
+	"{{ path }}"
 {% endfor %}
 {% endif %}
 )
