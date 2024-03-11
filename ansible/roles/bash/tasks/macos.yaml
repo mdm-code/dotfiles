@@ -1,0 +1,13 @@
+---
+
+- name: Install recent Bash with Homebrew
+  homebrew:
+    name:
+      - bash
+    state: present
+
+- name: Install Bash Completion 2 with Homebrew
+  homebrew:
+    name:
+      - bash-completion@2
+    state: present
