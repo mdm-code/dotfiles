@@ -1,0 +1,15 @@
+---
+
+- name: Install Pyenv
+  tags: pyenv
+  become_user: "{{ user }}"
+  block:
+    - name: Install Pyenv on MacOS with Homebrew
+      import_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+
+    - name: Make sure Pyenv root directory exists
+      file:
+        path: "{{ pyenv_root_dir }}"
+        state: directory
+        mode: u=+rwx,g=+r-wx,o=+r-wx

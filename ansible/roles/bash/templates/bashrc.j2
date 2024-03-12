@@ -124,11 +124,12 @@ alias \
 
 
 # COMPLETIONS ============================================ #
-
+{% if ansible_distribution == "MacOSX" %}
 # OSX doesn't have Bash completions installed by default.
 shopt -q progcomp && [ -r "/usr/local/etc/profile.d/bash_completion.sh" ] && \
 	source "/usr/local/etc/profile.d/bash_completion.sh"
 
+{% endif %}
 __exists() { type "$1" &>/dev/null; }
 
 __exists gh && source <(gh completion -s bash)
@@ -165,6 +166,7 @@ nvm() {
 	[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 	nvm "$@"
 }
+{% if pyenv_exists.rc == 0 %}
 
 
 # PYENV ================================================== #
@@ -172,3 +174,4 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+{% endif %}
