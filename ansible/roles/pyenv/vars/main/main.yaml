@@ -1,0 +1,3 @@
+user: "$USER"
+home: "$HOME"
+pyenv_root_dir: "{{ home }}/.pyenv"
