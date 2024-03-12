@@ -8,6 +8,10 @@
       include_tasks: macos.yaml
       when: ansible_distribution == "MacOSX"
 
+    - name: Check if Pyenv is installed
+      shell: "command -v pyenv"
+      register: pyenv_exists
+
     - name: Ensure Bash configuration file is present
       template:
         src: templates/bashrc.j2
