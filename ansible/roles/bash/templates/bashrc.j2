@@ -124,11 +124,12 @@ alias \
 
 
 # COMPLETIONS ============================================ #
-
+{% if ansible_distribution == "MacOSX" %}
 # OSX doesn't have Bash completions installed by default.
 shopt -q progcomp && [ -r "/usr/local/etc/profile.d/bash_completion.sh" ] && \
 	source "/usr/local/etc/profile.d/bash_completion.sh"
 
+{% endif %}
 __exists() { type "$1" &>/dev/null; }
 
 __exists gh && source <(gh completion -s bash)
