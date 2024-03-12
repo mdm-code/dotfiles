@@ -17,11 +17,9 @@
         src: templates/bashrc.j2
         dest: "{{ bash_default_dir }}/.bashrc"
         mode: u=+rwx,g=+r-wx,o=+r-wx
-      changed_when: false
 
     - name: Ensure Bash profile file is present
       copy:
         src: files/profile
         dest: "{{ bash_default_dir }}/.profile"
         mode: u=+rwx,g=+r-wx,o=+r-wx
-      changed_when: false
