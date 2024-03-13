@@ -1,7 +1,0 @@
-export RUST_BIN="/Users/michal/.cargo/bin"
-
-path=(
-	"$RUST_BIN"
-)
-
-export PATH="$( IFS=":" ; echo "${path[*]}" ):$PATH"
