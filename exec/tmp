@@ -1,7 +1,0 @@
-#!/bin/sh
-
-# This script has to be sourced to affect
-# the current login shell like so:
-# " . cdtmp "
-
-cd "$(mktemp -d)" || exit
