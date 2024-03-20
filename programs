@@ -1,26 +1,16 @@
---cask alacritty
---cask keycastr
---cask vscodium
 --cask waterfox
-bash
-bash-completion@2
 ctags
 efm-langserver
 entr
 fzf
 gh
-git
-git-flow
 goreleaser
 htop
 jq
 kind
 kubectl
-lf
-lynx
 minikube
 neovim
-nvm
 pandoc
 pass
 postgresql
@@ -28,10 +18,7 @@ ripgrep
 shellcheck
 stow
 the_silver_searcher
-tmux
 tree
 wget
 youtube-dl
 yq
-pyenv
-pyenv-virtualenv
