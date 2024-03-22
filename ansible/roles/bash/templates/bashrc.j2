@@ -132,11 +132,12 @@ shopt -q progcomp && [ -r "/usr/local/etc/profile.d/bash_completion.sh" ] && \
 {% endif %}
 __exists() { type "$1" &>/dev/null; }
 
-__exists gh && source <(gh completion -s bash)
-__exists docker && source <(docker completion bash)
+# NOTE: Uncomment if the completions below are not included in Bash completions.
 __exists kind && source <(kind completion bash)
-__exists kubectl && source <(kubectl completion bash 2>/dev/null)
-__exists minikube && source <(minikube completion bash)
+# __exists gh && source <(gh completion -s bash)
+# __exists docker && source <(docker completion bash)
+# __exists kubectl && source <(kubectl completion bash 2>/dev/null)
+# __exists minikube && source <(minikube completion bash)
 
 
 # LYNX =================================================== #
