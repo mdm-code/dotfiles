@@ -2,3 +2,4 @@ user: "$USER"
 home: "$HOME"
 git_config_dir: "{{ home }}"
 default_branch: main
+git_rerere_enabled: true
