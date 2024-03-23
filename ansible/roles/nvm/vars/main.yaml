@@ -5,3 +5,5 @@ nvm_repository_name: "nvm-sh/nvm"
 nvm_latest_version: "v0.39.7"
 # sha256sum install.sh to update the checksum
 nvm_install_script_sha256_checksum: "sha256:8e45fa547f428e9196a5613efad3bfa4d4608b74ca870f930090598f5af5f643"
+nvm_node_versions:
+  - "--lts"
