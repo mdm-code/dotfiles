@@ -5,6 +5,7 @@
 
 - `zet` -- installation
 - `neovim`
+- `node` -- install a default node version in the nvm role
 - other programs from the list
 
 
