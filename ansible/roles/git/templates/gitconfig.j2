@@ -5,3 +5,7 @@
 	ui = auto
 [init]
 	defaultBranch = {{ default_branch }}
+{% if git_rerere_enabled %}
+[rerere]
+	enabled = true
+{% endif %}
