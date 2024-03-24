@@ -1,5 +1,4 @@
 ---
-
 - hosts: hosts
   roles:
     - git
@@ -11,3 +10,5 @@
     - lynx
     - pyenv
     - bash
+    - neovim
+...
