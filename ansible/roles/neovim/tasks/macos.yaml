@@ -1,0 +1,7 @@
+---
+- name: Install Novim with Homebrew
+  homebrew:
+    name:
+      - neovim
+    state: present
+...
