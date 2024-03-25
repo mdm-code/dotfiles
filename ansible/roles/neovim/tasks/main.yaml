@@ -1,0 +1,62 @@
+---
+- name: Install Neovim
+  tags: neovim
+  become_user: "{{ user }}"
+  block:
+    - name: Install Neovim on MacOS with Homebrew
+      import_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+
+    - name: Confirm that Git available
+      command: git version
+      register: git_exists
+      check_mode: false
+      changed_when: false
+      failed_when: git_exists.rc != 0
+
+    - name: Ensure Pyenv is available
+      command: pyenv version
+      register: pyenv_exists
+      check_mode: false
+      changed_when: false
+      failed_when: pyenv_exists.rc != 0
+
+    - name: Ensure dedicated Python virtual environment is created with Pyenv
+      command: pyenv virtualenv neovim
+      check_mode: false
+      changed_when: false
+
+    - name: >-
+        Register the path to the Python interpreter from the virtual environment
+        created with Pyenv
+      command: echo $(pyenv root)/neovim/bin/python3
+      register: pyenv_python_executable
+      check_mode: false
+      changed_when: false
+
+    - name: >-
+        Make sure that pynvim Python package is installed in the provided
+        virtual environment
+      command: "{{ pyenv_python_executable }} -m pip install pynvim"
+      register: pynvim_install_result
+      check_mode: false
+      changed_when: false
+      failed_when: pynvim_install_result.rc != 0
+
+    - name: Confirm that Node is available
+
+    - name: Ensure Neovim configuration directory is present
+
+    - name: Ensure Neovim configuration file is available
+
+    - name: Make sure the plugin directory is present
+
+    - name: Install Neovim plugins
+
+    - name: Install required LSP servers
+
+    - name: Make sure Ripgrep is installed
+
+    - name: Make sure Fd is installed
+
+...
