@@ -6,6 +6,7 @@ This is a set of notes on how to install Neovim with Ansible.
     - Can be recorded as an Ansible fact to be reused later in the Jinja template
     - install pynvim in the virtual environment
 3. Run Neovim in a headless mode to install required plugins
+    -  nvim --headless +PlugInstall +qa
 4. Consider whether to install Neovim with brew (macos only) or build it from source
 5. The second option is more portable
 6. Plugins can be declared as Ansible variables and added to init.vim with Jinja template
