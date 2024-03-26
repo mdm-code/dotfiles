@@ -1,6 +1,5 @@
 ---
-
-- hosts: hosts
+- hosts: localservers
   roles:
     - git
     - lf
@@ -11,3 +10,4 @@
     - lynx
     - pyenv
     - bash
+...
