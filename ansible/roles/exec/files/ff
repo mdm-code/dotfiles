@@ -1,0 +1,3 @@
+#!/bin/sh
+
+"${EDITOR:-vim}" -O $(fzf $@)
