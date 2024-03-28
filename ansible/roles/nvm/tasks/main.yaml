@@ -37,3 +37,7 @@
 
     - name: Install declared Node versions with Nvm
       include_tasks: install_versions.yaml
+
+    - name: Set alias for the Node default version to LTS in Nvm
+      shell: "bash -ilc 'nvm alias default lts/*'"
+      when: nvm_default_dir_stats.stat.exists
