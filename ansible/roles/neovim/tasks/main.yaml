@@ -86,7 +86,12 @@
       changed_when: false
       failed_when: vim_plug_install_result.rc != 0
 
-    # - name: Install Neovim plugins
+    - name: Install Neovim plugins
+      command: nvim --headless +PlugInstall +qall
+      register: nvim_plugins_install_result
+      check_mode: false
+      changed_when: false
+      failed_when: nvim_plugins_install_result.rc != 0
 
     # - name: Install required LSP servers
 
