@@ -9,7 +9,7 @@
 
 call plug#begin('~/.config/nvim/plugged')
 " Github Copilot
-+Plug 'github/copilot.vim'
+Plug 'github/copilot.vim'
 
 " Swapping words, lines, longer parts of text
 Plug 'tommcdo/vim-exchange'
