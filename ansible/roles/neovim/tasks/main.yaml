@@ -100,7 +100,12 @@
       changed_when: false
       failed_when: rg_exists.rc != 0
 
-    # - name: Make sure Ripgrep is installed
+    - name: Make sure Fd is installed
+      command: fd --version
+      register: fd_exists
+      check_mode: false
+      changed_when: false
+      failed_when: fd_exists.rc != 0
 
     # - name: Install required LSP servers
 ...
