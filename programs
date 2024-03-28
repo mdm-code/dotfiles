@@ -1,4 +1,4 @@
---cask waterfox
+node # node has to be installed to satisfy neovim
 ctags
 entr
 fzf
