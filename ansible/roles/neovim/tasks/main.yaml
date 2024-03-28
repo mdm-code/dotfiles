@@ -93,9 +93,14 @@
       changed_when: false
       failed_when: nvim_plugins_install_result.rc != 0
 
-    # - name: Install required LSP servers
+    - name: Make sure Ripgrep is installed
+      command: rg --version
+      register: rg_exists
+      check_mode: false
+      changed_when: false
+      failed_when: rg_exists.rc != 0
 
     # - name: Make sure Ripgrep is installed
 
-    # - name: Make sure Fd is installed
+    # - name: Install required LSP servers
 ...
