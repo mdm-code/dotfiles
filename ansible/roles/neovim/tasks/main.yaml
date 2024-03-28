@@ -51,18 +51,8 @@
       changed_when: false
       failed_when: pynvim_install_result.rc != 0
 
-    # - name: Use the LTS version of Node.js with Nvm
-    #   command: source {{ home }}/.bashrc && nvm use --lts
-    #   register: nvm_use_cmd_result
-    #   check_mode: false
-    #   changed_when: false
-    #   failed_when: nvm_use_cmd_result.rc != 0
-
     - name: Confirm that Node is available
-      shell: >-
-        bash -ilc 'source {{home }}/.bashrc &&
-        nvm use --lts &&
-        node --version'
+      command: node --version
       register: node_exists
       check_mode: false
       changed_when: false
@@ -81,5 +71,4 @@
     # - name: Make sure Ripgrep is installed
 
     # - name: Make sure Fd is installed
-
 ...
