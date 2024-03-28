@@ -114,5 +114,19 @@
       changed_when: false
       failed_when: fd_exists.rc != 0
 
+    - name: Ensure that Tree-sitter is installed
+      command: tree-sitter --version
+      register: tree_sitter_exists
+      check_mode: false
+      changed_when: false
+      failed_when: tree_sitter_exists.rc != 0
+
+    - name: Make sure that Neovim Tree-sitter is installed and updated
+      command: nvim --headless +TSInstallSync all +qa
+      register: tree_sitter_install_result
+      check_mode: false
+      changed_when: false
+      failed_when: tree_sitter_install_result.rc != 0
+
     # - name: Install required LSP servers
 ...
