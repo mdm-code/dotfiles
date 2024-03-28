@@ -60,25 +60,25 @@
 
     - name: Ensure that Neovim configuration directory is present
       file:
-        path: "{{ home }}/.config/nvim"
+        path: "{{ neovim_config_dir }}"
         state: directory
         mode: u=+rwx,g=+r-wx,o=+r-wx
 
     - name: Ensure Neovim configuration file is available
       template:
         src: templates/init.vim.j2
-        dest: "{{ home }}/.config/nvim/init.vim"
+        dest: "{{ neovim_config_dir }}/init.vim"
         mode: u=+rwx,g=+r-wx,o=+r-wx
 
     - name: Make sure the plugin directory is present
       file:
-        path: "{{ home }}/.config/nvim/plugged"
+        path: "{{ neovim_config_dir }}/plugged"
         state: directory
         mode: u=+rwx,g=+r-wx,o=+r-wx
 
     - name: Install Vim Plug plugin manager for Neovim
       command: >-
-        curl -fLo "{{ home }}/.config/nvim/autoload/plug.vim"
+        curl -fLo "{{ neovim_config_dir }}/autoload/plug.vim"
         --create-dirs
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
       register: vim_plug_install_result
