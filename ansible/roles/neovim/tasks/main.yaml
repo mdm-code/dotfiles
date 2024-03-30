@@ -58,6 +58,13 @@
       changed_when: false
       failed_when: node_exists.rc != 0
 
+    - name: Confirm that Npm is available
+      command: npm --version
+      register: npm_exists
+      check_mode: false
+      changed_when: false
+      failed_when: npm_exists.rc != 0
+
     - name: Ensure that Neovim configuration directory is present
       file:
         path: "{{ neovim_config_dir }}"
@@ -141,4 +148,11 @@
       check_mode: false
       changed_when: false
       failed_when: gopls_install_result.rc != 0
+
+    - name: Install Typescript language server
+      command: npm install -g typescript typescript-language-server
+      register: typescript_ls_install_result
+      check_mode: false
+      changed_when: false
+      failed_when: typescript_ls_install_result.rc != 0
 ...
