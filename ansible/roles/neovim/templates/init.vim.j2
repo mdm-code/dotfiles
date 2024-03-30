@@ -8,59 +8,10 @@
 
 
 call plug#begin('~/.config/nvim/plugged')
-" Github Copilot
-Plug 'github/copilot.vim'
-
-" Swapping words, lines, longer parts of text
-Plug 'tommcdo/vim-exchange'
-
-" Go coding
-Plug 'tweekmonster/gofmt.vim' " Format code on save
-Plug 'mattn/vim-goimports' " Manage imports on save
-Plug 'sebdah/vim-delve' " Deleve Go debugger
-
-" Snippets (Engine)
-Plug 'SirVer/ultisnips' " The actual collection of snippets
-Plug 'honza/vim-snippets'
-Plug 'quangnguyen30192/cmp-nvim-ultisnips'
-
-" Code completion
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-
-" Align text on symbol, e.g., '='
-Plug 'junegunn/vim-easy-align' " Select text, type ga and then the delimiter
-
-" Vim sorround cs'" | ds" | ysiw"
-Plug 'tpope/vim-surround'
-
-" Comment out line with gcc / selection or motion with gc
-Plug 'tpope/vim-commentary'
-
-" Tagbar - menu bar with ctags
-Plug 'majutsushi/tagbar'
-
-" Multiple cursors
-Plug 'terryma/vim-multiple-cursors'
-
-" Quick line navigation for f/F
-Plug 'unblevable/quick-scope'
-
-" Treesitter
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'nvim-treesitter/nvim-treesitter-context'
-
-" Telescope
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-
 " Colors and color schemes
-Plug 'ryanoasis/vim-devicons'
-Plug 'morhetz/gruvbox'
+{% for plugin in neovim_plugins %}
+Plug '{{ plugin.name }}' {% if plugin.comment %} " {{ plugin.comment }} {% endif %}
+{% endfor %}
 call plug#end()
 
 " Basic configuration
@@ -94,6 +45,7 @@ set clipboard=unnamed
 set updatetime=50
 set smartindent
 set completeopt=menuone,noinsert,noselect
+set shortmess+=c
 colorscheme gruvbox
 
 " Set leader to comma
@@ -118,8 +70,10 @@ autocmd Filetype python,go setlocal colorcolumn=80  " Add a column showing 80 li
 " Enters interactive mode
 autocmd FileType python xnoremap <leader>p :w! \| :sp \| :term python3 -i % <CR>
 
-" Set path to python
-let g:python3_host_prog = "~/.pyenv/versions/neovim/bin/python3"
+{% if pyenv_neovim_env_exec %}
+" Set path to the Python executable
+let g:python3_host_prog = {{ pyenv_neovim_env_exec }}
+{% endif %}
 
 " Newtrw :Explore key binding
 nnoremap <leader>e :Explore<CR>
@@ -227,22 +181,6 @@ let g:gofmt_on_save=1
     }
 end
 
--- This is gsnip-based completion running on efm-langserver
-lspconfig['efm'].setup({
-  on_attach = on_attach,
-  init_options = { completion = true },
-  settings = {
-    languages = {
-      ["="] = {
-        {
-          completionCommand = "gsnip list | grep -v '^$' |  cut -f1 -d$\'\t\' | sort -u",
-          completionStdin = true
-        },
-      },
-    },
-  },
-})
-
 -- Treesitter and Treesitter-context configuration
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "all",
@@ -282,16 +220,7 @@ end
 ContextSetup(true)
 EOF
 
-" Gsnip lsp completion expand trigger
-" Press @w to change the placeholder under the cursor
-" Press n/N to move forward and backward between placeholders
-inoremap <c-x>g <esc>!!gsnip find<CR>:let @w='cf}'<CR>/\${[0-9]\+:\w*}<CR>
-
-
 " Telescope commands
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
- " Avoid showing message extra message when using completion
- set shortmess+=c
