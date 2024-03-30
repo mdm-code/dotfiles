@@ -7,28 +7,28 @@
       import_tasks: macos.yaml
       when: ansible_distribution == "MacOSX"
 
-    - name: Confirm that Git available
+    - name: Confirm that Git is available
       command: git version
       register: git_exists
       check_mode: false
       changed_when: false
       failed_when: git_exists.rc != 0
 
-    - name: Ensure Pyenv is available
+    - name: Ensure that Pyenv is available
       command: pyenv version
       register: pyenv_exists
       check_mode: false
       changed_when: false
       failed_when: pyenv_exists.rc != 0
 
-    - name: Ensure dedicated Python virtual environment is created with Pyenv
+    - name: Ensure the dedicated Python virtual environment is created with Pyenv
       command: pyenv virtualenv neovim
       check_mode: false
       changed_when: false
       ignore_errors: true
       when: pyenv_exists.rc == 0
 
-    - name: Register the path to the Pyenv rot directory
+    - name: Register the path to the Pyenv root directory
       command: pyenv root
       register: pyenv_root
       check_mode: false
@@ -64,7 +64,7 @@
         state: directory
         mode: u=+rwx,g=+r-wx,o=+r-wx
 
-    - name: Ensure Neovim configuration file is available
+    - name: Ensure Neovim configuration file is provided
       template:
         src: templates/init.vim.j2
         dest: "{{ neovim_config_dir }}/init.vim"
@@ -128,5 +128,17 @@
       changed_when: false
       failed_when: tree_sitter_install_result.rc != 0
 
-    # - name: Install required LSP servers
+    - name: Ensure that Go is installed and available
+      command: go version
+      register: go_exists
+      check_mode: false
+      changed_when: false
+      failed_when: go_exists.rc != 0
+
+    - name: Install Gopls language server for the Go programming language
+      command: go install golang.org/x/tools/gopls@latest
+      register: gopls_install_result
+      check_mode: false
+      changed_when: false
+      failed_when: gopls_install_result.rc != 0
 ...
