@@ -1,0 +1,7 @@
+---
+- name: Install Yq with Homebrew
+  homebrew:
+    name:
+      - yq
+    state: present
+...
