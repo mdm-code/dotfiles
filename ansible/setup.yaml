@@ -3,6 +3,7 @@
   roles:
     - git
     - lf
+    - fzf
     - tmux
     - exec
     - go
