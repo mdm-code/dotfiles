@@ -1,0 +1,9 @@
+---
+- name: Install Entr
+  tags: entr
+  become_user: "{{ user }}"
+  block:
+    - name: Install Entr on MacOS
+      include_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+...

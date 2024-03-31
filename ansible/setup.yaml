@@ -11,6 +11,7 @@
     - pyenv
     - bash
     - ctags
+    - entr
     - neovim
     - zet
 ...
