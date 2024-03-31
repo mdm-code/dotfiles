@@ -4,6 +4,7 @@
     - git
     - lf
     - fzf
+    - node
     - tmux
     - wget
     - exec
