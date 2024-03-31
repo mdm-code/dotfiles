@@ -8,9 +8,8 @@
 
 
 call plug#begin('~/.config/nvim/plugged')
-" Colors and color schemes
 {% for plugin in neovim_plugins %}
-Plug '{{ plugin.name }}' {% if plugin.comment %} " {{ plugin.comment }} {% endif %}
+Plug '{{ plugin.name }}'{% if plugin.comment %} " {{ plugin.comment }}{% endif %}{{''}}
 {% endfor %}
 call plug#end()
 
@@ -72,7 +71,7 @@ autocmd FileType python xnoremap <leader>p :w! \| :sp \| :term python3 -i % <CR>
 
 {% if pyenv_neovim_env_exec %}
 " Set path to the Python executable
-let g:python3_host_prog = {{ pyenv_neovim_env_exec }}
+let g:python3_host_prog = '{{ pyenv_neovim_env_exec }}'
 {% endif %}
 
 " Newtrw :Explore key binding
