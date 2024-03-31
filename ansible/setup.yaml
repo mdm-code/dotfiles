@@ -13,6 +13,7 @@
     - bash
     - ctags
     - entr
+    - tree
     - neovim
     - zet
 ...
