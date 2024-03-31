@@ -1,3 +1,4 @@
+---
 - name: Install Tmux
   tags: tmux
   become_user: "{{ user }}"
@@ -18,3 +19,4 @@
         src: templates/tmux.j2
         dest: "{{ tmux_config_file_path }}"
         mode: u=+rw-x,g=+r-wx,o=+r-wx
+...

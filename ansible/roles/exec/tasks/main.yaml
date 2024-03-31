@@ -1,3 +1,4 @@
+---
 - name: Include custom shell executables
   tags: exec
   become_user: "{{ user }}"
@@ -8,3 +9,4 @@
         dest: "{{ dest_dir }}"
         mode: u=+rwx,g=+rx-w,o=+rx-w
       loop: "{{ query('fileglob', 'files/*') }}"
+...

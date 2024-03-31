@@ -1,5 +1,4 @@
 ---
-
 - name: Install Pyenv with Homebrew
   homebrew:
     name:
@@ -11,3 +10,4 @@
     name:
       - pyenv-virtualenv
     state: present
+...

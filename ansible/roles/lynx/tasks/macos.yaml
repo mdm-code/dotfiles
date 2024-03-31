@@ -1,7 +1,7 @@
 ---
-
 - name: Install Lynx with Homebrew
   homebrew:
     name:
       - lynx
     state: present
+...
