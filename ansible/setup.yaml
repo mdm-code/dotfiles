@@ -5,6 +5,7 @@
     - lf
     - fzf
     - tmux
+    - wget
     - exec
     - go
     - nvm

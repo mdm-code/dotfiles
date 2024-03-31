@@ -1,0 +1,9 @@
+---
+- name: Install Wget
+  tags: wget
+  become_user: "{{ user }}"
+  block:
+    - name: Install Wget on MacOS
+      include_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+...
