@@ -3,7 +3,6 @@
 
 ## Things to install
 
-1. Zet - a personal knowledge management system
 2. A list of other standalone programs
 3. For Neovim install the following
     - Plugins for html, css, htmx
