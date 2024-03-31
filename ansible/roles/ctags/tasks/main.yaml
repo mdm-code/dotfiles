@@ -1,0 +1,9 @@
+---
+- name: Install Ctags
+  tags: ctags
+  become_user: "{{ user }}"
+  block:
+    - name: Install Ctags on MacOS
+      include_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+...

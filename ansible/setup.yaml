@@ -10,6 +10,7 @@
     - lynx
     - pyenv
     - bash
+    - ctags
     - neovim
     - zet
 ...
