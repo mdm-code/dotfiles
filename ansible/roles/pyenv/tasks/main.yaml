@@ -1,5 +1,4 @@
 ---
-
 - name: Install Pyenv
   tags: pyenv
   become_user: "{{ user }}"
@@ -13,3 +12,4 @@
         path: "{{ pyenv_root_dir }}"
         state: directory
         mode: u=+rwx,g=+r-wx,o=+r-wx
+...

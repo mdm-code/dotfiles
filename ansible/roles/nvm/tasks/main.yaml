@@ -1,5 +1,4 @@
 ---
-
 - name: Install Nvm
   tags: nvm
   become_user: "{{ user }}"
@@ -41,3 +40,4 @@
     - name: Set alias for the Node default version to LTS in Nvm
       shell: "bash -ilc 'nvm alias default lts/*'"
       when: nvm_default_dir_stats.stat.exists
+...

@@ -1,5 +1,4 @@
 ---
-
 - name: Install Lynx
   tags: lynx
   become_user: "{{ user }}"
@@ -23,3 +22,4 @@
         mode: u=+rw-x,g=+r-wx,o=+r-wx
       with_items : "{{ lynx_config_files }}"
       changed_when: false
+...

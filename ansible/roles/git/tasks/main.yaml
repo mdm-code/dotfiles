@@ -1,3 +1,4 @@
+---
 - name: Install Git
   tags: git
   become_user: "{{ user }}"
@@ -11,3 +12,4 @@
         src: templates/gitconfig.j2
         dest: "{{ git_config_dir }}/.gitconfig"
         mode: u=+rw-x,g=+r-wx,o=+r-wx
+...

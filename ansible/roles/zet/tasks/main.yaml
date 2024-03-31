@@ -1,0 +1,44 @@
+---
+- name: Install Zet scripts to manage personal notes
+  tags: zet
+  become_user: "{{ user }}"
+  block:
+    - name: Ensure temporary directory to clone Zet Git repository exists
+      tempfile:
+        state: directory
+      register: zet_clone_temp_dir
+
+    - name: Clone Zet Git repository
+      git:
+        repo: "{{ zet_repository_url }}"
+        dest: "{{ zet_clone_temp_dir.path }}"
+        clone: yes
+
+    - name: Copy Zet scripts to the destination directory
+      copy:
+        src: "{{ zet_clone_temp_dir.path }}/zet"
+        dest: "{{ dest_dir }}/{{ item }}"
+        mode: u=+rwx,g=+r-wx,o=+r-wx
+        force: true
+      loop: "{{ zet_script_modes }}"
+
+    - name: Delete Zet Git repository temporary directory
+      file:
+        path: "{{ zet_clone_temp_dir.path }}"
+        state: absent
+      when: zet_clone_temp_dir is defined
+
+    - name: Make sure that the directory with zettelkasten notes exists
+      file:
+        path: "{{ zet_notes_dir }}"
+        state: directory
+        mode: u=+rwx,g=+r-wx,o=+r-wx
+        recurse: yes
+
+    - name: Ensure that Fzf is installed and available
+      command: fzf --version
+      register: fzf_exists
+      check_mode: false
+      changed_when: false
+      failed_when: fzf_exists.rc != 0
+...

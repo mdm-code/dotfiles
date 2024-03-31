@@ -1,0 +1,10 @@
+user: "$USER"
+home: "$HOME"
+zet_repository_url: https://github.com/mdm-code/zet.git
+dest_dir: "/usr/local/bin"
+zet_notes_dir: "{{ home }}/zettel"
+zet_script_modes:
+  - zet
+  - zetf
+  - zetg
+  - zetp

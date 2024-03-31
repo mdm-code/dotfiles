@@ -22,3 +22,4 @@
     path: "{{ nvm_installation_temp_dir.path }}"
     state: absent
   when: nvm_installation_temp_dir is defined
+...

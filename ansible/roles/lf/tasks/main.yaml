@@ -1,3 +1,4 @@
+---
 - name: Install Lf
   tags: lf
   become_user: "{{ user }}"
@@ -18,3 +19,4 @@
         src: "files/lfrc"
         dest: "{{ lf_config_dir }}/lfrc"
         mode: u=+rw-x,g=+r-wx,o=+r-wx
+...

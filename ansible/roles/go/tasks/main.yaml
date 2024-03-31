@@ -1,3 +1,4 @@
+---
 - name: Setup Go programming language
   tags: go
   become_user: "{{ user }}"
@@ -38,3 +39,4 @@
       command: go install "{{ item }}"
       with_items: "{{ go_pkgs_to_install }}"
       when: go_pkgs_to_install is defined
+...
