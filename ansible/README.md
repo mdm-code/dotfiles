@@ -1,11 +1,15 @@
 # Ansible
 
 
-# TODO
+## Things to install
 
-- `zet` -- installation
-- `neovim`
-- other programs from the list
+1. Zet - a personal knowledge management system
+2. A list of other standalone programs
+3. For Neovim install the following
+    - Plugins for html, css, htmx
+    - Go templ has to be installed with the Go task
+    - LSP support for Go templ in Neovim
+    - Htmx LSP support in Neovim
 
 
 ## Install Ansible

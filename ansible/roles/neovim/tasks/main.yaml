@@ -1,0 +1,165 @@
+---
+- name: Install Neovim
+  tags: neovim
+  become_user: "{{ user }}"
+  block:
+    - name: Install Neovim on MacOS with Homebrew
+      import_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+
+    - name: Confirm that Git is available
+      command: git version
+      register: git_exists
+      check_mode: false
+      changed_when: false
+      failed_when: git_exists.rc != 0
+
+    - name: Ensure that Pyenv is available
+      command: pyenv version
+      register: pyenv_exists
+      check_mode: false
+      changed_when: false
+      failed_when: pyenv_exists.rc != 0
+
+    - name: Ensure the dedicated Python virtual environment is created with Pyenv
+      command: pyenv virtualenv neovim
+      check_mode: false
+      changed_when: false
+      ignore_errors: true
+      when: pyenv_exists.rc == 0
+
+    - name: Register the path to the Pyenv root directory
+      command: pyenv root
+      register: pyenv_root
+      check_mode: false
+      changed_when: false
+      when: pyenv_exists.rc == 0
+
+    - name: >-
+        Register the path to the Python interpreter from the virtual environment
+        created with Pyenv
+      set_fact:
+        pyenv_neovim_env_exec: "{{ pyenv_root.stdout }}/versions/neovim/bin/python3"
+      when: pyenv_exists.rc == 0
+
+    - name: >-
+        Make sure that pynvim Python package is installed in the provided
+        virtual environment
+      command: "{{ pyenv_neovim_env_exec }} -m pip install pynvim"
+      register: pynvim_install_result
+      check_mode: false
+      changed_when: false
+      failed_when: pynvim_install_result.rc != 0
+
+    - name: Confirm that Node is available
+      command: node --version
+      register: node_exists
+      check_mode: false
+      changed_when: false
+      failed_when: node_exists.rc != 0
+
+    - name: Confirm that Npm is available
+      command: npm --version
+      register: npm_exists
+      check_mode: false
+      changed_when: false
+      failed_when: npm_exists.rc != 0
+
+    - name: Ensure that Neovim configuration directory is present
+      file:
+        path: "{{ neovim_config_dir }}"
+        state: directory
+        mode: u=+rwx,g=+r-wx,o=+r-wx
+
+    - name: Ensure Neovim configuration file is provided
+      template:
+        src: templates/init.vim.j2
+        dest: "{{ neovim_config_dir }}/init.vim"
+        mode: u=+rwx,g=+r-wx,o=+r-wx
+
+    - name: Make sure the plugin directory is present
+      file:
+        path: "{{ neovim_config_dir }}/plugged"
+        state: directory
+        mode: u=+rwx,g=+r-wx,o=+r-wx
+
+    - name: Install Vim Plug plugin manager for Neovim
+      command: >-
+        curl -fLo "{{ neovim_config_dir }}/autoload/plug.vim"
+        --create-dirs
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+      register: vim_plug_install_result
+      check_mode: false
+      changed_when: false
+      failed_when: vim_plug_install_result.rc != 0
+
+    - name: Update remote plugins for Neovim
+      command: nvim --headless +UpdateRemotePlugins +qa
+      register: nvim_plugins_update_result
+      check_mode: false
+      changed_when: false
+      failed_when: nvim_plugins_update_result.rc != 0
+
+    - name: Install Neovim plugins
+      command: nvim --headless +PlugInstall +qall
+      register: nvim_plugins_install_result
+      check_mode: false
+      changed_when: false
+      failed_when: nvim_plugins_install_result.rc != 0
+
+    - name: Make sure Ripgrep is installed
+      command: rg --version
+      register: rg_exists
+      check_mode: false
+      changed_when: false
+      failed_when: rg_exists.rc != 0
+
+    - name: Make sure Fd is installed
+      command: fd --version
+      register: fd_exists
+      check_mode: false
+      changed_when: false
+      failed_when: fd_exists.rc != 0
+
+    - name: Ensure that Tree-sitter is installed
+      command: tree-sitter --version
+      register: tree_sitter_exists
+      check_mode: false
+      changed_when: false
+      failed_when: tree_sitter_exists.rc != 0
+
+    - name: Make sure that Neovim Tree-sitter is installed and updated
+      command: nvim --headless +TSInstall all +qa
+      register: tree_sitter_install_result
+      check_mode: false
+      changed_when: false
+      failed_when: tree_sitter_install_result.rc != 0
+
+    - name: Ensure that Go is installed and available
+      command: go version
+      register: go_exists
+      check_mode: false
+      changed_when: false
+      failed_when: go_exists.rc != 0
+
+    - name: Install Gopls language server for the Go programming language
+      command: go install golang.org/x/tools/gopls@latest
+      register: gopls_install_result
+      check_mode: false
+      changed_when: false
+      failed_when: gopls_install_result.rc != 0
+
+    - name: Install Typescript language server
+      command: npm install -g typescript typescript-language-server
+      register: typescript_ls_install_result
+      check_mode: false
+      changed_when: false
+      failed_when: typescript_ls_install_result.rc != 0
+
+    - name: Install Pyright language server for Python with Npm
+      command: npm install -g pyright
+      register: pyright_install_result
+      check_mode: false
+      changed_when: false
+      failed_when: pyright_install_result.rc != 0
+...

@@ -1,6 +1,5 @@
---cask waterfox
+node # node has to be installed to satisfy neovim
 ctags
-efm-langserver
 entr
 fzf
 gh
@@ -10,7 +9,6 @@ jq
 kind
 kubectl
 minikube
-neovim
 pandoc
 pass
 postgresql
