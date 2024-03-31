@@ -15,6 +15,7 @@
     - entr
     - tree
     - htop
+    - jq
     - neovim
     - zet
 ...
