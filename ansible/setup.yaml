@@ -24,4 +24,5 @@
     - zet
     - kind
     - minikube
+    - kubectl
 ...
