@@ -1,0 +1,9 @@
+---
+- name: Install Shellcheck
+  tags: shellcheck
+  become_user: "{{ user }}"
+  block:
+    - name: Install Shellcheck on MacOS
+      include_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+...

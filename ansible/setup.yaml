@@ -12,6 +12,7 @@
     - lynx
     - pyenv
     - bash
+    - shellcheck
     - ctags
     - entr
     - tree
