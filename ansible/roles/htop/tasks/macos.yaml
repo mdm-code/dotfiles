@@ -1,0 +1,7 @@
+---
+- name: Install Htop with Homebrew
+  homebrew:
+    name:
+      - htop
+    state: present
+...
