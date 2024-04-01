@@ -11,6 +11,7 @@
     - wget
     - exec
     - go
+    - goreleaser
     - nvm
     - lynx
     - pyenv
