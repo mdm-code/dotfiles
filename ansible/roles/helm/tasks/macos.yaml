@@ -1,0 +1,7 @@
+---
+- name: Install Helm with Homebrew
+  homebrew:
+    name:
+      - helm
+    state: present
+...

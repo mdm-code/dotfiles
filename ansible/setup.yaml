@@ -27,4 +27,5 @@
     - kind
     - minikube
     - kubectl
+    - helm
 ...
