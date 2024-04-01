@@ -1,0 +1,9 @@
+---
+- name: Install Fd
+  tags: fd
+  become_user: "{{ user }}"
+  block:
+    - name: Install Fd on MacOS
+      include_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+...
