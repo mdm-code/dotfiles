@@ -1,0 +1,7 @@
+---
+- name: Install Kind with Homebrew
+  homebrew:
+    name:
+      - kind
+    state: present
+...

@@ -1,0 +1,9 @@
+---
+- name: Install Node
+  tags: node
+  become_user: "{{ user }}"
+  block:
+    - name: Install Node on MacOS
+      include_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+...

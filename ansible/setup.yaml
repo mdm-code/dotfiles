@@ -2,14 +2,34 @@
 - hosts: localservers
   roles:
     - git
+    - gh
     - lf
+    - fzf
+    - fd
+    - ripgrep
+    - node
     - tmux
+    - smug
+    - wget
     - exec
     - go
+    - goreleaser
     - nvm
     - lynx
     - pyenv
     - bash
+    - shellcheck
+    - ctags
+    - entr
+    - tree
+    - htop
+    - jq
+    - yq
+    - pass
     - neovim
     - zet
+    - kind
+    - minikube
+    - kubectl
+    - helm
 ...

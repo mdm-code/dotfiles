@@ -1,0 +1,7 @@
+---
+- name: Install Pass with Homebrew
+  homebrew:
+    name:
+      - pass
+    state: present
+...

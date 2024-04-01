@@ -1,21 +1,10 @@
 # Ansible
 
 
-## Things to install
-
-2. A list of other standalone programs
-3. For Neovim install the following
-    - Plugins for html, css, htmx
-    - Go templ has to be installed with the Go task
-    - LSP support for Go templ in Neovim
-    - Htmx LSP support in Neovim
-
-
 ## Install Ansible
 
 Check the Python interpreter path to verify if the target Ansible interpreter
-on the host has the Python Ansible package installed. It might not work on
-MacOS out of the box, and I would first recommend installing Pyenv first.
+on the host has the Python Ansible package installed.
 
 ```sh
 python3 -m pip install --user ansible
@@ -28,23 +17,31 @@ The connection to the localhost in the Ansible inventory is set to be local in
 order to skip the SSH tunneling.
 
 ```sh
-ansible hosts -i inventory.yaml -m ping
+ansible localhost -m ping
 ```
 
 
-## Bootstrap the development environment
+## Run the setup playbook
 
 Here is how to run it:
 
 ```sh
-ansible-playbook setup.yaml -i inventory.yaml --ask-vault-pass
+ansible-playbook setup.yaml --ask-vault-pass
 ```
 
-It's possible to use `--tags` and `--limit` to narrow down the scope of planned
+The playbook will run all the specified roles in the `setup.yaml` file. It's
+possible to use `--tags` and `--limit` to narrow down the scope of planned
 changes to apply.
 
 
-## Environmental variables used in Ansible setup
+## Planned changes
 
-- `$HOME`
-- `$USER`
+As for the planned changes, the following roles are to be implemented:
+
+1. Changes in the Neovim role
+    - Install plugins for html, css, htmx
+    - Provide LSP support for Go Templ and htmx
+2. Changes in the Go role
+    - Install Go templ
+3. Add Docker installation
+4. Consider adding Firefox installation

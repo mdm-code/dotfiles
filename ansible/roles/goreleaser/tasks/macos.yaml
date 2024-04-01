@@ -1,0 +1,7 @@
+---
+- name: Install Goreleaser with Homebrew
+  homebrew:
+    name:
+      - goreleaser
+    state: present
+...

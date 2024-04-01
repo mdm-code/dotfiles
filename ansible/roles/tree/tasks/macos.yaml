@@ -1,0 +1,7 @@
+---
+- name: Install Tree with Homebrew
+  homebrew:
+    name:
+      - tree
+    state: present
+...

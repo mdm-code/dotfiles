@@ -1,0 +1,9 @@
+---
+- name: Install Yq
+  tags: yq
+  become_user: "{{ user }}"
+  block:
+    - name: Install Yq on MacOS
+      include_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+...

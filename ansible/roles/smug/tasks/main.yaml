@@ -1,0 +1,15 @@
+---
+- name: Install Smug
+  tags: smug
+  become_user: "{{ user }}"
+  block:
+    - name: Install Smug on MacOS
+      include_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+
+    - name: Ensure Smug configuration directory is present
+      file:
+        path: "{{ smug_config_dir }}"
+        state: directory
+        mode: u=+rwx,g=+r-wx,o=+r-wx
+...

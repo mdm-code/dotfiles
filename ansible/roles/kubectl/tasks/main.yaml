@@ -1,0 +1,9 @@
+---
+- name: Install Kubectl
+  tags: kubectl
+  become_user: "{{ user }}"
+  block:
+    - name: Install Kubectl on MacOS
+      include_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+...
