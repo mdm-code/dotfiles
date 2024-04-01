@@ -1,0 +1,9 @@
+---
+- name: Install Pass
+  tags: pass
+  become_user: "{{ user }}"
+  block:
+    - name: Install Pass on MacOS
+      include_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+...

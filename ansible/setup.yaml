@@ -23,6 +23,7 @@
     - htop
     - jq
     - yq
+    - pass
     - neovim
     - zet
     - kind
