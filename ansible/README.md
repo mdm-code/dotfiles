@@ -43,3 +43,5 @@ As for the planned changes, the following roles are to be implemented:
     - Provide LSP support for Go Templ and htmx
 2. Changes in the Go role
     - Install Go templ
+3. Add Docker installation
+4. Consider adding Firefox installation
