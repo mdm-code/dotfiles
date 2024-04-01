@@ -5,6 +5,7 @@
     - lf
     - fzf
     - fd
+    - ripgrep
     - node
     - tmux
     - wget

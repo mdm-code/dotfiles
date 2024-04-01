@@ -1,0 +1,9 @@
+---
+- name: Install Ripgrep
+  tags: ripgrep
+  become_user: "{{ user }}"
+  block:
+    - name: Install Ripgrep on MacOS
+      include_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+...
