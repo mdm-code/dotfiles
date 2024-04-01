@@ -1,0 +1,28 @@
+---
+- name: Install Gh
+  tags: gh
+  become_user: "{{ user }}"
+  block:
+    - name: Install Gh on MacOS
+      include_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+
+    - name: Ensure that Gh configuration directory is present
+      file:
+        path: "{{ gh_config_dir }}"
+        state: directory
+        mode: u=+rwx,g=+r-wx,o=+r-wx
+        recurse: yes
+
+    - name: Ensure that Gh config file is available
+      copy:
+        src: files/config.yml
+        dest: "{{ gh_config_dir }}/config.yml"
+        mode: u=+rw-x,g=+r-wx,o=+r-wx
+
+    - name: Ensure Gh hosts file is available
+      template:
+        src: templates/hosts.yml.j2
+        dest: "{{ gh_config_dir }}/hosts.yml"
+        mode: u=+rw-x,g=+r-wx,o=+r-wx
+...

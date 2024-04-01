@@ -1,0 +1,4 @@
+user: "$USER"
+home: "$HOME"
+gh_config_dir: "{{ home }}/.config/gh"
+gh_user: mdm-code
