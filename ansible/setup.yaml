@@ -28,6 +28,7 @@
     - pass
     - neovim
     - zet
+    - docker
     - kind
     - minikube
     - kubectl
