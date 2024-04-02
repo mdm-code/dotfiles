@@ -123,7 +123,6 @@ let g:gofmt_on_save=1
   local cmp = require('cmp')
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
   capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
   cmp.setup.cmdline(':', {
@@ -133,11 +132,6 @@ let g:gofmt_on_save=1
     })
   })
   cmp.setup({
-      snippet = {
-      expand = function(args)
-        vim.fn['UltiSnips#Anon'](args.body)
-      end,
-    },
     mapping = cmp.mapping.preset.insert({
       ['<C-x><C-o>'] = cmp.mapping.complete(),
       ['<C-space>'] = cmp.mapping.confirm(),
@@ -146,7 +140,6 @@ let g:gofmt_on_save=1
     }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-      { name = 'ultisnips' },
       { name = 'buffer' },
     }),
     completion = cmp.mapping.preset.insert({
