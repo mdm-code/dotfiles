@@ -1,0 +1,9 @@
+---
+- name: Install Firefox
+  tags: firefox
+  become_user: "{{ user }}"
+  block:
+    - name: Install Firefox on MacOS
+      include_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+...
