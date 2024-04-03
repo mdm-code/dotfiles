@@ -1,0 +1,24 @@
+---
+- name: Install Rust
+  tags:
+    - rust
+  become_user: "{{ user }}"
+  block:
+    - name: Check if Rust is already installed
+      stat:
+        path: "{{ rustup_binary_path }}"
+      register: rust_installed
+
+    - name: Install Rust with the official installer
+      shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      args:
+        creates: "{{ rustup_binary_path }}"
+      when: rust_installed.stat.exists == false
+
+    - name: Install Rust packages
+      shell: bash -ilc 'cargo install {{ item }}'
+      environment:
+        MACOSX_DEPLOYMENT_TARGET: 10.15
+      with_items: "{{ rust_cargo_pkgs }}"
+      when: rust_cargo_pkgs is defined
+...
