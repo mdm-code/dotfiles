@@ -168,15 +168,20 @@ let g:gofmt_on_save=1
     vim.keymap.set("n", "<leader>rr", function() vim.lsp.buf.references() end, opts)
     vim.keymap.set("n", "<leader>n", function() vim.diagnostic.goto_next() end, opts)
     vim.keymap.set("n", "<leader>p", function() vim.diagnostic.goto_prev() end, opts)
-	vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
+    vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
     vim.keymap.set("n", "<leader>gd", function() vim.diagnostic.open_float() end, opts)
   end
-  local servers = {"pyright", "gopls", "tsserver"}
+  local servers = { "pyright", "gopls", "tsserver", "templ" }
   for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
       capabilities = capabilities,
       on_attach = on_attach,
     }
+  lspconfig.html.setup({
+    capabilities = capabilities,
+    on_attach = on_attach,
+    filetypes = { "html", "templ" },
+  })
 end
 
 -- Treesitter and Treesitter-context configuration
