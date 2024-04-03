@@ -1,0 +1,17 @@
+---
+- name: Install Rust
+  tags:
+    - rust
+  become_user: "{{ user }}"
+  block:
+    - name: Check if Rust is already installed
+      stat:
+        path: "{{ rustup_binary_path }}"
+      register: rust_installed
+
+    - name: Install Rust with the official installer
+      shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      args:
+        creates: "{{ rustup_binary_path }}"
+      when: rust_installed.stat.exists == false
+...

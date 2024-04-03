@@ -1,0 +1,3 @@
+user: "$USER"
+home: "$HOME"
+rustup_binary_path: "{{ home }}/.cargo/bin/rustup"
