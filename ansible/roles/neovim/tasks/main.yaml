@@ -162,4 +162,11 @@
       check_mode: false
       changed_when: false
       failed_when: pyright_install_result.rc != 0
+
+    - name: Install HTML language server with Npm
+      command: npm install -g vscode-langservers-extracted
+      register: html_lsp_install_result
+      check_mode: false
+      changed_when: false
+      failed_when: html_lsp_install_result.rc != 0
 ...
