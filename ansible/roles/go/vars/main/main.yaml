@@ -9,3 +9,4 @@ go_pkgs_to_install:
   - "github.com/mdm-code/tq/cmd/tq@latest"
   - "github.com/mdm-code/termcols/cmd/tcols@latest"
   - "github.com/mdm-code/duct/cmd/duct@latest"
+  - "github.com/a-h/templ/cmd/templ@latest"
