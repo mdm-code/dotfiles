@@ -182,6 +182,11 @@ let g:gofmt_on_save=1
     on_attach = on_attach,
     filetypes = { "html", "templ" },
   })
+  lspconfig.htmx.setup({
+    capabilities = capabilities,
+    on_attach = on_attach,
+    filetypes = { "html", "templ" },
+  })
   vim.filetype.add({ extension = { templ = "templ" } })
 end
 
