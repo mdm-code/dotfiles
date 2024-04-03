@@ -14,4 +14,11 @@
       args:
         creates: "{{ rustup_binary_path }}"
       when: rust_installed.stat.exists == false
+
+    - name: Install Rust packages
+      shell: bash -ilc 'cargo install {{ item }}'
+      environment:
+        MACOSX_DEPLOYMENT_TARGET: 10.15
+      with_items: "{{ rust_cargo_pkgs }}"
+      when: rust_cargo_pkgs is defined
 ...
