@@ -14,6 +14,7 @@
     - exec
     - go
     - goreleaser
+    - rust
     - nvm
     - lynx
     - pyenv
