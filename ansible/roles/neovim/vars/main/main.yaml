@@ -2,8 +2,6 @@ user: "$USER"
 home: "$HOME"
 neovim_config_dir: "{{ home }}/.config/nvim"
 neovim_plugins:
-  - name: "github/copilot.vim"
-    comment: "GitHub Copilot"
   - name: "tommcdo/vim-exchange"
     comment: "Swap words, lines and paragraphs"
   - name: "tweekmonster/gofmt.vim"
