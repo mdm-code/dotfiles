@@ -12,4 +12,32 @@
         path: "{{ pyenv_root_dir }}"
         state: directory
         mode: u=+rwx,g=+r-wx,o=+r-wx
+
+    - name: Install specified Python versions
+      shell: yes n | pyenv install "{{ item }}"
+      register: result
+      changed_when: result.rc == 0
+      failed_when: result.rc not in [ 0, 1 ]
+      when: pyenv_python_versions_to_install is defined
+      with_items: "{{ pyenv_python_versions_to_install }}"
+
+    - name: Set the global Python version in Pyenv
+      block:
+      - name: Register the current Python global version for Pyenv
+        command: pyenv global
+        register: pyenv_current_global_version
+        changed_when: false
+
+      - set_fact:
+          pyenv_current_global_version="{{ pyenv_current_global_version.stdout }}"
+
+      - name: Change the global Python version in Pyenv
+        shell: pyenv global "{{ pyenv_python_global_version }}" && pyenv global
+        when: pyenv_python_global_version is defined
+        register: pyenv_changed_global_version
+        changed_when: pyenv_current_global_version != pyenv_changed_global_version.stdout
+
+    - name: Install Ansible package for the global Python interpreter
+      pip:
+        name: ansible
 ...
