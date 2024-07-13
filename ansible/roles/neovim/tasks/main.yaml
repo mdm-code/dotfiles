@@ -15,7 +15,7 @@
       failed_when: git_exists.rc != 0
 
     - name: Ensure that Pyenv is available
-      command: pyenv version
+      command: pyenv --version
       register: pyenv_exists
       check_mode: false
       changed_when: false
