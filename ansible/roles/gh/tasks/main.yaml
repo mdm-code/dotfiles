@@ -12,7 +12,6 @@
         path: "{{ gh_config_dir }}"
         state: directory
         mode: u=+rwx,g=+r-wx,o=+r-wx
-        recurse: yes
 
     - name: Ensure that Gh config file is available
       copy:
