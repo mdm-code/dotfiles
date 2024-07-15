@@ -10,6 +10,7 @@
     - name: Check if Pyenv is installed
       shell: "command -v pyenv"
       register: pyenv_exists
+      changed_when: false
 
     - name: Ensure Bash configuration file is present
       template:
