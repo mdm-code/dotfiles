@@ -30,6 +30,7 @@
     - name: Run Go setup script
       command: sh "{{ go_setup_script_file_path }}"
       register: setup_out
+      changed_when: setup_out is search("Added new Go version")
 
     - debug:
         msg: "{{ setup_out }}"

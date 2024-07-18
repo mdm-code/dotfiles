@@ -63,6 +63,7 @@ version_dir="$goroot/$version"
 
 [ ! -d "$version_dir" ] && \
 	mkdir -p "$version_dir" && \
+	echo "Added new Go version $version" && \
 	tar -C "$version_dir" --strip-components=1 -xzf "$tarball"
 
 ln -sfn "$version_dir" "$goroot/current"
