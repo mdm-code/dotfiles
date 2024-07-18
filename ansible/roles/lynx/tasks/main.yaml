@@ -12,8 +12,6 @@
         path: "{{ lynx_config_dir }}"
         state: directory
         mode: u=+rwx,g=+r-wx,o=+r-wx
-        recurse: yes
-      changed_when: false
 
     - name: Ensure Lynx configuration files are available
       copy:
@@ -21,5 +19,4 @@
         dest: "{{ lynx_config_dir }}/{{ item }}"
         mode: u=+rw-x,g=+r-wx,o=+r-wx
       with_items : "{{ lynx_config_files }}"
-      changed_when: false
 ...
