@@ -12,7 +12,6 @@
         path: "{{ lf_config_dir }}"
         state: directory
         mode: u=+rwx,g=+r-wx,o=+r-wx
-        recurse: yes
 
     - name: Ensure Lf configuration file is available
       copy:
