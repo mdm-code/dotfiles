@@ -7,12 +7,14 @@
       tempfile:
         state: directory
       register: zet_clone_temp_dir
+      changed_when: false
 
     - name: Clone Zet Git repository
       git:
         repo: "{{ zet_repository_url }}"
         dest: "{{ zet_clone_temp_dir.path }}"
         clone: yes
+      changed_when: false
 
     - name: Copy Zet scripts to the destination directory
       copy:
@@ -27,13 +29,13 @@
         path: "{{ zet_clone_temp_dir.path }}"
         state: absent
       when: zet_clone_temp_dir is defined
+      changed_when: false
 
     - name: Make sure that the directory with zettelkasten notes exists
       file:
         path: "{{ zet_notes_dir }}"
         state: directory
         mode: u=+rwx,g=+r-wx,o=+r-wx
-        recurse: yes
 
     - name: Ensure that Fzf is installed and available
       command: fzf --version
