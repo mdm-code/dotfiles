@@ -20,5 +20,7 @@
       environment:
         MACOSX_DEPLOYMENT_TARGET: 10.15
       with_items: "{{ rust_cargo_pkgs }}"
+      register: rust_package_installation_log
+      changed_when: "'already installed' not in rust_package_installation_log.stderr"
       when: rust_cargo_pkgs is defined
 ...
