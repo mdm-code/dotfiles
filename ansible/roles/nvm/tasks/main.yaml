@@ -40,4 +40,7 @@
     - name: Set alias for the Node default version to LTS in Nvm
       shell: "bash -ilc 'nvm alias default lts/*'"
       when: nvm_default_dir_stats.stat.exists
+      register: nvm_set_default_version_out
+      changed_when: false
+      failed_when: "'WARNING' in nvm_set_default_version_out.stdout"
 ...
