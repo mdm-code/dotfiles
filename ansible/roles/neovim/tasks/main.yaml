@@ -129,7 +129,7 @@
       failed_when: tree_sitter_exists.rc != 0
 
     - name: Make sure that Neovim Tree-sitter is installed and updated
-      command: nvim --headless +TSInstall all +qa
+      command: nvim --headless '+TSInstallSync all' +qa
       register: tree_sitter_install_result
       check_mode: false
       changed_when: false
