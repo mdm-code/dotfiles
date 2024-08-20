@@ -1,0 +1,9 @@
+---
+- name: Install Karabiner-elements
+  tags: karabiner
+  become_user: "{{ user }}"
+  block:
+    - name: Install Karabiner-elements on MacOS
+      include_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+...
