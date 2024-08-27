@@ -2,7 +2,7 @@ user: "$USER"
 home: "$HOME"
 go_config_dir: "{{ home }}/.config/go"
 go_env_file_path: "{{ go_config_dir }}/goenv"
-go_version: "1.22.0"
+go_version: "1.23.0"
 go_default_dir: "{{ home }}/.go"
 go_setup_script_file_path: "{{ go_default_dir }}/setup"
 go_pkgs_to_install:
