@@ -1,0 +1,9 @@
+---
+- name: Install K9s
+  tags: k9s
+  become_user: "{{ user }}"
+  block:
+    - name: Install K9s on MacOS
+      include_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+...
