@@ -126,13 +126,6 @@
       changed_when: false
       failed_when: gopls_install_result.rc != 0
 
-    - name: Install Typescript language server with Npm
-      command: npm install -g typescript typescript-language-server
-      register: typescript_ls_install_result
-      check_mode: false
-      changed_when: false
-      failed_when: typescript_ls_install_result.rc != 0
-
     - name: Install Pyright language server for Python with Npm
       command: npm install -g pyright
       register: pyright_install_result
