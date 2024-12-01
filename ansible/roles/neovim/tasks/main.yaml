@@ -71,11 +71,11 @@
         state: directory
         mode: u=+rwx,g=+r-wx,o=+r-wx
 
-    - name: Ensure Neovim configuration file is provided
-      template:
-        src: templates/init.vim.j2
-        dest: "{{ neovim_config_dir }}/init.vim"
-        mode: u=+rwx,g=+r-wx,o=+r-wx
+    - name: Ensure Neovim configuration files are present
+      copy:
+        src: files/
+        dest: "{{ neovim_config_dir }}/"
+        mode: u=+rw,g=+r-wx,o=+r-wx
 
     - name: Make sure the plugin directory is present
       file:
