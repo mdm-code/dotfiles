@@ -77,12 +77,6 @@
         dest: "{{ neovim_config_dir }}/"
         mode: u=+rw,g=+r-wx,o=+r-wx
 
-    - name: Make sure the plugin directory is present
-      file:
-        path: "{{ neovim_config_dir }}/plugged"
-        state: directory
-        mode: u=+rwx,g=+r-wx,o=+r-wx
-
     - name: Install Vim Plug plugin manager for Neovim
       command: >-
         curl -fLo "{{ neovim_config_dir }}/autoload/plug.vim"
