@@ -71,37 +71,14 @@
         state: directory
         mode: u=+rwx,g=+r-wx,o=+r-wx
 
-    - name: Ensure Neovim configuration file is provided
-      template:
-        src: templates/init.vim.j2
-        dest: "{{ neovim_config_dir }}/init.vim"
-        mode: u=+rwx,g=+r-wx,o=+r-wx
+    - name: Ensure Neovim configuration files are present
+      copy:
+        src: files/
+        dest: "{{ neovim_config_dir }}/"
+        mode: u=+rw,g=+r-wx,o=+r-wx
 
-    - name: Make sure the plugin directory is present
-      file:
-        path: "{{ neovim_config_dir }}/plugged"
-        state: directory
-        mode: u=+rwx,g=+r-wx,o=+r-wx
-
-    - name: Install Vim Plug plugin manager for Neovim
-      command: >-
-        curl -fLo "{{ neovim_config_dir }}/autoload/plug.vim"
-        --create-dirs
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-      register: vim_plug_install_result
-      check_mode: false
-      changed_when: false
-      failed_when: vim_plug_install_result.rc != 0
-
-    - name: Update remote plugins for Neovim
-      command: nvim --headless +UpdateRemotePlugins +qa
-      register: nvim_plugins_update_result
-      check_mode: false
-      changed_when: false
-      failed_when: nvim_plugins_update_result.rc != 0
-
-    - name: Install Neovim plugins
-      command: nvim --headless +PlugInstall +qall
+    - name: Install/update Neovim plugins (Lazy installation seems to be blocking)
+      command: nvim --headless +qall
       register: nvim_plugins_install_result
       check_mode: false
       changed_when: false
@@ -148,13 +125,6 @@
       check_mode: false
       changed_when: false
       failed_when: gopls_install_result.rc != 0
-
-    - name: Install Typescript language server
-      command: npm install -g typescript typescript-language-server
-      register: typescript_ls_install_result
-      check_mode: false
-      changed_when: false
-      failed_when: typescript_ls_install_result.rc != 0
 
     - name: Install Pyright language server for Python with Npm
       command: npm install -g pyright

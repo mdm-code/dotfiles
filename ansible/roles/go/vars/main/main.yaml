@@ -10,3 +10,5 @@ go_pkgs_to_install:
   - "github.com/mdm-code/termcols/cmd/tcols@latest"
   - "github.com/mdm-code/duct/cmd/duct@latest"
   - "github.com/a-h/templ/cmd/templ@latest"
+  - "golang.org/x/tools/cmd/goimports@latest"
+  - "mvdan.cc/gofumpt@latest"
