@@ -1,0 +1,8 @@
+---
+- name: Install Wezterm with Homebrew Cask
+  homebrew_cask:
+    name:
+      - wezterm
+    state: present
+    upgrade_all: false
+...

@@ -1,0 +1,21 @@
+---
+- name: Install Wezterm
+  tags: wezterm
+  become_user: "{{ user }}"
+  block:
+    - name: Install Wezterm on MacOS
+      include_tasks: macos.yaml
+      when: ansible_distribution == "MacOSX"
+
+    - name: Ensure that Wezterm configuration directory is present
+      file:
+        path: "{{ wezterm_config_dir }}"
+        state: directory
+        mode: u=+rwx,g=+r-wx,o=+r-wx
+
+    - name: Ensure Wezterm configuration files are present
+      copy:
+        src: files/
+        dest: "{{ wezterm_config_dir }}/"
+        mode: u=+rw,g=+r-wx,o=+r-wx
+...
