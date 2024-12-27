@@ -1,11 +1,9 @@
 ---
 - name: Install Neovim
   tags: neovim
-  become_user: "{{ user }}"
   block:
-    - name: Install Neovim on MacOS with Homebrew
-      import_tasks: macos.yaml
-      when: ansible_distribution == "MacOSX"
+    - name: Install Neovim from the source release files
+      import_tasks: install_from_source.yaml
 
     - name: Confirm that Git is available
       command: git version
