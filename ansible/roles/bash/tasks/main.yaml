@@ -16,6 +16,7 @@
       shell: "command -v pyenv"
       register: pyenv_exists
       changed_when: false
+      ignore_errors: true
 
     - name: Ensure Bash configuration file is present
       template:
