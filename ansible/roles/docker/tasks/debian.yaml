@@ -1,0 +1,30 @@
+---
+- name: Install prerequisites with apt
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+    state: present
+
+- name: Add Docker GPG apt key
+  apt_key:
+    url: "{{ docker_gpg_url }}"
+    state: present
+
+- name: Add Docker repository
+  apt_repository:
+    repo: "{{ docker_apt_repository }}"
+    state: present
+
+- name: Install Docker packages with apt
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+...

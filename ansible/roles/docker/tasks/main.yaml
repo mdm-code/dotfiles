@@ -1,9 +1,14 @@
 ---
 - name: Install Docker
   tags: docker
-  become_user: "{{ user }}"
   block:
     - name: Install Docker on MacOS
       include_tasks: macos.yaml
       when: ansible_distribution == "MacOSX"
+
+    - name: Install Docker on Debian-based OS with apt
+      import_tasks: debian.yaml
+      when: >
+        ansible_distribution == "Debian" or
+        ansible_distribution == "Ubuntu"
 ...
