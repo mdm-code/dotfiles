@@ -1,7 +1,0 @@
----
-- name: Install ctags with Homebrew
-  homebrew:
-    name:
-      - ctags
-    state: present
-...
