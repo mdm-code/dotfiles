@@ -1,11 +1,16 @@
 ---
 - name: Install Bash
   tags: bash
-  become_user: "{{ user }}"
   block:
     - name: Install recent Bash version on MacOS
       include_tasks: macos.yaml
       when: ansible_distribution == "MacOSX"
+
+    - name: Install Bash on Debian-based OS with APT
+      import_tasks: debian.yaml
+      when: >
+        ansible_distribution == "Debian" or
+        ansible_distribution == "Ubuntu"
 
     - name: Check if Pyenv is installed
       shell: "command -v pyenv"

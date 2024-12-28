@@ -1,0 +1,13 @@
+---
+- name: Install Bash on Debian-based OS with APT
+  apt:
+    name:
+      - bash
+    state: present
+
+- name: Install Bash completion on Debian-based OS with APT
+  apt:
+    name:
+      - bash-completion
+    state: present
+...
