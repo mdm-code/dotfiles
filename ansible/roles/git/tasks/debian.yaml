@@ -1,0 +1,7 @@
+---
+- name: Install Git on Debian-based OS with apt
+  apt:
+    name:
+      - git
+    state: present
+...

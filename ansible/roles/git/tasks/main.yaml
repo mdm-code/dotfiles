@@ -1,11 +1,17 @@
 ---
 - name: Install Git
   tags: git
-  become_user: "{{ user }}"
+  become: true
   block:
     - name: Install Git on MacOS with Homebrew
       import_tasks: macos.yaml
       when: ansible_distribution == "MacOSX"
+
+    - name: Install Git on Debian-based OS with apt
+      import_tasks: debian.yaml
+      when: >
+        ansible_distribution == "Debian" or
+        ansible_distribution == "Ubuntu"
 
     - name: Ensure Git configuration file is available
       template:
