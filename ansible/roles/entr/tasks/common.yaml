@@ -1,6 +1,6 @@
 ---
 - name: Install Entr with Homebrew
-  homebrew:
+  ansible.builtin.package:
     name:
       - entr
     state: present
