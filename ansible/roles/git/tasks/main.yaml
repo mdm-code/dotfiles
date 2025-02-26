@@ -1,21 +1,17 @@
 ---
 - name: Install Git
   tags: git
-  become: true
+  become: "{{ should_run_pkg_mgr_as_root }}"
   block:
-    - name: Install Git on MacOS with Homebrew
-      import_tasks: macos.yaml
-      when: ansible_distribution == "MacOSX"
+  - name: Install Git with a package manager
+    ansible.builtin.package:
+      name:
+        - git
+      state: latest
 
-    - name: Install Git on Debian-based OS with apt
-      import_tasks: debian.yaml
-      when: >
-        ansible_distribution == "Debian" or
-        ansible_distribution == "Ubuntu"
-
-    - name: Ensure Git configuration file is available
-      template:
-        src: templates/gitconfig.j2
-        dest: "{{ git_config_dir }}/.gitconfig"
-        mode: u=+rw-x,g=+r-wx,o=+r-wx
+  - name: Ensure Git configuration file is available
+    template:
+      src: templates/gitconfig.j2
+      dest: "{{ git_config_dir }}/.gitconfig"
+      mode: u=+rw-x,g=+r-wx,o=+r-wx
 ...
