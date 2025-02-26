@@ -1,40 +1,42 @@
 ---
 - hosts: localservers
+  vars:
+    should_run_pkg_mgr_as_root: "{{ true if ansible_pkg_mgr != 'homebrew' else false }}"
   roles:
-    - git
-    - gh
-    - lf
-    - fzf
-    - fd
-    - ripgrep
-    - node
-    - tmux
-    - smug
-    - wget
-    - exec
-    - go
-    - goreleaser
-    - rust
-    - nvm
-    - lynx
-    - pyenv
-    - bash
-    - shellcheck
+    # - git
+    # - gh
+    # - lf
+    # - fzf
+    # - fd
+    # - ripgrep
+    # - node
+    # - tmux
+    # - smug
+    # - wget
+    # - exec
+    # - go
+    # - goreleaser
+    # - rust
+    # - nvm
+    # - lynx
+    # - pyenv
+    # - bash
+    # - shellcheck
     - entr
-    - tree
-    - htop
-    - jq
-    - yq
-    - pass
-    - neovim
-    - zet
-    - docker
-    - kind
-    - minikube
-    - kubectl
-    - helm
-    - k9s
-    - firefox
-    - karabiner
-    - wezterm
+    # - tree
+    # - htop
+    # - jq
+    # - yq
+    # - pass
+    # - neovim
+    # - zet
+    # - docker
+    # - kind
+    # - minikube
+    # - kubectl
+    # - helm
+    # - k9s
+    # - firefox
+    # - karabiner
+    # - wezterm
 ...
