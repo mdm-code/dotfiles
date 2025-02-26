@@ -1,7 +1,0 @@
----
-- name: Install Gh with Homebrew
-  homebrew:
-    name:
-      - gh
-    state: latest
-...
