@@ -1,7 +1,0 @@
----
-- name: Install Ripgrep with Homebrew
-  homebrew:
-    name:
-      - ripgrep
-    state: present
-...
