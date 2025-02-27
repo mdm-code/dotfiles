@@ -1,7 +1,0 @@
----
-- name: Install Fd with Homebrew
-  homebrew:
-    name:
-      - fd
-    state: present
-...
