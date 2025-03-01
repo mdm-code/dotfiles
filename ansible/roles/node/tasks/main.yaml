@@ -1,9 +1,11 @@
 ---
 - name: Install Node
   tags: node
-  become_user: "{{ user }}"
+  become: "{{ should_run_pkg_mgr_as_root }}"
   block:
-    - name: Install Node on MacOS
-      include_tasks: macos.yaml
-      when: ansible_distribution == "MacOSX"
+  - name: Install Node with a package manager
+    ansible.builtin.package:
+      name:
+        - "{{ 'nodejs' if ansible_pkg_mgr == 'apt' else 'node' }}"
+      state: latest
 ...

@@ -1,7 +1,0 @@
----
-- name: Install Node with Homebrew
-  homebrew:
-    name:
-      - node
-    state: present
-...
