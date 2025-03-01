@@ -1,43 +1,44 @@
 ---
 - name: Setup Go programming language
-  tags: go
-  become_user: "{{ user }}"
+  tags:
+  - go
+  - smug
   block:
-    - name: Ensure Go configuration directory is present
-      file:
-        path: "{{ go_config_dir }}"
-        state: directory
-        mode: u=+rwx,g=+r-wx,o=+r-wx
+  - name: Ensure Go configuration directory is present
+    file:
+      path: "{{ go_config_dir }}"
+      state: directory
+      mode: u=+rwx,g=+r-wx,o=+r-wx
 
-    - name: Ensure Go file with environmental variables is available
-      template:
-        src: templates/goenv.j2
-        dest: "{{ go_env_file_path }}"
-        mode: u=+rwx,g=+r-wx,o=+r-wx
+  - name: Ensure Go file with environmental variables is available
+    template:
+      src: templates/goenv.j2
+      dest: "{{ go_env_file_path }}"
+      mode: u=+rwx,g=+r-wx,o=+r-wx
 
-    - name: Ensure Go default directory is present
-      file:
-        path: "{{ go_default_dir }}"
-        state: directory
-        mode: u=+rwx,g=+r-wx,o=+r-wx
+  - name: Ensure Go default directory is present
+    file:
+      path: "{{ go_default_dir }}"
+      state: directory
+      mode: u=+rwx,g=+r-wx,o=+r-wx
 
-    - name: Ensure Go setup script is available
-      template:
-        src: templates/setup.j2
-        dest: "{{ go_setup_script_file_path }}"
-        mode: u=+rwx,g=+r-wx,o=+r-wx
+  - name: Ensure Go setup script is available
+    template:
+      src: templates/setup.j2
+      dest: "{{ go_setup_script_file_path }}"
+      mode: u=+rwx,g=+r-wx,o=+r-wx
 
-    - name: Run Go setup script
-      command: sh "{{ go_setup_script_file_path }}"
-      register: setup_out
-      changed_when: setup_out is search("Added new Go version")
+  - name: Run Go setup script
+    command: sh "{{ go_setup_script_file_path }}"
+    register: setup_out
+    changed_when: setup_out is search("Added new Go version")
 
-    - debug:
-        msg: "{{ setup_out }}"
+  - debug:
+      msg: "{{ setup_out }}"
 
-    - name: Install Go programs
-      command: go install "{{ item }}"
-      with_items: "{{ go_pkgs_to_install }}"
-      when: go_pkgs_to_install is defined
-      changed_when: false
+  - name: Install Go programs
+    command: go install "{{ item }}"
+    with_items: "{{ go_pkgs_to_install }}"
+    when: go_pkgs_to_install is defined
+    changed_when: false
 ...

@@ -1,3 +1,0 @@
-user: "$USER"
-home: "$HOME"
-smug_config_dir: "{{ home }}/.config/smug"
