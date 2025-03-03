@@ -1,0 +1,14 @@
+---
+- name: Install Build-essential
+  tags:
+  - build-essential
+  - rust
+  become: "{{ should_run_pkg_mgr_as_root }}"
+  block:
+  - name: Install Build-essential with a package manager
+    ansible.builtin.package:
+      name:
+      - build-essential
+      state: latest
+    when: ansible_pkg_mgr == 'apt'
+...
