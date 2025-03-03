@@ -1,9 +1,11 @@
 ---
 - name: Install Wget
   tags: wget
-  become_user: "{{ user }}"
+  become: "{{ should_run_pkg_mgr_as_root }}"
   block:
-    - name: Install Wget on MacOS
-      include_tasks: macos.yaml
-      when: ansible_distribution == "MacOSX"
+  - name: Install Wget with a package manager
+    ansible.builtin.package:
+      name:
+        - wget
+      state: latest
 ...
