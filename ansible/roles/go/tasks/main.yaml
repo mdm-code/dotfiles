@@ -37,7 +37,7 @@
       msg: "{{ setup_out }}"
 
   - name: Install Go programs
-    command: go install "{{ item }}"
+    command: "{{ home }}/.go/goroot/current/bin/go install {{ item }}"
     with_items: "{{ go_pkgs_to_install }}"
     when: go_pkgs_to_install is defined
     changed_when: false

@@ -67,5 +67,7 @@ version_dir="$goroot/$version"
 	tar -C "$version_dir" --strip-components=1 -xzf "$tarball"
 
 ln -sfn "$version_dir" "$goroot/current"
-mkdir -p "${gopath}/"{src,pkg,bin}
+mkdir -p "${gopath}/src"
+mkdir -p "${gopath}/pkg"
+mkdir -p "${gopath}/bin"
 rm -f "$tarball"
