@@ -1,0 +1,13 @@
+---
+- name: Install Curl
+  tags:
+  - curl
+  - go
+  become: "{{ should_run_pkg_mgr_as_root }}"
+  block:
+  - name: Install Curl with a package manager
+    ansible.builtin.package:
+      name:
+        - curl
+      state: latest
+...
