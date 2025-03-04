@@ -10,7 +10,7 @@ function cleanup() {
     container_id=$(docker inspect --format="{{.Id}}" "${NAME}" ||:)
     if [[ -n "${container_id}" ]]; then
         echo "Cleaning up container ${NAME}..."
-        docker rm --force "${container_id}"
+        # docker rm --force "${container_id}"
     fi
     if [[ -n "${TEMP_DIR:-}" && -d "${TEMP_DIR:-}" ]]; then
         echo "Cleaning up temporary directory ${TEMP_DIR}..."
@@ -53,7 +53,7 @@ EOL
 
 function run_ansible_playbook() {
     export ANSIBLE_CONFIG="${base_dir}/ansible.cfg"
-    ansible-playbook -i "${TEMP_INVENTORY_FILE}" -vvv "${base_dir}/../setup.yaml"
+    ansible-playbook -i "${TEMP_INVENTORY_FILE}" -vvv "${base_dir}/../setup.yaml"  --ask-vault-pass
 }
 
 setup_tempdir
