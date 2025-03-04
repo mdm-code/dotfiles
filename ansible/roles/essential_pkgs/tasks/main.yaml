@@ -1,0 +1,27 @@
+---
+- name: Install essential Linux packages
+  tags:
+  - essential-pkgs
+  - rust
+  - pyenv
+  become: "{{ should_run_pkg_mgr_as_root }}"
+  block:
+  - name: Install essential Linux packages with a package manager
+    ansible.builtin.package:
+      name:
+      - build-essential
+      - libssl-dev
+      - zlib1g-dev
+      - libbz2-dev
+      - libreadline-dev
+      - libsqlite3-dev
+      - libncursesw5-dev
+      - xz-utils
+      - tk-dev
+      - libxml2-dev
+      - libxmlsec1-dev
+      - libffi-dev
+      - liblzma-dev
+      state: latest
+    when: ansible_pkg_mgr == 'apt'
+...
