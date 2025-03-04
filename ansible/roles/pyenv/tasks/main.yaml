@@ -1,55 +1,60 @@
 ---
 - name: Install pyenv
-  tags: pyenv
+  tags:
+  - pyenv
+  become_user: "{{ user }}"
   block:
-    - name: Install pyenv from the git repository
-      git:
-        repo: https://github.com/pyenv/pyenv.git
-        dest: "{{ pyenv_root_dir }}"
+  - name: Install pyenv from the git repository
+    git:
+      repo: https://github.com/pyenv/pyenv.git
+      dest: "{{ pyenv_root_dir }}"
 
-    - name: Install pyenv-virtualenv plugin from the git repository
-      git:
-        repo: https://github.com/pyenv/pyenv-virtualenv.git
-        dest: "{{ pyenv_root_dir }}/plugins/pyenv-virtualenv"
+  - name: Install pyenv-virtualenv plugin from the git repository
+    git:
+      repo: https://github.com/pyenv/pyenv-virtualenv.git
+      dest: "{{ pyenv_root_dir }}/plugins/pyenv-virtualenv"
 
-    - name: Check if pyenv executable exists
-      stat:
-        path: "{{ pyenv_root_dir }}/bin/pyenv"
-      register: pyenv_executable_status
+  - name: Check if pyenv executable exists
+    stat:
+      path: "{{ pyenv_root_dir }}/bin/pyenv"
+    register: pyenv_executable_status
 
-    - name: Create soft link to pyenv executable
-      file:
-        src: "{{ pyenv_root_dir }}/bin/pyenv"
-        dest: /usr/local/bin/pyenv
-        state: link
-      when: pyenv_executable_status.stat.exists
+  - name: Create soft link to pyenv executable
+    become_user: root
+    become: true
+    file:
+      src: "{{ pyenv_root_dir }}/bin/pyenv"
+      dest: /usr/local/bin/pyenv
+      state: link
+    when: pyenv_executable_status.stat.exists
+    changed_when: false
+
+  - name: Install specified Python versions
+    shell: yes n | pyenv install "{{ item }}"
+    register: result
+    changed_when: result.rc == 0
+    failed_when: result.rc not in [ 0, 1 ]
+    when: pyenv_python_versions_to_install is defined
+    with_items: "{{ pyenv_python_versions_to_install }}"
+
+  - name: Set the global Python version in pyenv
+    block:
+    - name: Register the current Python global version for pyenv
+      command: pyenv global
+      register: pyenv_current_global_version
       changed_when: false
 
-    - name: Install specified Python versions
-      shell: yes n | pyenv install "{{ item }}"
-      register: result
-      changed_when: result.rc == 0
-      failed_when: result.rc not in [ 0, 1 ]
-      when: pyenv_python_versions_to_install is defined
-      with_items: "{{ pyenv_python_versions_to_install }}"
+    - set_fact:
+        pyenv_current_global_version="{{ pyenv_current_global_version.stdout }}"
 
-    - name: Set the global Python version in pyenv
-      block:
-      - name: Register the current Python global version for pyenv
-        command: pyenv global
-        register: pyenv_current_global_version
-        changed_when: false
+    - name: Change the global Python version in pyenv
+      shell: pyenv global "{{ pyenv_python_global_version }}" && pyenv global
+      when: pyenv_python_global_version is defined
+      register: pyenv_changed_global_version
+      changed_when: pyenv_current_global_version != pyenv_changed_global_version.stdout
 
-      - set_fact:
-          pyenv_current_global_version="{{ pyenv_current_global_version.stdout }}"
-
-      - name: Change the global Python version in pyenv
-        shell: pyenv global "{{ pyenv_python_global_version }}" && pyenv global
-        when: pyenv_python_global_version is defined
-        register: pyenv_changed_global_version
-        changed_when: pyenv_current_global_version != pyenv_changed_global_version.stdout
-
-    - name: Install Ansible package for the global Python interpreter
-      pip:
-        name: ansible
+  - name: Install Ansible package for the global Python interpreter
+    shell: eval "$(pyenv init -)" && pip3 install "{{ item }}"
+    when: pyenv_python_pkgs_to_global_install is defined
+    with_items: "{{ pyenv_python_pkgs_to_global_install }}"
 ...

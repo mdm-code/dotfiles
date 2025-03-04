@@ -1,7 +1,8 @@
 user: "$USER"
-home: "$HOME"
-pyenv_root_dir: "{{ home }}/.pyenv"
+pyenv_root_dir: "{{ ansible_env.HOME }}/.pyenv"
 pyenv_python_global_version: "3.11.8"
 pyenv_python_versions_to_install:
   - "{{ pyenv_python_global_version }}"
   - "3.12.4"
+pyenv_python_pkgs_to_global_install:
+  - ansible
