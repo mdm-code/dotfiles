@@ -1,6 +1,5 @@
 user: "$USER"
-home: "$HOME"
-nvm_default_dir: "{{ home }}/.config/nvm"
+nvm_default_dir: "{{ ansible_env.HOME }}/.config/nvm"
 nvm_repository_name: "nvm-sh/nvm"
 nvm_latest_version: "v0.39.7"
 # sha256sum install.sh to update the checksum

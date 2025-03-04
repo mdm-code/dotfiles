@@ -1,7 +1,6 @@
 ---
 - name: Ensure the expected Node versions are installed with Nvm
-  shell: >
-    . {{ nvm_default_dir }}/nvm.sh && nvm install {{ item }}
+  shell: "bash -ilc 'nvm install {{ item }}'"
   register: node_version_install_resp
   with_items: "{{ nvm_node_versions }}"
   when: nvm_node_versions is defined

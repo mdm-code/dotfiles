@@ -11,10 +11,16 @@
     mode: u=+rwx,g=+r-wx,o=+r-wx
     checksum: "{{ nvm_install_script_sha256_checksum }}"
 
+- name: Ensure Nvm default directory is present
+  file:
+    path: "{{ nvm_default_dir }}"
+    state: directory
+    mode: u=+rwx,g=+r-xw,o=+r-xw
+
 - name: Run Nvm installation script
   command: "bash {{ nvm_installation_temp_dir.path }}/install.sh"
-  args:
-    chdir: "{{ nvm_installation_temp_dir.path }}"
+  environment:
+    XDG_CONFIG_HOME: "{{ ansible_env.HOME }}/.config"
   changed_when: true
 
 - name: Delete Nvm installation temporary directory
