@@ -3,11 +3,13 @@
   tags:
   - curl
   - go
+  - rust
+  - nvm
   become: "{{ should_run_pkg_mgr_as_root }}"
   block:
   - name: Install Curl with a package manager
     ansible.builtin.package:
       name:
-        - curl
+      - curl
       state: latest
 ...
