@@ -1,32 +1,35 @@
 ---
 - name: Install Bash
-  tags: bash
+  tags:
+  - bash
   block:
-    - name: Install recent Bash version on MacOS
-      include_tasks: macos.yaml
-      when: ansible_distribution == "MacOSX"
+  - name: Install Bash with a package manager
+    ansible.builtin.package:
+      name:
+        - bash
+      state: latest
 
-    - name: Install Bash on Debian-based OS with APT
-      import_tasks: debian.yaml
-      when: >
-        ansible_distribution == "Debian" or
-        ansible_distribution == "Ubuntu"
+  - name: Install Bash Completion with a package manager
+    ansible.builtin.package:
+      name:
+        - {{ bash-completion@2 if ansible_os_family == 'Darwin' else bash-completion }}
+      state: latest
 
-    - name: Check if Pyenv is installed
-      shell: "command -v pyenv"
-      register: pyenv_exists
-      changed_when: false
-      ignore_errors: true
+  - name: Check if Pyenv is installed
+    shell: "command -v pyenv"
+    register: pyenv_exists
+    changed_when: false
+    ignore_errors: true
 
-    - name: Ensure Bash configuration file is present
-      template:
-        src: templates/bashrc.j2
-        dest: "{{ bash_default_dir }}/.bashrc"
-        mode: u=+rwx,g=+r-wx,o=+r-wx
+  - name: Ensure Bash configuration file is present
+    template:
+      src: templates/bashrc.j2
+      dest: "{{ bash_default_dir }}/.bashrc"
+      mode: u=+rwx,g=+r-wx,o=+r-wx
 
-    - name: Ensure Bash profile file is present
-      copy:
-        src: files/profile
-        dest: "{{ bash_default_dir }}/.profile"
-        mode: u=+rwx,g=+r-wx,o=+r-wx
+  - name: Ensure Bash profile file is present
+    copy:
+      src: files/profile
+      dest: "{{ bash_default_dir }}/.profile"
+      mode: u=+rwx,g=+r-wx,o=+r-wx
 ...

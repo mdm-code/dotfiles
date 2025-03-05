@@ -30,8 +30,13 @@ export PYTHONDONTWRITEBYTECODE=2
 
 # PATH =================================================== #
 path=(
-{% if bash_paths is defined %}
-{% for path in bash_paths %}
+{% if bash_paths_darwin is defined and ansible_os_family == 'Darwin' %}
+{% for path in bash_paths_darwin %}
+	"{{ path }}"
+{% endfor %}
+{% endif %}
+{% if bash_paths_linux is defined %}
+{% for path in bash_paths_linux %}
 	"{{ path }}"
 {% endfor %}
 {% endif %}
@@ -128,7 +133,7 @@ alias \
 
 
 # COMPLETIONS ============================================ #
-{% if ansible_distribution == "MacOSX" %}
+{% if ansible_os_family == "Darwin" %}
 # OSX doesn't have Bash completions installed by default.
 shopt -q progcomp && [ -r "/usr/local/etc/profile.d/bash_completion.sh" ] && \
 	source "/usr/local/etc/profile.d/bash_completion.sh"
