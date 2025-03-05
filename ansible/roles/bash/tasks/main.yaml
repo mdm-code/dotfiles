@@ -34,4 +34,10 @@
       src: files/profile
       dest: "{{ bash_default_dir }}/.profile"
       mode: u=+rwx,g=+r-wx,o=+r-wx
+
+  - name: Ensure the inputrc file is present
+    copy:
+      src: files/inputrc
+      dest: "{{ ansible_env.HOME }}/.inputrc"
+      mode: u=+rwx,g=+r-wx,o=+r-wx
 ...
