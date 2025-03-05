@@ -4,15 +4,17 @@
   - bash
   block:
   - name: Install Bash with a package manager
+    become: "{{ should_run_pkg_mgr_as_root }}"
     ansible.builtin.package:
       name:
         - bash
       state: latest
 
   - name: Install Bash Completion with a package manager
+    become: "{{ should_run_pkg_mgr_as_root }}"
     ansible.builtin.package:
       name:
-        - {{ bash-completion@2 if ansible_os_family == 'Darwin' else bash-completion }}
+        - "{{ 'bash-completion@2' if ansible_os_family == 'Darwin' else 'bash-completion' }}"
       state: latest
 
   - name: Check if Pyenv is installed
