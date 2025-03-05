@@ -71,7 +71,7 @@
       register: pyenv_changed_global_version
       changed_when: pyenv_current_global_version != pyenv_changed_global_version.stdout
 
-  - name: Install Ansible package for the global Python interpreter
+  - name: Install packages for the global Python interpreter
     shell: eval "$(pyenv init -)" && pip3 install "{{ item }}"
     when: pyenv_python_pkgs_to_global_install is defined
     with_items: "{{ pyenv_python_pkgs_to_global_install }}"
