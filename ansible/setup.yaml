@@ -1,9 +1,21 @@
 ---
+# TODO: use "{{ ansible_env.HOME }}" instead of $HOME
+# TODO: Check deps and indentation, and make tags for roles lists
+# TODO: Check become_user when directories are created
+# TODO: replace build_essential with pyenv required packages
+# TODO: add .inputrc (for vim motions in psql/python repl and the like)
+# TODO replace ansible_pkg_mgr with os_family ??
+# bash should come after pyenv and the like
 - hosts: localservers
   vars:
-    should_run_pkg_mgr_as_root: "{{ true if ansible_pkg_mgr != 'homebrew' else false }}"
+    should_run_pkg_mgr_as_root: "{{ true if ansible_os_family != 'Darwin' else false }}"
   roles:
+    # NOTE: no deps
+    # - essential_pkgs
     # - git
+    # - curl
+    # - wget
+    # - entr
     # - gh
     # - lf
     # - fzf
@@ -11,18 +23,18 @@
     # - ripgrep
     # - node
     # - tmux
-    # - smug
-    # - wget
     # - exec
-    # - go
-    # - goreleaser
-    # - rust
-    # - nvm
     # - lynx
-    # - pyenv
-    # - bash
+    # - goreleaser
+
+    # NOTE: deps
+    # - go  # curl
+    # - rust  # curl, essential_pkgs (for pkg installation)
+    # - nvm  # git, curl
+    # - pyenv  # git, essential_pkgs (for python installation from source)
+
+    - bash
     # - shellcheck
-    - entr
     # - tree
     # - htop
     # - jq

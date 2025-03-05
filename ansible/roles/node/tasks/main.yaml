@@ -6,6 +6,6 @@
   - name: Install Node with a package manager
     ansible.builtin.package:
       name:
-        - "{{ 'nodejs' if ansible_pkg_mgr == 'apt' else 'node' }}"
+        - "{{ 'nodejs' if ansible_os_family == 'Debian' else 'node' }}"
       state: latest
 ...

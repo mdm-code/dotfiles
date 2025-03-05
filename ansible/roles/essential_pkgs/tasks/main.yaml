@@ -23,5 +23,5 @@
       - libffi-dev
       - liblzma-dev
       state: latest
-    when: ansible_pkg_mgr == 'apt'
+    when: ansible_os_family == 'Debian'
 ...

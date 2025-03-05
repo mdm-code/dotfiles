@@ -10,6 +10,6 @@
         # distros. On *most* other distros it's 'fd', but on Fedora it's also
         # 'fd-find'. I am not planning to play around with Fedora. Check the
         # README file in case the task fails.
-        - "{{ 'fd-find' if ansible_pkg_mgr == 'apt' else 'fd' }}"
+        - "{{ 'fd-find' if ansible_os_family == 'Debian' else 'fd' }}"
       state: latest
 ...

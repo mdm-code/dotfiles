@@ -7,7 +7,7 @@
     ansible.builtin.apt_repository:
       repo: "deb [trusted=yes] https://repo.goreleaser.com/apt/ /"
       state: present
-    when: ansible_pkg_mgr == 'apt'
+    when: ansible_os_family == 'Debian'
 
   - name: Install Goreleaser with a package manager
     ansible.builtin.package:
