@@ -4,7 +4,6 @@
   become: "{{ should_run_pkg_mgr_as_root }}"
   block:
   - name: "Configure APT repository on a {{ ansible_os_family }}-based operating system."
-    when: ansible_os_family == "Debian"
     block:
       - name: Add the GPG key to APT
         ansible.builtin.get_url:
@@ -18,6 +17,7 @@
           filename: "{{ wezterm_apt_repository_name }}"
           repo: "deb [signed-by={{ wezterm_apt_key_destination }}] https://apt.fury.io/wez/ * *"
           state: present
+    when: ansible_os_family == "Debian"
 
   - name: Install Wezterm with a package manager
     ansible.builtin.package:
