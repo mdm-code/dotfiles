@@ -1,21 +1,39 @@
 ---
 - name: Install Wezterm
   tags: wezterm
-  become_user: "{{ user }}"
+  become: "{{ should_run_pkg_mgr_as_root }}"
   block:
-    - name: Install Wezterm on MacOS
-      include_tasks: macos.yaml
-      when: ansible_distribution == "MacOSX"
+  - name: "Configure APT repository on a {{ ansible_os_family }}-based operating system."
+    when: ansible_os_family == "Debian"
+    block:
+      - name: Add the GPG key to APT
+        ansible.builtin.get_url:
+          url: "{{ wezterm_apt_key_url }}"
+          dest: "{{ wezterm_apt_key_destination }}"
+          mode: "0644"
+          force: true
 
-    - name: Ensure that Wezterm configuration directory is present
-      file:
-        path: "{{ wezterm_config_dir }}"
-        state: directory
-        mode: u=+rwx,g=+r-wx,o=+r-wx
+      - name: Add the repository to APT
+        ansible.builtin.apt_repository:
+          filename: "{{ wezterm_apt_repository_name }}"
+          repo: "deb [signed-by={{ wezterm_apt_key_destination }}] https://apt.fury.io/wez/ * *"
+          state: present
 
-    - name: Ensure Wezterm configuration files are present
-      copy:
-        src: files/
-        dest: "{{ wezterm_config_dir }}/"
-        mode: u=+rw,g=+r-wx,o=+r-wx
+  - name: Install Wezterm with a package manager
+    ansible.builtin.package:
+      name:
+      - wezterm
+      state: present
+
+  - name: Ensure that Wezterm configuration directory is present
+    file:
+      path: "{{ wezterm_config_dir }}"
+      state: directory
+      mode: u=+rwx,g=+r-wx,o=+r-wx
+
+  - name: Ensure Wezterm configuration files are present
+    copy:
+      src: files/
+      dest: "{{ wezterm_config_dir }}/"
+      mode: u=+rw,g=+r-wx,o=+r-wx
 ...
