@@ -22,6 +22,7 @@
       - libxmlsec1-dev
       - libffi-dev
       - liblzma-dev
+      - gnupg
       state: latest
     when: ansible_os_family == 'Debian'
 ...
