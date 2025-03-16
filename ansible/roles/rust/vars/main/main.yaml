@@ -3,3 +3,4 @@ rustup_binary_path: "{{ home }}/.cargo/bin/rustup"
 cargo_binary_path: "{{ home }}/.cargo/bin/cargo"
 rust_cargo_pkgs:
   - htmx-lsp
+  - tree-sitter-cli
