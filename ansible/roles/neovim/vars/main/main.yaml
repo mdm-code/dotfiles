@@ -1,11 +1,9 @@
 user: "$USER"
-home: "$HOME"
-neovim_config_dir: "{{ home }}/.config/nvim"
+neovim_config_dir: "{{ ansible_env.HOME }}/.config/nvim"
 
 neovim_release_version: "latest"
-neovim_os_arch_releases: {
-  "MacOSX": "nvim-macos-x86_64",
+neovim_os_family_release: {
+  "Darwin": "nvim-macos-x86_64",
   "Debian": "nvim-linux64",
-  "Ubuntu": "nvim-linux64",
 }
-neovim_release_source_url: "https://github.com/neovim/neovim/releases/latest/download/{{ ansible_distribution | extract(neovim_os_arch_releases) }}.tar.gz"
+neovim_release_source_url: "https://github.com/neovim/neovim/releases/latest/download/{{ ansible_os_family | extract(neovim_os_family_release) }}.tar.gz"
