@@ -2,7 +2,6 @@
 - name: Setup Go programming language
   tags:
   - go
-  - smug
   block:
   - name: Ensure Go configuration directory is present
     file:
