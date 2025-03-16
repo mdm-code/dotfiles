@@ -12,3 +12,4 @@ go_pkgs_to_install:
   - "golang.org/x/tools/cmd/goimports@latest"
   - "mvdan.cc/gofumpt@latest"
   - "github.com/ivaaaan/smug@latest"
+  - "golang.org/x/tools/gopls@latest"
