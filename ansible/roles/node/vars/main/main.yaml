@@ -1,0 +1,4 @@
+node_npm_packages:
+  - pyright
+  - vscode-langservers-extracted
+  - neovim

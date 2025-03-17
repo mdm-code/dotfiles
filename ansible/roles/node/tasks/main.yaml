@@ -6,6 +6,21 @@
   - name: Install Node with a package manager
     ansible.builtin.package:
       name:
-        - "{{ 'nodejs' if ansible_os_family == 'Debian' else 'node' }}"
+      - "{{ 'nodejs' if ansible_os_family == 'Debian' else 'node' }}"
       state: latest
+
+  - name: Install Npm with a package manager on Debian
+    ansible.builtin.package:
+      name:
+      - npm
+      state: latest
+    when: ansible_os_family == 'Debian'
+
+  - name: Install packages with Npm
+    command: "npm install -g {{ item }}"
+    register: result
+    check_mode: false
+    changed_when: false
+    failed_when: result.rc != 0
+    with_items: "{{ node_npm_packages }}"
 ...
