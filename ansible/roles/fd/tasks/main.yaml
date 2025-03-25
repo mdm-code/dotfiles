@@ -12,4 +12,11 @@
         # README file in case the task fails.
         - "{{ 'fd-find' if ansible_os_family == 'Debian' else 'fd' }}"
       state: latest
+
+  - name: Link Fdfind on Debian-based distributions to Fd
+    file:
+      src: /usr/bin/fdfind
+      dest: /usr/local/bin/fd
+      state: link
+    when: ansible_os_family == 'Debian'
 ...
