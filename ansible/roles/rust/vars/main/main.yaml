@@ -1,6 +1,8 @@
-home: "$HOME"
-rustup_binary_path: "{{ home }}/.cargo/bin/rustup"
-cargo_binary_path: "{{ home }}/.cargo/bin/cargo"
+rustup_binary_path: "{{ ansible_env.HOME }}/.cargo/bin/rustup"
+cargo_pkgs_path: "{{ ansible_env.HOME }}/.cargo/bin"
+cargo_binary_path: "{{ cargo_pkgs_path }}/cargo"
 rust_cargo_pkgs:
-  - htmx-lsp
-  - tree-sitter-cli
+  - name: htmx-lsp
+    binary: htmx-lsp
+  - name: tree-sitter-cli
+    binary: tree-sitter

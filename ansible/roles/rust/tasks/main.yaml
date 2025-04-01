@@ -15,9 +15,19 @@
     when: rust_installed.stat.exists == false
 
   - name: Install Rust packages
-    command: "{{ cargo_binary_path }} install {{ item }}"
+    command: "{{ cargo_binary_path }} install {{ item.name }}"
     with_items: "{{ rust_cargo_pkgs }}"
     register: rust_package_installation_log
     changed_when: "'already installed' not in rust_package_installation_log.stderr"
     when: rust_cargo_pkgs is defined
+
+  - name: Create soft links for Rust cargo-installed binaries
+    become_user: root
+    become: true
+    file:
+      src: "{{ cargo_pkgs_path }}/{{ item.binary }}"
+      dest: "/usr/local/bin/{{ item.binary }}"
+      state: link
+    when: rust_cargo_pkgs is defined
+    with_items: "{{ rust_cargo_pkgs }}"
 ...
