@@ -19,9 +19,11 @@
     - name: Copy Zet scripts to the destination directory
       copy:
         src: "{{ zet_clone_temp_dir.path }}/zet"
-        dest: "{{ dest_dir }}/{{ item }}"
+        dest: "{{ dest_dir }}/{{ script_mode }}"
         mode: u=+rwx,g=+r-wx,o=+r-wx
         force: true
+      loop_control:
+        loop_var: script_mode
       loop: "{{ zet_script_modes }}"
 
     - name: Delete Zet Git repository temporary directory
