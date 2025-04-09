@@ -1,14 +1,15 @@
-export GOROOT_BIN="{{ home }}/.go/goroot/current/bin"
-export GOPATH_BIN="{{ home }}/.go/gopath/bin"
+export GOPATH="{{ go_gopath_env }}"
+export GOROOT="{{ go_goroot_env }}"
+export GOBIN="{{ go_gobin_env }}"
+
+export GOROOT_BIN="{{ go_goroot_env }}/bin"
+export GOPATH_BIN="{{ go_gobin_env }}"
+
+export GOPROXY="direct"
+export CGO_ENABLED=0
 
 path=(
 	"$GOROOT_BIN"
 	"$GOPATH_BIN"
 )
 export PATH="$( IFS=":" ; echo "${path[*]}" ):$PATH"
-
-export GOROOT="$(go env GOROOT)"
-export GOPATH="$(go env GOPATH)"
-export GOBIN="$GOPATH/bin"
-export GOPROXY="direct"
-export CGO_ENABLED=0
