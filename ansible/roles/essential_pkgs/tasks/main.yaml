@@ -6,6 +6,7 @@
   - pyenv
   - wezterm
   become: "{{ should_run_pkg_mgr_as_root }}"
+  when: ansible_os_family == 'Debian'
   block:
   - name: Install essential Linux packages with a package manager
     ansible.builtin.package:
@@ -24,6 +25,9 @@
       - libffi-dev
       - liblzma-dev
       - gnupg
+      - locales
       state: latest
-    when: ansible_os_family == 'Debian'
+
+  - name: Generate required locales
+    ansible.builtin.command: "locale-gen en_US.UTF-8"
 ...
