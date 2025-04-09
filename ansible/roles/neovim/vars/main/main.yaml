@@ -1,9 +1,27 @@
-user: "$USER"
-neovim_config_dir: "{{ ansible_env.HOME }}/.config/nvim"
-
+neovim_home_dir: "{{ ansible_env.HOME }}"
+neovim_config_dir: "{{ neovim_home_dir }}/.config/nvim"
 neovim_release_version: "latest"
 neovim_os_family_release: {
   "Darwin": "nvim-macos-x86_64",
-  "Debian": "nvim-linux64",
+  "Debian": "nvim-linux-x86_64",
 }
 neovim_release_source_url: "https://github.com/neovim/neovim/releases/latest/download/{{ ansible_os_family | extract(neovim_os_family_release) }}.tar.gz"
+neovim_template_config_files:
+ - src: "templates/lua/settings/python.lua.j2"
+   dest: "lua/settings/python.lua"
+   mode: "u=+rwx,g=+r-wx,o=+r-wx"
+neovim_dependencies:
+  - name: git
+    command: git version
+  - name: pyenv
+    command: pyenv --version
+  - name: node
+    command: node --version
+  - name: npm
+    command: npm --version
+  - name: ripgrep
+    command: rg --version
+  - name: fd
+    command: fd --version
+  - name: tree-sitter
+    command: tree-sitter --version

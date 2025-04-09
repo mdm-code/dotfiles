@@ -23,6 +23,7 @@
       changed_when: false
 
     - name: Extract Neovim release source files
+      become: true
       unarchive:
         src: "{{neovim_source_temp_dir.path}}/{{neovim_release_source_url | basename}}"
         dest: /opt/nvim
@@ -37,6 +38,7 @@
       register: nvim_executable_status
 
     - name: Create soft link to Neovim binary
+      become: true
       file:
         src: /opt/nvim/bin/nvim
         dest: /usr/local/bin/nvim
