@@ -5,9 +5,11 @@
   block:
     - name: Copy custom executables to the target bin directory
       copy:
-        src: "{{ item }}"
+        src: "{{ executable }}"
         dest: "{{ dest_dir }}"
         mode: u=+rwx,g=+rx-w,o=+rx-w
         owner: "{{ lookup('ansible.builtin.env', 'USER', default=Undefined) }}"
+      loop_control:
+        loop_var: executable
       loop: "{{ query('fileglob', 'files/*') }}"
 ...
