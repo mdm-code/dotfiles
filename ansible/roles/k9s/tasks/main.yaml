@@ -1,9 +1,33 @@
 ---
 - name: Install K9s
   tags: k9s
-  become_user: "{{ user }}"
   block:
-    - name: Install K9s on MacOS
-      include_tasks: macos.yaml
-      when: ansible_distribution == "MacOSX"
+  - name: Create temporary directory for the K9s archive
+    ansible.builtin.tempfile:
+      state: directory
+    register: k9s_source_temp_dir
+    changed_when: false
+
+  - name: Extract K9s release source files
+    become: true
+    ansible.builtin.unarchive:
+      src: "{{ k9s_release_source_url }}"
+      dest: "{{ k9s_source_temp_dir.path }}"
+      remote_src: true
+    changed_when: false
+
+  - name: Copy the K9s binary to the destination catalog
+    become: true
+    ansible.builtin.copy:
+      src: "{{ k9s_source_temp_dir.path }}/k9s"
+      dest: "{{ k9s_binary_dest_dir }}/k9s"
+      mode: u=+rwx,g=+rx-x,o=+rx-w
+      remote_src: true
+
+  - name: Ensure the temporary directory for K9s source files is removed
+    ansible.builtin.file:
+      path: "{{ k9s_source_temp_dir.path }}"
+      state: absent
+    when: k9s_source_temp_dir is defined
+    changed_when: false
 ...

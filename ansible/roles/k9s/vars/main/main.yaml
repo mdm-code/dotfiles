@@ -1,1 +1,7 @@
-user: "$USER"
+k9s_release_version: "v0.50.3"
+k9s_os_family_release: {
+  "Darwin": "k9s_Darwin_amd64",
+  "Debian": "k9s_Linux_amd64",
+}
+k9s_release_source_url: "https://github.com/derailed/k9s/releases/download/{{ k9s_release_version }}/{{ ansible_os_family | extract(k9s_os_family_release) }}.tar.gz"
+k9s_binary_dest_dir: "/usr/local/bin"
