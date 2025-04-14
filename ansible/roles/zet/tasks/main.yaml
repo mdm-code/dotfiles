@@ -38,11 +38,4 @@
         path: "{{ zet_notes_dir }}"
         state: directory
         mode: u=+rwx,g=+r-wx,o=+r-wx
-
-    - name: Ensure that Fzf is installed and available
-      command: fzf --version
-      register: fzf_exists
-      check_mode: false
-      changed_when: false
-      failed_when: fzf_exists.rc != 0
 ...
