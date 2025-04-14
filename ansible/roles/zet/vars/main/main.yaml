@@ -1,8 +1,7 @@
-user: "$USER"
-home: "$HOME"
 zet_repository_url: https://github.com/mdm-code/zet.git
+zet_notes_repository_url: https://github.com/mdm-code/zettelkasten.git
 dest_dir: "/usr/local/bin"
-zet_notes_dir: "{{ home }}/zettel"
+zet_notes_dir: "{{ ansible_env.HOME }}/zettel"
 zet_script_modes:
   - zet
   - zetf

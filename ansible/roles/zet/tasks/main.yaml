@@ -1,41 +1,48 @@
 ---
-- name: Install Zet scripts to manage personal notes
+- name: Install Zet scripts and personal zettelkasten notes
   tags: zet
-  become_user: "{{ user }}"
   block:
-    - name: Ensure temporary directory to clone Zet Git repository exists
-      tempfile:
-        state: directory
-      register: zet_clone_temp_dir
-      changed_when: false
+  - name: Ensure temporary directory to clone Zet scripts git repository exists
+    tempfile:
+      state: directory
+    register: zet_clone_temp_dir
+    changed_when: false
 
-    - name: Clone Zet Git repository
-      git:
-        repo: "{{ zet_repository_url }}"
-        dest: "{{ zet_clone_temp_dir.path }}"
-        clone: yes
-      changed_when: false
+  - name: Clone Zet scripts git repository
+    git:
+      repo: "{{ zet_repository_url }}"
+      dest: "{{ zet_clone_temp_dir.path }}"
+      clone: yes
+    changed_when: false
 
-    - name: Copy Zet scripts to the destination directory
-      copy:
-        src: "{{ zet_clone_temp_dir.path }}/zet"
-        dest: "{{ dest_dir }}/{{ script_mode }}"
-        mode: u=+rwx,g=+r-wx,o=+r-wx
-        force: true
-      loop_control:
-        loop_var: script_mode
-      loop: "{{ zet_script_modes }}"
+  - name: Copy Zet scripts to the destination directory
+    become: true
+    copy:
+      src: "{{ zet_clone_temp_dir.path }}/zet"
+      dest: "{{ dest_dir }}/{{ script_mode }}"
+      mode: u=+rwx,g=+r-wx,o=+r-wx
+      remote_src: true
+      force: true
+    loop_control:
+      loop_var: script_mode
+    loop: "{{ zet_script_modes }}"
 
-    - name: Delete Zet Git repository temporary directory
-      file:
-        path: "{{ zet_clone_temp_dir.path }}"
-        state: absent
-      when: zet_clone_temp_dir is defined
-      changed_when: false
+  - name: Delete Zet scripts Git repository temporary directory
+    file:
+      path: "{{ zet_clone_temp_dir.path }}"
+      state: absent
+    when: zet_clone_temp_dir is defined
+    changed_when: false
 
-    - name: Make sure that the directory with zettelkasten notes exists
-      file:
-        path: "{{ zet_notes_dir }}"
-        state: directory
-        mode: u=+rwx,g=+r-wx,o=+r-wx
+  - name: Check if directory with zettelkasten notes has already been cloned
+    stat:
+      path: "{{ zet_notes_dir }}"
+    register: zet_notes_dir_cloned
+    changed_when: false
+
+  - name: Clone the git repository with the existing zettelkasten notes
+    git:
+      repo: "{{ zet_notes_repository_url }}"
+      dest: "{{ zet_notes_dir }}"
+    when: not zet_notes_dir_cloned.stat.exists
 ...
