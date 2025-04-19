@@ -1,9 +1,20 @@
 ---
 - name: Install Kubectl
   tags: kubectl
-  become_user: "{{ user }}"
   block:
-    - name: Install Kubectl on MacOS
-      include_tasks: macos.yaml
-      when: ansible_distribution == "MacOSX"
+  - name: Get latest stable release version
+    ansible.builtin.uri:
+      url: https://dl.k8s.io/release/stable.txt
+      method: GET
+      follow_redirects: "safe"
+      return_content: true
+    register: kubectl_stable_release_version
+    changed_when: false
+
+  - name: Get Kubectl released binary to the destination directory
+    become: true
+    ansible.builtin.get_url:
+      url: "{{ kubectl_release_source_url }}"
+      dest: "{{ kubectl_binary_dest_dir }}/kubectl"
+      mode: u=+rwx,g=+rx-x,o=+rx-w
 ...
