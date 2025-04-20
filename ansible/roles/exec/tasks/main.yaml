@@ -1,15 +1,16 @@
 ---
 - name: Include custom shell executables
-  tags: exec
+  tags:
+  - exec
   become: true
   block:
-    - name: Copy custom executables to the target bin directory
-      copy:
-        src: "{{ executable }}"
-        dest: "{{ dest_dir }}"
-        mode: u=+rwx,g=+rx-w,o=+rx-w
-        owner: "{{ lookup('ansible.builtin.env', 'USER', default=Undefined) }}"
-      loop_control:
-        loop_var: executable
-      loop: "{{ query('fileglob', 'files/*') }}"
+  - name: Copy custom executables to the target bin directory
+    ansible.builtin.copy:
+      src: "{{ executable }}"
+      dest: "{{ dest_dir }}"
+      mode: u=+rwx,g=+rx-w,o=+rx-w
+      owner: "{{ lookup('ansible.builtin.env', 'USER', default=Undefined) }}"
+    loop_control:
+      loop_var: executable
+    loop: "{{ query('fileglob', 'files/*') }}"
 ...
