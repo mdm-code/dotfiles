@@ -1,6 +1,7 @@
 ---
 - name: Install Yq
-  tags: yq
+  tags:
+  - yq
   become: "{{ should_run_pkg_mgr_as_root }}"
   block:
   - name: Install Yq with a package manager

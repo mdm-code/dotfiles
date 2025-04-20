@@ -1,15 +1,16 @@
 ---
 - name: Install Zet scripts and personal zettelkasten notes
-  tags: zet
+  tags:
+  - zet
   block:
   - name: Ensure temporary directory to clone Zet scripts git repository exists
-    tempfile:
+    ansible.builtin.tempfile:
       state: directory
     register: zet_clone_temp_dir
     changed_when: false
 
   - name: Clone Zet scripts git repository
-    git:
+    ansible.builtin.git:
       repo: "{{ zet_repository_url }}"
       dest: "{{ zet_clone_temp_dir.path }}"
       clone: yes
@@ -17,7 +18,7 @@
 
   - name: Copy Zet scripts to the destination directory
     become: true
-    copy:
+    ansible.builtin.copy:
       src: "{{ zet_clone_temp_dir.path }}/zet"
       dest: "{{ dest_dir }}/{{ script_mode }}"
       mode: u=+rwx,g=+r-wx,o=+r-wx
@@ -28,20 +29,20 @@
     loop: "{{ zet_script_modes }}"
 
   - name: Delete Zet scripts Git repository temporary directory
-    file:
+    ansible.builtin.file:
       path: "{{ zet_clone_temp_dir.path }}"
       state: absent
     when: zet_clone_temp_dir is defined
     changed_when: false
 
   - name: Check if directory with zettelkasten notes has already been cloned
-    stat:
+    ansible.builtin.stat:
       path: "{{ zet_notes_dir }}"
     register: zet_notes_dir_cloned
     changed_when: false
 
   - name: Clone the git repository with the existing zettelkasten notes
-    git:
+    ansible.builtin.git:
       repo: "{{ zet_notes_repository_url }}"
       dest: "{{ zet_notes_dir }}"
     when: not zet_notes_dir_cloned.stat.exists

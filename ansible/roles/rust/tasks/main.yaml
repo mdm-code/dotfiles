@@ -4,18 +4,18 @@
   - rust
   block:
   - name: Check if Rust is already installed
-    stat:
+    ansible.builtin.stat:
       path: "{{ rustup_binary_path }}"
     register: rust_installed
 
   - name: Install Rust with the official installer
-    shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    ansible.builtin.shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
     args:
       creates: "{{ rustup_binary_path }}"
     when: rust_installed.stat.exists == false
 
   - name: Install Rust packages
-    command: "{{ cargo_binary_path }} install {{ item.name }}"
+    ansible.builtin.command: "{{ cargo_binary_path }} install {{ item.name }}"
     with_items: "{{ rust_cargo_pkgs }}"
     register: rust_package_installation_log
     changed_when: "'already installed' not in rust_package_installation_log.stderr"
@@ -24,7 +24,7 @@
   - name: Create soft links for Rust cargo-installed binaries
     become_user: root
     become: true
-    file:
+    ansible.builtin.file:
       src: "{{ cargo_pkgs_path }}/{{ item.binary }}"
       dest: "/usr/local/bin/{{ item.binary }}"
       state: link

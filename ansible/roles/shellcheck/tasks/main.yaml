@@ -1,6 +1,7 @@
 ---
 - name: Install Shellcheck
-  tags: shellcheck
+  tags:
+  - shellcheck
   become: "{{ should_run_pkg_mgr_as_root }}"
   block:
   - name: Install Shellcheck with a package manager

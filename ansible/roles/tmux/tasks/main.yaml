@@ -1,22 +1,23 @@
 ---
 - name: Install Tmux
-  tags: tmux
+  tags:
+  - tmux
   become: "{{ should_run_pkg_mgr_as_root }}"
   block:
   - name: Install Tmux with a package manager
     ansible.builtin.package:
       name:
-        - tmux
+      - tmux
       state: latest
 
   - name: Ensure Tmux configuration directory is present
-    file:
+    ansible.builtin.file:
       path: "{{ tmux_config_dir }}"
       state: directory
       mode: u=+rwx,g=+r-wx,o=+r-wx
 
   - name: Ensure Tmux configuration file is available
-    template:
+    ansible.builtin.template:
       src: templates/tmux.j2
       dest: "{{ tmux_config_file_path }}"
       mode: u=+rw-x,g=+r-wx,o=+r-wx

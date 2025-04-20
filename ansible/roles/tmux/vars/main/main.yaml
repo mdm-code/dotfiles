@@ -1,3 +1,2 @@
-home: "$HOME"
-tmux_config_dir: "{{ home }}/.config/tmux"
+tmux_config_dir: "{{ ansible_env.HOME }}/.config/tmux"
 tmux_config_file_path: "{{ tmux_config_dir }}/tmux.conf"
