@@ -18,25 +18,25 @@
       state: latest
 
   - name: Check if Pyenv is installed
-    shell: "command -v pyenv"
+    ansible.builtin.shell: "command -v pyenv"
     register: pyenv_exists
     changed_when: false
     ignore_errors: true
 
   - name: Ensure Bash configuration file is present
-    template:
+    ansible.builtin.template:
       src: templates/bashrc.j2
       dest: "{{ bash_default_dir }}/.bashrc"
       mode: u=+rwx,g=+r-wx,o=+r-wx
 
   - name: Ensure Bash profile file is present
-    copy:
+    ansible.builtin.copy:
       src: files/profile
       dest: "{{ bash_default_dir }}/.profile"
       mode: u=+rwx,g=+r-wx,o=+r-wx
 
   - name: Ensure the inputrc file is present
-    copy:
+    ansible.builtin.copy:
       src: files/inputrc
       dest: "{{ inputrc_default_dir }}/.inputrc"
       mode: u=+rwx,g=+r-wx,o=+r-wx
