@@ -2,78 +2,78 @@
 - name: Install Neovim
   tags: neovim
   block:
-    - name: Install Neovim from the source release files
-      import_tasks: install_from_source.yaml
+  - name: Install Neovim from the source release files
+    import_tasks: install_from_source.yaml
 
-    - name: Confirm that dependencies are available
-      become: true
-      command: "{{ item.command }}"
-      register: result
-      check_mode: false
-      changed_when: false
-      failed_when: result.rc != 0
-      with_items: "{{ neovim_dependencies }}"
+  - name: Confirm that dependencies are available
+    become: true
+    ansible.builtin.command: "{{ item.command }}"
+    register: result
+    check_mode: false
+    changed_when: false
+    failed_when: result.rc != 0
+    with_items: "{{ neovim_dependencies }}"
 
-    - name: Ensure the dedicated Python virtual environment is created with Pyenv
-      command: pyenv virtualenv neovim
-      check_mode: false
-      changed_when: false
-      ignore_errors: true
-      when: pyenv_exists.rc == 0
+  - name: Ensure the dedicated Python virtual environment is created with Pyenv
+    ansible.builtin.command: pyenv virtualenv neovim
+    check_mode: false
+    changed_when: false
+    ignore_errors: true
+    when: pyenv_exists.rc == 0
 
-    - name: Register the path to the Pyenv root directory
-      command: pyenv root
-      register: pyenv_root
-      check_mode: false
-      changed_when: false
-      when: pyenv_exists.rc == 0
+  - name: Register the path to the Pyenv root directory
+    ansible.builtin.command: pyenv root
+    register: pyenv_root
+    check_mode: false
+    changed_when: false
+    when: pyenv_exists.rc == 0
 
-    - name: >-
-        Register the path to the Python interpreter from the virtual environment
-        created with Pyenv
-      set_fact:
-        pyenv_neovim_env_exec: "{{ pyenv_root.stdout }}/versions/neovim/bin/python"
-      when: pyenv_exists.rc == 0
+  - name: >-
+      Register the path to the Python interpreter from the virtual environment
+      created with Pyenv
+    set_fact:
+      pyenv_neovim_env_exec: "{{ pyenv_root.stdout }}/versions/neovim/bin/python"
+    when: pyenv_exists.rc == 0
 
-    - name: >-
-        Make sure that pynvim Python package is installed in the provided
-        virtual environment
-      command: "{{ pyenv_neovim_env_exec }} -m pip install pynvim"
-      register: pynvim_install_result
-      check_mode: false
-      changed_when: false
-      failed_when: pynvim_install_result.rc != 0
+  - name: >-
+      Make sure that pynvim Python package is installed in the provided
+      virtual environment
+    ansible.builtin.command: "{{ pyenv_neovim_env_exec }} -m pip install pynvim"
+    register: pynvim_install_result
+    check_mode: false
+    changed_when: false
+    failed_when: pynvim_install_result.rc != 0
 
-    - name: Ensure that Neovim configuration directory is present
-      file:
-        path: "{{ neovim_config_dir }}"
-        state: directory
-        mode: u=+rwx,g=+r-wx,o=+r-wx
+  - name: Ensure that Neovim configuration directory is present
+    ansible.builtin.file:
+      path: "{{ neovim_config_dir }}"
+      state: directory
+      mode: u=+rwx,g=+r-wx,o=+r-wx
 
-    - name: Ensure Neovim configuration files are present
-      copy:
-        src: files/
-        dest: "{{ neovim_config_dir }}/"
-        mode: u=+rw,g=+r-wx,o=+r-wx
+  - name: Ensure Neovim configuration files are present
+    ansible.builtin.copy:
+      src: files/
+      dest: "{{ neovim_config_dir }}/"
+      mode: u=+rw,g=+r-wx,o=+r-wx
 
-    - name: Ensure that Neovim template-based files are present
-      template:
-        src: "{{ item.src }}"
-        dest: "{{ neovim_config_dir }}/{{ item.dest }}"
-        mode: "{{ item.mode }}"
-      with_items: "{{ neovim_template_config_files }}"
+  - name: Ensure that Neovim template-based files are present
+    ansible.builtin.template:
+      src: "{{ item.src }}"
+      dest: "{{ neovim_config_dir }}/{{ item.dest }}"
+      mode: "{{ item.mode }}"
+    with_items: "{{ neovim_template_config_files }}"
 
-    - name: Install/update Neovim plugins (Lazy installation seems to be blocking)
-      command: nvim --headless +qall
-      register: nvim_plugins_install_result
-      check_mode: false
-      changed_when: false
-      failed_when: nvim_plugins_install_result.rc != 0
+  - name: Install/update Neovim plugins (Lazy installation seems to be blocking)
+    ansible.builtin.command: nvim --headless +qall
+    register: nvim_plugins_install_result
+    check_mode: false
+    changed_when: false
+    failed_when: nvim_plugins_install_result.rc != 0
 
-    - name: Make sure that Neovim Tree-sitter is installed and updated
-      command: nvim --headless '+TSInstallSync all' +qa
-      register: tree_sitter_install_result
-      check_mode: false
-      changed_when: false
-      failed_when: tree_sitter_install_result.rc != 0
+  - name: Make sure that Neovim Tree-sitter is installed and updated
+    ansible.builtin.command: nvim --headless '+TSInstallSync all' +qa
+    register: tree_sitter_install_result
+    check_mode: false
+    changed_when: false
+    failed_when: tree_sitter_install_result.rc != 0
 ...

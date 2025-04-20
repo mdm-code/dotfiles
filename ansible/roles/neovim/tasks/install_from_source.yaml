@@ -1,55 +1,55 @@
 ---
 - name: Install Neovim from the release source files
   block:
-    - name: Create temporary directory for the Neovim archive
-      tempfile:
-        state: directory
-      register: neovim_source_temp_dir
-      changed_when: false
+  - name: Create temporary directory for the Neovim archive
+    ansible.builtin.tempfile:
+      state: directory
+    register: neovim_source_temp_dir
+    changed_when: false
 
-    - name: Download Neovim release source files
-      get_url:
-        url: "{{ neovim_release_source_url }}"
-        dest: "{{ neovim_source_temp_dir.path }}"
+  - name: Download Neovim release source files
+    ansible.builtin.get_url:
+      url: "{{ neovim_release_source_url }}"
+      dest: "{{ neovim_source_temp_dir.path }}"
 
-    - name: Clear target directory
-      become: true
-      file:
-        path: /opt/nvim
-        state: "{{ item }}"
-      with_items:
-        - absent
-        - directory
-      changed_when: false
+  - name: Clear target directory
+    become: true
+    ansible.builtin.file:
+      path: /opt/nvim
+      state: "{{ item }}"
+    with_items:
+    - absent
+    - directory
+    changed_when: false
 
-    - name: Extract Neovim release source files
-      become: true
-      unarchive:
-        src: "{{neovim_source_temp_dir.path}}/{{neovim_release_source_url | basename}}"
-        dest: /opt/nvim
-        remote_src: true
-        extra_opts: "--strip-components=1"
-      register: neovim_source_extract
-      changed_when: false
+  - name: Extract Neovim release source files
+    become: true
+    ansible.builtin.unarchive:
+      src: "{{neovim_source_temp_dir.path}}/{{neovim_release_source_url | basename}}"
+      dest: /opt/nvim
+      remote_src: true
+      extra_opts: "--strip-components=1"
+    register: neovim_source_extract
+    changed_when: false
 
-    - name: Check if Neovim executable exists
-      stat:
-        path: /opt/nvim/bin/nvim
-      register: nvim_executable_status
+  - name: Check if Neovim executable exists
+    ansible.builtin.stat:
+      path: /opt/nvim/bin/nvim
+    register: nvim_executable_status
 
-    - name: Create soft link to Neovim binary
-      become: true
-      file:
-        src: /opt/nvim/bin/nvim
-        dest: /usr/local/bin/nvim
-        state: link
-      when: nvim_executable_status.stat.exists
-      changed_when: false
+  - name: Create soft link to Neovim binary
+    become: true
+    ansible.builtin.file:
+      src: /opt/nvim/bin/nvim
+      dest: /usr/local/bin/nvim
+      state: link
+    when: nvim_executable_status.stat.exists
+    changed_when: false
 
-    - name: Ensure the temporary directory is removed
-      file:
-        path: "{{ neovim_source_temp_dir.path }}"
-        state: absent
-      when: neovim_source_temp_dir is defined
-      changed_when: false
+  - name: Ensure the temporary directory is removed
+    ansible.builtin.file:
+      path: "{{ neovim_source_temp_dir.path }}"
+      state: absent
+    when: neovim_source_temp_dir is defined
+    changed_when: false
 ...
