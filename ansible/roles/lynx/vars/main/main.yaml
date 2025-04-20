@@ -1,5 +1,4 @@
-home: "$HOME"
-lynx_config_dir: "{{ home }}/.config/lynx"
+lynx_config_dir: "{{ ansible_env.HOME }}/.config/lynx"
 lynx_config_files:
   - "lynx.cfg"
   - "lynx.lss"
