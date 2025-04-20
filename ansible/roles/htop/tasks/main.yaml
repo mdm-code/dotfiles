@@ -1,6 +1,7 @@
 ---
 - name: Install Htop
-  tags: htop
+  tags:
+  - htop
   become: "{{ should_run_pkg_mgr_as_root }}"
   block:
   - name: Install Htop with a package manager
