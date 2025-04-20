@@ -17,7 +17,7 @@
     when: ansible_os_family == 'Debian'
 
   - name: Install packages with Npm
-    command: "npm install -g {{ item }}"
+    ansible.builtin.command: "npm install -g {{ item }}"
     register: result
     check_mode: false
     changed_when: false

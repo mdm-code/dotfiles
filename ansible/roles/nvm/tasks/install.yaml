@@ -1,30 +1,30 @@
 ---
 - name: Ensure Nvm installation temporary directory exists
-  tempfile:
+  ansible.builtin.tempfile:
     state: directory
   register: nvm_installation_temp_dir
 
 - name: Download Nvm installation script
-  get_url:
+  ansible.builtin.get_url:
     dest: "{{ nvm_installation_temp_dir.path }}"
     url: "https://raw.githubusercontent.com/{{ nvm_repository_name }}/{{ nvm_latest_version }}/install.sh"
     mode: u=+rwx,g=+r-wx,o=+r-wx
     checksum: "{{ nvm_install_script_sha256_checksum }}"
 
 - name: Ensure Nvm default directory is present
-  file:
+  ansible.builtin.file:
     path: "{{ nvm_default_dir }}"
     state: directory
     mode: u=+rwx,g=+r-xw,o=+r-xw
 
 - name: Run Nvm installation script
-  command: "bash {{ nvm_installation_temp_dir.path }}/install.sh"
+  ansible.builtin.command: "bash {{ nvm_installation_temp_dir.path }}/install.sh"
   environment:
     XDG_CONFIG_HOME: "{{ ansible_env.HOME }}/.config"
   changed_when: true
 
 - name: Delete Nvm installation temporary directory
-  file:
+  ansible.builtin.file:
     path: "{{ nvm_installation_temp_dir.path }}"
     state: absent
   when: nvm_installation_temp_dir is defined
