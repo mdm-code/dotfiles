@@ -1,6 +1,7 @@
 ---
 - name: Install Kubectl
-  tags: kubectl
+  tags:
+  - kubectl
   block:
   - name: Get latest stable release version
     ansible.builtin.uri:

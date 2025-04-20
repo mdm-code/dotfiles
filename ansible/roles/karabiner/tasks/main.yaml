@@ -1,6 +1,7 @@
 ---
 - name: Install Karabiner-elements
-  tags: karabiner
+  tags:
+  - karabiner
   become: "{{ should_run_pkg_mgr_as_root }}"
   when: ansible_os_family == "Darwin"
   block:
@@ -11,7 +12,7 @@
       state: latest
 
   - name: Ensure that Karabiner-elements configuration file is present
-    copy:
+    ansible.builtin.copy:
       src: files/karabiner.json
       dest: "{{ karabiner_config_dir }}/karabiner.json"
       mode: u=+rw-x,g=-rwx,o=-rwx

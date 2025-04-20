@@ -1,6 +1,7 @@
 ---
 - name: Install Kind
-  tags: kind
+  tags:
+  - kind
   block:
   - name: Get Kind released binary to the destination directory
     become: true

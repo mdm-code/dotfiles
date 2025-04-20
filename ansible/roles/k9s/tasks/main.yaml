@@ -1,6 +1,7 @@
 ---
 - name: Install K9s
-  tags: k9s
+  tags:
+  - k9s
   block:
   - name: Create temporary directory for the K9s archive
     ansible.builtin.tempfile:

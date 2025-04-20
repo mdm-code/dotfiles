@@ -1,2 +1,1 @@
-home: "$HOME"
-lf_config_dir: "{{ home }}/.config/lf"
+lf_config_dir: "{{ ansible_env.HOME }}/.config/lf"
