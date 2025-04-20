@@ -1,6 +1,7 @@
 ---
 - name: Install Helm
-  tags: helm
+  tags:
+  - helm
   block:
   - name: Create temporary directory for the Helm archive
     ansible.builtin.tempfile:
