@@ -1,3 +1,2 @@
-home: "$HOME"
-gh_config_dir: "{{ home }}/.config/gh"
+gh_config_dir: "{{ ansible_env.HOME }}/.config/gh"
 gh_user: mdm-code
