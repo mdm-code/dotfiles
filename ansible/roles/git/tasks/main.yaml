@@ -4,6 +4,8 @@
   - git
   - nvm
   - pyenv
+  - neovim
+  - zet
   become: "{{ should_run_pkg_mgr_as_root }}"
   block:
   - name: Install Git with a package manager
@@ -13,7 +15,7 @@
       state: latest
 
   - name: Ensure Git configuration file is available
-    template:
+    ansible.builtin.template:
       src: templates/gitconfig.j2
       dest: "{{ git_config_dir }}/.gitconfig"
       mode: u=+rw-x,g=+r-wx,o=+r-wx
