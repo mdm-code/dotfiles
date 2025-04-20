@@ -7,13 +7,13 @@
   - name: Install pyenv from the git repository
     block:
     - name: Check if pyenv repository has been already cloned
-      stat:
+      ansible.builtin.stat:
         path: "{{ pyenv_root_dir }}"
       register: pyenv_already_cloned
       changed_when: false
 
     - name: Clone pyenv git repository
-      git:
+      ansible.builtin.git:
         repo: https://github.com/pyenv/pyenv.git
         dest: "{{ pyenv_root_dir }}"
       when: not pyenv_already_cloned.stat.exists
@@ -21,26 +21,26 @@
   - name: Install pyenv-virtualenv plugin from the git repository
     block:
     - name: Check if pyenv-virtualenv repository has been already cloned
-      stat:
+      ansible.builtin.stat:
         path: "{{ pyenv_root_dir }}/plugins/pyenv-virtualenv"
       register: pyenv_virtualenv_already_cloned
       changed_when: false
 
     - name: Check if pyenv-virtualenv repository has been already cloned
-      git:
+      ansible.builtin.git:
         repo: https://github.com/pyenv/pyenv-virtualenv.git
         dest: "{{ pyenv_root_dir }}/plugins/pyenv-virtualenv"
       when: not pyenv_virtualenv_already_cloned.stat.exists
 
   - name: Check if pyenv executable exists
-    stat:
+    ansible.builtin.stat:
       path: "{{ pyenv_root_dir }}/bin/pyenv"
     register: pyenv_executable_status
 
   - name: Create soft link to pyenv executable
     become_user: root
     become: true
-    file:
+    ansible.builtin.file:
       src: "{{ pyenv_root_dir }}/bin/pyenv"
       dest: /usr/local/bin/pyenv
       state: link
@@ -48,7 +48,7 @@
     changed_when: false
 
   - name: Install specified Python versions
-    shell: yes n | pyenv install "{{ item }}"
+    ansible.builtin.shell: yes n | pyenv install "{{ item }}"
     register: result
     changed_when: result.rc == 0
     failed_when: result.rc not in [ 0, 1 ]
@@ -58,7 +58,7 @@
   - name: Set the global Python version in pyenv
     block:
     - name: Register the current Python global version for pyenv
-      command: pyenv global
+      ansible.builtin.command: pyenv global
       register: pyenv_current_global_version
       changed_when: false
 
@@ -66,13 +66,13 @@
         pyenv_current_global_version="{{ pyenv_current_global_version.stdout }}"
 
     - name: Change the global Python version in pyenv
-      shell: pyenv global "{{ pyenv_python_global_version }}" && pyenv global
+      ansible.builtin.shell: pyenv global "{{ pyenv_python_global_version }}" && pyenv global
       when: pyenv_python_global_version is defined
       register: pyenv_changed_global_version
       changed_when: pyenv_current_global_version != pyenv_changed_global_version.stdout
 
   - name: Install packages for the global Python interpreter
-    shell: eval "$(pyenv init -)" && pip3 install "{{ item }}"
+    ansible.builtin.shell: eval "$(pyenv init -)" && pip3 install "{{ item }}"
     when: pyenv_python_pkgs_to_global_install is defined
     with_items: "{{ pyenv_python_pkgs_to_global_install }}"
 ...
