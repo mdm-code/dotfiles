@@ -1,9 +1,0 @@
----
-- name: Install Minikube
-  tags: minikube
-  become_user: "{{ user }}"
-  block:
-    - name: Install Minikube on MacOS
-      include_tasks: macos.yaml
-      when: ansible_distribution == "MacOSX"
-...
