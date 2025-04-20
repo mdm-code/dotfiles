@@ -1,12 +1,14 @@
 ---
 - name: Install Fd
-  tags: fd
+  tags:
+  - fd
+  - neovim
   become: "{{ should_run_pkg_mgr_as_root }}"
   block:
   - name: Install Fd with a package manager
     ansible.builtin.package:
       name:
-        # This is a hack. The package is named 'fd-find' on Debian-based
+        # NOTE: This is a hack. The package is named 'fd-find' on Debian-based
         # distros. On *most* other distros it's 'fd', but on Fedora it's also
         # 'fd-find'. I am not planning to play around with Fedora. Check the
         # README file in case the task fails.
@@ -14,7 +16,7 @@
       state: latest
 
   - name: Link Fdfind on Debian-based distributions to Fd
-    file:
+    ansible.builtin.file:
       src: /usr/bin/fdfind
       dest: /usr/local/bin/fd
       state: link
