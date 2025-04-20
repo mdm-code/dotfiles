@@ -38,6 +38,6 @@
   - name: Ensure the inputrc file is present
     copy:
       src: files/inputrc
-      dest: "{{ ansible_env.HOME }}/.inputrc"
+      dest: "{{ inputrc_default_dir }}/.inputrc"
       mode: u=+rwx,g=+r-wx,o=+r-wx
 ...
