@@ -1,54 +1,42 @@
 ---
-# TODO: use "{{ ansible_env.HOME }}" instead of $HOME
-# TODO: Check deps and indentation, and make tags for roles lists
-# TODO: Check become_user when directories are created
-# TODO: replace build_essential with pyenv required packages
-# TODO: add .inputrc (for vim motions in psql/python repl and the like)
-# TODO replace ansible_pkg_mgr with os_family ??
-# bash should come after pyenv and the like
 - hosts: localservers
   vars:
     should_run_pkg_mgr_as_root: "{{ true if ansible_os_family != 'Darwin' else false }}"
   roles:
-    # NOTE: no deps
-    # - essential_pkgs
-    # - git
-    # - curl
-    # - wget
-    # - entr
-    # - gh
-    # - lf
-    # - fzf
-    # - fd
-    # - ripgrep
-    # - node
-    # - tmux
-    # - exec
-    # - lynx
-    # - goreleaser
-
-    # NOTE: deps
-    # - go  # curl
-    # - rust  # curl, essential_pkgs (for pkg installation)
-    # - nvm  # git, curl
-    # - pyenv  # git, essential_pkgs (for python installation from source)
-
+    - essential_pkgs
+    - git
+    - curl
+    - wget
+    - entr
+    - gh
+    - lf
+    - fzf
+    - fd
+    - ripgrep
+    - node
+    - tmux
+    - exec
+    - lynx
+    - goreleaser
+    - shellcheck
+    - jq
+    - yq
+    - tree
+    - htop
+    - pass
+    - go
+    - rust
+    - nvm
+    - pyenv
     - bash
-    # - shellcheck
-    # - tree
-    # - htop
-    # - jq
-    # - yq
-    # - pass
-    # - neovim
-    # - zet
-    # - docker
-    # - kind
-    # - minikube
-    # - kubectl
-    # - helm
-    # - k9s
-    # - firefox
-    # - karabiner
-    # - wezterm
+    - neovim
+    - zet
+    - docker
+    - kind
+    - kubectl
+    - helm
+    - k9s
+    - wezterm
+    - firefox
+    - karabiner
 ...
