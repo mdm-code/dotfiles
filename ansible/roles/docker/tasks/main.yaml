@@ -1,14 +1,62 @@
 ---
 - name: Install Docker
-  tags: docker
+  tags:
+  - docker
   block:
-    - name: Install Docker on MacOS
-      include_tasks: macos.yaml
-      when: ansible_distribution == "MacOSX"
+  - name: Install Docker on MacOS with Homebrew
+    when: ansible_os_family == "Darwin"
+    ansible.builtin.package:
+      name:
+      - docker
+      state: latest
 
-    - name: Install Docker on Debian-based OS with apt
-      import_tasks: debian.yaml
-      when: >
-        ansible_distribution == "Debian" or
-        ansible_distribution == "Ubuntu"
+  - name: Install Docker on Debian-based OS
+    when: ansible_os_family == "Debian"
+    become: "{{ should_run_pkg_mgr_as_root }}"
+    block:
+    - name: Install Docker pre-requisite Debian packages
+      ansible.builtin.package:
+        name:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg
+        - software-properties-common
+        state: latest
+
+    - name: Add the Docker GPG key to APT
+      ansible.builtin.apt_key:
+        url: "{{ docker_gpg_url }}"
+        keyring: /etc/apt/keyrings/docker.gpg
+        state: present
+
+    - name: Add the Docker repository to APT
+      ansible.builtin.apt_repository:
+        repo: >-
+          deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg]
+          https://download.docker.com/linux/{{ ansible_distribution | extract(docker_linux_distribution_version) }}
+        filename: docker
+        state: present
+
+    - name: Install Docker packages with APT
+      ansible.builtin.package:
+        name:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-compose-plugin
+        - docker-ce-rootless-extras
+        - docker-buildx-plugin
+        state: latest
+
+    - name: Add Docker group
+      ansible.builtin.group:
+        name: docker
+        state: present
+
+    - name: Add user to Docker group
+      ansible.builtin.user:
+        name: "{{ ansible_env.USER }}"
+        groups: docker
+        append: true
 ...
