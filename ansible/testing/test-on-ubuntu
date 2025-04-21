@@ -53,7 +53,7 @@ EOL
 
 function run_ansible_playbook() {
     export ANSIBLE_CONFIG="${base_dir}/ansible.cfg"
-    ansible-playbook -i "${TEMP_INVENTORY_FILE}" -vvv "${base_dir}/../setup.yaml"
+    ansible-playbook -i "${TEMP_INVENTORY_FILE}" -vvv "${base_dir}/../setup.yaml" # --ask-vault-pass
 }
 
 setup_tempdir
