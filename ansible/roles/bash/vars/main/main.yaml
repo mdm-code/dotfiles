@@ -1,5 +1,4 @@
-user: "$USER"
-home: "$HOME"
-bash_default_dir: "{{ home }}"
-bash_paths:
+bash_default_dir: "{{ ansible_env.HOME }}"
+bash_paths_darwin:
   - "/usr/local/homebrew"
+inputrc_default_dir: "{{ ansible_env.HOME }}"

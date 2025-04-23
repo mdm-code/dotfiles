@@ -1,9 +1,12 @@
 ---
 - name: Install Kind
-  tags: kind
-  become_user: "{{ user }}"
+  tags:
+  - kind
   block:
-    - name: Install Kind on MacOS
-      include_tasks: macos.yaml
-      when: ansible_distribution == "MacOSX"
+  - name: Get Kind released binary to the destination directory
+    become: true
+    ansible.builtin.get_url:
+      url: "{{ kind_release_source_url }}"
+      dest: "{{ kind_binary_dest_dir }}/kind"
+      mode: u=+rwx,g=+rx-x,o=+rx-w
 ...

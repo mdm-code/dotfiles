@@ -1,9 +1,34 @@
 ---
 - name: Install Helm
-  tags: helm
-  become_user: "{{ user }}"
+  tags:
+  - helm
   block:
-    - name: Install Helm on MacOS
-      include_tasks: macos.yaml
-      when: ansible_distribution == "MacOSX"
+  - name: Create temporary directory for the Helm archive
+    ansible.builtin.tempfile:
+      state: directory
+    register: helm_source_temp_dir
+    changed_when: false
+
+  - name: Extract Helm release source files
+    become: true
+    ansible.builtin.unarchive:
+      src: "{{ helm_release_source_url }}"
+      dest: "{{ helm_source_temp_dir.path }}"
+      remote_src: true
+    changed_when: false
+
+  - name: Copy the Helm binary to the destination catalog
+    become: true
+    ansible.builtin.copy:
+      src: "{{ helm_source_temp_dir.path }}/{{ ansible_os_family | extract(helm_os_family_release) }}/helm"
+      dest: "{{ helm_binary_dest_dir }}/helm"
+      mode: u=+rwx,g=+rx-x,o=+rx-w
+      remote_src: true
+
+  - name: Ensure the temporary directory for Helm source files is removed
+    ansible.builtin.file:
+      path: "{{ helm_source_temp_dir.path }}"
+      state: absent
+    when: helm_source_temp_dir is defined
+    changed_when: false
 ...

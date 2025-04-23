@@ -1,15 +1,19 @@
 ---
 - name: Install Karabiner-elements
-  tags: karabiner
-  become_user: "{{ user }}"
-  when: ansible_distribution == "MacOSX"
+  tags:
+  - karabiner
+  become: "{{ should_run_pkg_mgr_as_root }}"
+  when: ansible_os_family == "Darwin"
   block:
-    - name: Install Karabiner-elements on MacOS
-      include_tasks: macos.yaml
+  - name: Install Karabiner-elements with a package manager
+    ansible.builtin.package:
+      name:
+      - karabiner-elements
+      state: latest
 
-    - name: Ensure that Karabiner-elements configuration file is present
-      copy:
-        src: files/karabiner.json
-        dest: "{{ karabiner_config_dir }}/karabiner.json"
-        mode: u=+rw-x,g=-rwx,o=-rwx
+  - name: Ensure that Karabiner-elements configuration file is present
+    ansible.builtin.copy:
+      src: files/karabiner.json
+      dest: "{{ karabiner_config_dir }}/karabiner.json"
+      mode: u=+rw-x,g=-rwx,o=-rwx
 ...

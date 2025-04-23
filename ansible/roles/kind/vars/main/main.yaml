@@ -1,1 +1,7 @@
-user: "$USER"
+kind_release_version: "v0.27.0"
+kind_os_family_release: {
+  "Darwin": "darwin-amd64",
+  "Debian": "linux-amd64",
+}
+kind_release_source_url: "https://kind.sigs.k8s.io/dl/{{ kind_release_version }}/kind-{{ ansible_os_family | extract(kind_os_family_release) }}"
+kind_binary_dest_dir: "/usr/local/bin"

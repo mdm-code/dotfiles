@@ -1,7 +1,0 @@
----
-- name: Install Minikube with Homebrew
-  homebrew:
-    name:
-      - minikube
-    state: present
-...

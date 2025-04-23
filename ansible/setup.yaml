@@ -1,7 +1,13 @@
 ---
 - hosts: localservers
+  vars:
+    should_run_pkg_mgr_as_root: "{{ true if ansible_os_family != 'Darwin' else false }}"
   roles:
+    - essential_pkgs
     - git
+    - curl
+    - wget
+    - entr
     - gh
     - lf
     - fzf
@@ -9,33 +15,28 @@
     - ripgrep
     - node
     - tmux
-    - smug
-    - wget
     - exec
-    - go
-    - goreleaser
-    - rust
-    - nvm
     - lynx
-    - pyenv
-    - bash
+    - goreleaser
     - shellcheck
-    - ctags
-    - entr
-    - tree
-    - htop
     - jq
     - yq
+    - tree
+    - htop
     - pass
+    - go
+    - rust
+    - nvm
+    - pyenv
+    - bash
     - neovim
     - zet
     - docker
     - kind
-    - minikube
     - kubectl
     - helm
     - k9s
+    - wezterm
     - firefox
     - karabiner
-    - wezterm
 ...

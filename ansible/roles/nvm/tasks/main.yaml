@@ -1,46 +1,46 @@
 ---
 - name: Install Nvm
-  tags: nvm
+  tags:
+  - nvm
   become_user: "{{ user }}"
   block:
-    - name: Check if Nvm default directory already exists
-      stat:
-        path: "{{ nvm_default_dir }}"
-      register: nvm_default_dir_stats
-      changed_when: false
+  - name: Check if Nvm default directory already exists
+    ansible.builtin.stat:
+      path: "{{ nvm_default_dir }}"
+    register: nvm_default_dir_stats
+    changed_when: false
 
-    - name: Register the installed Nvm revision with Git
-      shell: "git rev-list --tags --max-count=1"
-      args:
-        chdir: "{{ nvm_default_dir }}"
-      register: nvm_revision
-      when: nvm_default_dir_stats.stat.exists
-      changed_when: false
+  - name: Register the installed Nvm revision with Git
+    ansible.builtin.shell: "git rev-list --tags --max-count=1"
+    args:
+      chdir: "{{ nvm_default_dir }}"
+    register: nvm_revision
+    when: nvm_default_dir_stats.stat.exists
+    changed_when: false
 
-    - name: Register the installed Nvm version with Git
-      shell: "git describe --tags {{ nvm_revision.stdout }}"
-      args:
-        chdir: "{{ nvm_default_dir }}"
-      register: nvm_installed_version
-      when: nvm_default_dir_stats.stat.exists
-      changed_when: false
+  - name: Register the installed Nvm version with Git
+    ansible.builtin.shell: "git describe --tags {{ nvm_revision.stdout }}"
+    args:
+      chdir: "{{ nvm_default_dir }}"
+    register: nvm_installed_version
+    when: nvm_default_dir_stats.stat.exists
+    changed_when: false
 
-    - name: Check if the latest Nvm version is running
-      set_fact:
-        nvm_version_match: "{{ nvm_installed_version.stdout == nvm_latest_version }}"
-      when: nvm_default_dir_stats.stat.exists
+  - name: Check if the latest Nvm version is running
+    set_fact:
+      nvm_version_match: "{{ nvm_installed_version.stdout == nvm_latest_version }}"
+    when: nvm_default_dir_stats.stat.exists
 
-    - name: Install Nvm with with the shell script
-      include_tasks: install.yaml
-      when: not nvm_default_dir_stats.stat.exists or not nvm_version_match
+  - name: Install Nvm with with the shell script
+    include_tasks: install.yaml
+    when: not nvm_default_dir_stats.stat.exists or not nvm_version_match
 
-    - name: Install declared Node versions with Nvm
-      include_tasks: install_versions.yaml
+  - name: Install declared Node versions with Nvm
+    include_tasks: install_versions.yaml
 
-    - name: Set alias for the Node default version to LTS in Nvm
-      shell: "bash -ilc 'nvm alias default lts/*'"
-      when: nvm_default_dir_stats.stat.exists
-      register: nvm_set_default_version_out
-      changed_when: false
-      failed_when: "'WARNING' in nvm_set_default_version_out.stdout"
+  - name: Set alias for the Node default version to LTS in Nvm
+    ansible.builtin.shell: "bash -ilc 'nvm alias default lts/*'"
+    register: nvm_set_default_version_out
+    changed_when: false
+    failed_when: "'WARNING' in nvm_set_default_version_out.stderr"
 ...

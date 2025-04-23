@@ -1,9 +1,12 @@
 ---
 - name: Install Firefox
-  tags: firefox
-  become_user: "{{ user }}"
+  tags:
+  - firefox
+  become: "{{ should_run_pkg_mgr_as_root }}"
   block:
-    - name: Install Firefox on MacOS
-      include_tasks: macos.yaml
-      when: ansible_distribution == "MacOSX"
+  - name: Install Firefox with a package manager
+    ansible.builtin.package:
+      name:
+      - firefox
+      state: latest
 ...

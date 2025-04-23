@@ -1,7 +1,0 @@
----
-- name: Install Shellcheck with Homebrew
-  homebrew:
-    name:
-      - shellcheck
-    state: present
-...

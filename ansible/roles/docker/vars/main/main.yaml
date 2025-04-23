@@ -1,1 +1,9 @@
-user: "$USER"
+docker_linux_distribution: {
+  "Debian": "debian",
+  "Ubuntu": "ubuntu",
+}
+docker_linux_distribution_version: {
+  "Debian": "debian bookworm stable",
+  "Ubuntu": "ubuntu noble stable",
+}
+docker_gpg_url: "https://download.docker.com/linux/{{ ansible_distribution | extract(docker_linux_distribution)  }}/gpg"

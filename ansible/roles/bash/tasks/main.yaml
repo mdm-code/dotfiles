@@ -1,26 +1,43 @@
 ---
 - name: Install Bash
-  tags: bash
-  become_user: "{{ user }}"
+  tags:
+  - bash
   block:
-    - name: Install recent Bash version on MacOS
-      include_tasks: macos.yaml
-      when: ansible_distribution == "MacOSX"
+  - name: Install Bash with a package manager
+    become: "{{ should_run_pkg_mgr_as_root }}"
+    ansible.builtin.package:
+      name:
+        - bash
+      state: latest
 
-    - name: Check if Pyenv is installed
-      shell: "command -v pyenv"
-      register: pyenv_exists
-      changed_when: false
+  - name: Install Bash Completion with a package manager
+    become: "{{ should_run_pkg_mgr_as_root }}"
+    ansible.builtin.package:
+      name:
+        - "{{ 'bash-completion@2' if ansible_os_family == 'Darwin' else 'bash-completion' }}"
+      state: latest
 
-    - name: Ensure Bash configuration file is present
-      template:
-        src: templates/bashrc.j2
-        dest: "{{ bash_default_dir }}/.bashrc"
-        mode: u=+rwx,g=+r-wx,o=+r-wx
+  - name: Check if Pyenv is installed
+    ansible.builtin.shell: "command -v pyenv"
+    register: pyenv_exists
+    changed_when: false
+    ignore_errors: true
 
-    - name: Ensure Bash profile file is present
-      copy:
-        src: files/profile
-        dest: "{{ bash_default_dir }}/.profile"
-        mode: u=+rwx,g=+r-wx,o=+r-wx
+  - name: Ensure Bash configuration file is present
+    ansible.builtin.template:
+      src: templates/bashrc.j2
+      dest: "{{ bash_default_dir }}/.bashrc"
+      mode: u=+rwx,g=+r-wx,o=+r-wx
+
+  - name: Ensure Bash profile file is present
+    ansible.builtin.copy:
+      src: files/profile
+      dest: "{{ bash_default_dir }}/.profile"
+      mode: u=+rwx,g=+r-wx,o=+r-wx
+
+  - name: Ensure the inputrc file is present
+    ansible.builtin.copy:
+      src: files/inputrc
+      dest: "{{ inputrc_default_dir }}/.inputrc"
+      mode: u=+rwx,g=+r-wx,o=+r-wx
 ...

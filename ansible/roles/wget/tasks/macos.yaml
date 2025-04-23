@@ -1,7 +1,0 @@
----
-- name: Install Wget with Homebrew
-  homebrew:
-    name:
-      - wget
-    state: present
-...

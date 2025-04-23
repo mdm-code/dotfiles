@@ -1,5 +1,3 @@
-user: "$USER"
-home: "$HOME"
-git_config_dir: "{{ home }}"
+git_config_dir: "{{ ansible_env.HOME }}"
 default_branch: main
 git_rerere_enabled: true

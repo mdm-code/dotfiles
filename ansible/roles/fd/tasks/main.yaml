@@ -1,9 +1,24 @@
 ---
 - name: Install Fd
-  tags: fd
-  become_user: "{{ user }}"
+  tags:
+  - fd
+  - neovim
+  become: "{{ should_run_pkg_mgr_as_root }}"
   block:
-    - name: Install Fd on MacOS
-      include_tasks: macos.yaml
-      when: ansible_distribution == "MacOSX"
+  - name: Install Fd with a package manager
+    ansible.builtin.package:
+      name:
+        # NOTE: This is a hack. The package is named 'fd-find' on Debian-based
+        # distros. On *most* other distros it's 'fd', but on Fedora it's also
+        # 'fd-find'. I am not planning to play around with Fedora. Check the
+        # README file in case the task fails.
+        - "{{ 'fd-find' if ansible_os_family == 'Debian' else 'fd' }}"
+      state: latest
+
+  - name: Link Fdfind on Debian-based distributions to Fd
+    ansible.builtin.file:
+      src: /usr/bin/fdfind
+      dest: /usr/local/bin/fd
+      state: link
+    when: ansible_os_family == 'Debian'
 ...

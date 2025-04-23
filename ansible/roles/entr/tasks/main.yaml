@@ -1,9 +1,12 @@
 ---
 - name: Install Entr
-  tags: entr
-  become_user: "{{ user }}"
+  tags:
+  - entr
+  become: "{{ should_run_pkg_mgr_as_root }}"
   block:
-    - name: Install Entr on MacOS
-      include_tasks: macos.yaml
-      when: ansible_distribution == "MacOSX"
+  - name: Install Entr with a package manager
+    ansible.builtin.package:
+      name:
+      - entr
+      state: latest
 ...

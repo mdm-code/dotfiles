@@ -1,7 +1,0 @@
----
-- name: Install Smug with Homebrew
-  homebrew:
-    name:
-      - smug
-    state: present
-...

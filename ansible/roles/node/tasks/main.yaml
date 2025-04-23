@@ -1,9 +1,26 @@
 ---
 - name: Install Node
   tags: node
-  become_user: "{{ user }}"
+  become: "{{ should_run_pkg_mgr_as_root }}"
   block:
-    - name: Install Node on MacOS
-      include_tasks: macos.yaml
-      when: ansible_distribution == "MacOSX"
+  - name: Install Node with a package manager
+    ansible.builtin.package:
+      name:
+      - "{{ 'nodejs' if ansible_os_family == 'Debian' else 'node' }}"
+      state: latest
+
+  - name: Install Npm with a package manager on Debian
+    ansible.builtin.package:
+      name:
+      - npm
+      state: latest
+    when: ansible_os_family == 'Debian'
+
+  - name: Install packages with Npm
+    ansible.builtin.command: "npm install -g {{ item }}"
+    register: result
+    check_mode: false
+    changed_when: false
+    failed_when: result.rc != 0
+    with_items: "{{ node_npm_packages }}"
 ...

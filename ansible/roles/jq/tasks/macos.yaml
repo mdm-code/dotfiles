@@ -1,7 +1,0 @@
----
-- name: Install Jq with Homebrew
-  homebrew:
-    name:
-      - jq
-    state: present
-...

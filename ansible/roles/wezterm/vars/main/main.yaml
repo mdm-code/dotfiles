@@ -1,3 +1,4 @@
-user: "$USER"
-home: "$HOME"
-wezterm_config_dir: "{{ home }}/.config/wezterm"
+wezterm_config_dir: "{{ ansible_env.HOME }}/.config/wezterm"
+wezterm_apt_key_url: https://apt.fury.io/wez/gpg.key
+wezterm_apt_key_destination: /etc/apt/keyrings/wezterm-fury.asc
+wezterm_apt_repository_name: wezterm
