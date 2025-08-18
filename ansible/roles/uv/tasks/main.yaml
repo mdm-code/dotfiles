@@ -1,0 +1,35 @@
+---
+- name: Install Uv
+  tags:
+  - uv
+  block:
+  - name: Create temporary directory for the Uv archive
+    ansible.builtin.tempfile:
+      state: directory
+    register: uv_source_temp_dir
+    changed_when: false
+
+  - name: Extract Uv release source files
+    become: true
+    ansible.builtin.unarchive:
+      src: "{{ uv_release_source_url }}"
+      dest: "{{ uv_source_temp_dir.path }}"
+      remote_src: true
+    changed_when: false
+
+  - name: Copy the Uv binary to the destination catalog
+    become: true
+    ansible.builtin.copy:
+      src: "{{ uv_source_temp_dir.path }}/{{ ansible_os_family | extract(uv_os_family_release) }}/{{ item }}"
+      dest: "{{ uv_binary_dest_dir }}/{{ item }}"
+      mode: u=+rwx,g=+rx-x,o=+rx-w
+      remote_src: true
+    with_items: "{{ uv_binaries_to_copy }}"
+
+  - name: Ensure the temporary directory for Uv sources files is removed
+    ansible.builtin.file:
+      path: "{{ uv_source_temp_dir.path }}"
+      state: absent
+    when: uv_source_temp_dir is defined
+    changed_when: false
+...

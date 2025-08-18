@@ -1,0 +1,10 @@
+uv_release_version: "0.8.11"
+uv_os_family_release: {
+  "Darwin": "uv-x86_64-apple-darwin",
+  "Debian": "uv-i686-unknown-linux-gnu",
+}
+uv_release_source_url: "https://github.com/astral-sh/uv/releases/download/{{ uv_release_version }}/{{ ansible_os_family | extract(uv_os_family_release) }}.tar.gz"
+uv_binary_dest_dir: "/usr/local/bin"
+uv_binaries_to_copy:
+  - "uv"
+  - "uvx"
