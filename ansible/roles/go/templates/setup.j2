@@ -60,7 +60,7 @@ esac
 pkg="go$version.$platform.tar.gz"
 tmpdir="$(mktemp -d)"
 tarball="$tmpdir/go.tar.gz"
-curl -o "$tarball" "https://storage.googleapis.com/golang/$pkg"
+curl -L -o "$tarball" "https:/go.dev/dl/$pkg"
 
 [ $? -ne 0 ] && echo "Failed to download: $pkg" && exit 1
 
