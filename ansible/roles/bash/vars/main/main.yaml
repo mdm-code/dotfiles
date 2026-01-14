@@ -1,4 +1,6 @@
 bash_default_dir: "{{ ansible_env.HOME }}"
 bash_paths_darwin:
-  - "/usr/local/homebrew"
+  - "/opt/homebrew/bin"
+  - "/opt/homebrew/sbin"
+  - "/Users/michal/Library/Python/3.9/bin"
 inputrc_default_dir: "{{ ansible_env.HOME }}"
