@@ -14,6 +14,12 @@
     failed_when: result.rc != 0
     with_items: "{{ neovim_dependencies }}"
 
+  - name: Register if Pyenv is installed
+    ansible.builtin.shell: "command -v pyenv"
+    register: pyenv_exists
+    changed_when: false
+    ignore_errors: true
+
   - name: Ensure the dedicated Python virtual environment is created with Pyenv
     ansible.builtin.command: pyenv virtualenv neovim
     check_mode: false
