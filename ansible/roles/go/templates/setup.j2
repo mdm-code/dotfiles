@@ -24,7 +24,15 @@ arch="$(uname -m)"
 
 case $os in
 	"Darwin")
-		platform="darwin-amd64"
+		case $arch in
+		"arm64")
+			arch=arm64
+			;;
+		*)
+			arch=amd64
+			;;
+		esac
+	platform="darwin-$arch"
 	;;
 	"Linux")
 		case $arch in
@@ -43,7 +51,7 @@ case $os in
 		.*386.*)
 			arch=386
 			;;
-			esac
+		esac
         platform="linux-$arch"
 esac
 
