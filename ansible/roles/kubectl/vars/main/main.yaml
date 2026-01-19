@@ -2,5 +2,9 @@ kubectl_os_family_release: {
   "Darwin": "darwin",
   "Debian": "linux",
 }
-kubectl_release_source_url: "https://dl.k8s.io/release/{{ kubectl_stable_release_version.content }}/bin/{{ ansible_os_family | extract(kubectl_os_family_release) }}/amd64/kubectl"
+kubectl_arch: {
+  "Darwin": "arm64",
+  "Debian": "amd64",
+}
+kubectl_release_source_url: "https://dl.k8s.io/release/{{ kubectl_stable_release_version.content }}/bin/{{ ansible_os_family | extract(kubectl_os_family_release) }}/{{ ansible_os_family | extract(kubectl_arch) }}/kubectl"
 kubectl_binary_dest_dir: "/usr/local/bin"
