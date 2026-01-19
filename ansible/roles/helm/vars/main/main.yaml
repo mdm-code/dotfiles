@@ -1,6 +1,6 @@
 helm_release_version: "v3.17.3"
 helm_os_family_release: {
-  "Darwin": "darwin-amd64",
+  "Darwin": "darwin-arm64",
   "Debian": "linux-amd64",
 }
 helm_release_source_url: "https://get.helm.sh/helm-{{ helm_release_version }}-{{ ansible_os_family | extract(helm_os_family_release) }}.tar.gz"
