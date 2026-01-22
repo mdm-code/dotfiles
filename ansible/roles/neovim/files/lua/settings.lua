@@ -8,6 +8,7 @@
 
 
 require("settings.python")
+require("settings.node")
 
 
 ----------- GENERAL -------------

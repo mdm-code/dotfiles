@@ -25,3 +25,4 @@ neovim_dependencies:
     command: fd --version
   - name: tree-sitter
     command: tree-sitter --version
+neovim_node_host_exec: "/opt/homebrew/bin/neovim-node-host"
