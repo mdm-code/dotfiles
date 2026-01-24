@@ -59,3 +59,9 @@ vim.opt.clipboard:append("unnamedplus")
 
 ---------- COMPLETION -----------
 vim.opt.completeopt = { "menuone", "noinsert", "noselect", "popup" }
+
+---------- FOLDS ----------------
+vim.opt.foldmethod = "expr"
+vim.wo.foldlevel = 99
+vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.bo.indentexpr = "v:lua.vim.treesitter.indentexpr()"
