@@ -1,24 +1,6 @@
 # Ansible
 
 
-## Can be installed with apt:
-- bash (already done)
-- docker (done)
-- entr
-- fd (fd-find)
-- firefox (has to add repository to apt)
-- fzf
-- gh
-- git (already installed)
-- go (manual install)
-- goreleaser (has to add repository to apt)
-- helm (has to add repository to apt)
-- htop
-- jq
-- k9s (not possible right off the bat)
-- karabiner (not needed on debian)
-
-
 ## Install Ansible
 
 Check the Python interpreter path to verify if the target Ansible interpreter
