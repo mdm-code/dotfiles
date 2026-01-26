@@ -27,6 +27,7 @@
     - pass
     - go
     - rust
+    - tree-sitter
     - nvm
     - pyenv
     - bash
