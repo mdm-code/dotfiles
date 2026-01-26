@@ -1,0 +1,13 @@
+---
+- name: Install Tree-sitter-cli
+  tags:
+  - tree-sitter
+  become: "{{ should_run_pkg_mgr_as_root }}"
+  when: ansible_os_family == "Darwin"
+  block:
+  - name: Install Tree-sitter-cli with a package manager
+    ansible.builtin.package:
+      name:
+      - tree-sitter-cli
+      state: latest
+...

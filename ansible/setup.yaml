@@ -7,6 +7,7 @@
     - git
     - curl
     - wget
+    - gtar
     - entr
     - gh
     - lf
@@ -26,6 +27,7 @@
     - pass
     - go
     - rust
+    - tree-sitter
     - nvm
     - pyenv
     - bash
@@ -37,6 +39,7 @@
     - helm
     - k9s
     - wezterm
+    - ghostty
     - firefox
     - karabiner
 ...

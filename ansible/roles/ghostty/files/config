@@ -1,0 +1,22 @@
+#  _____  _   _ _____ _____ _____ _______   __
+# |  __ \| | | |  _  /  ___|_   _|_   _\ \ / /
+# | |  \/| |_| | | | \ `--.  | |   | |  \ V / 
+# | | __ |  _  | | | |`--. \ | |   | |   \ /  
+# | |_\ \| | | \ \_/ /\__/ / | |   | |   | |  
+#  \____/\_| |_/\___/\____/  \_/   \_/   \_/  
+# 
+
+
+################# NOTES ####################
+# $ ghostty --help
+# $ more $XDG_CONFIG_HOME/ghostty/config
+# $ ghostty +list-themes
+# $ ghostty +show-config --default --docs | less
+# $ ghostty +list-fonts | less
+# $ ghostty +show-config | less
+############################################
+
+
+theme = Gruvbox Dark
+mouse-hide-while-typing = true
+font-feature = -calt, -liga, -dlig

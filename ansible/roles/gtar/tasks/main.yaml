@@ -1,0 +1,13 @@
+---
+- name: Install Gtar
+  tags:
+  - gtar
+  become: "{{ should_run_pkg_mgr_as_root }}"
+  when: ansible_os_family == "Darwin"
+  block:
+  - name: Install Gtar with a package manager
+    ansible.builtin.package:
+      name:
+      - gnu-tar
+      state: latest
+...

@@ -9,14 +9,34 @@
 
 return {
 	"nvim-treesitter/nvim-treesitter",
-	config = function()
-		require("nvim-treesitter.configs").setup({
-			ensure_installed = "all",
-			sync_install = false,
-			highlight = {
-				enable = true,
-				additional_vim_regex_highlighting = { "markdown" },
-			},
-		})
-	end,
+	lazy = false,
+	opts = {
+		indent = { enable = true },
+		folds = { enable = true },
+		highlight = {
+			enable = true,
+			additional_vim_regex_highlighting = { "go", "python" },
+		},
+		ensure_installed = {
+			"bash",
+			"c",
+			"diff",
+			"lua",
+			"python",
+			"javascript",
+			"typescript",
+			"go",
+			"html",
+			"xml",
+			"markdown",
+			"json",
+			"toml",
+			"yaml",
+			"vim",
+			"vimdoc",
+			"query",
+			"regex",
+			"tsx",
+		},
+	},
 }

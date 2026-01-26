@@ -1,11 +1,11 @@
 neovim_home_dir: "{{ ansible_env.HOME }}"
 neovim_config_dir: "{{ neovim_home_dir }}/.config/nvim"
-neovim_release_version: "latest"
+neovim_release_version: "stable"
 neovim_os_family_release: {
-  "Darwin": "nvim-macos-x86_64",
+  "Darwin": "nvim-macos-arm64",
   "Debian": "nvim-linux-x86_64",
 }
-neovim_release_source_url: "https://github.com/neovim/neovim/releases/latest/download/{{ ansible_os_family | extract(neovim_os_family_release) }}.tar.gz"
+neovim_release_source_url: "https://github.com/neovim/neovim/releases/download/{{ neovim_release_version}}/{{ ansible_os_family | extract(neovim_os_family_release) }}.tar.gz"
 neovim_template_config_files:
  - src: "templates/lua/settings/python.lua.j2"
    dest: "lua/settings/python.lua"
@@ -25,3 +25,4 @@ neovim_dependencies:
     command: fd --version
   - name: tree-sitter
     command: tree-sitter --version
+neovim_node_host_exec: "/opt/homebrew/bin/neovim-node-host"

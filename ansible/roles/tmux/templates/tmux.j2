@@ -6,6 +6,11 @@
 #        \_/ \_|  |_/\___/\/   \/     \____/\___/\_| \_/\_|    \___/ \____/
 
 
+{% ansible_os_family == 'Darwin' %}
+# Default shell
+set -g default-shell /opt/homebrew/bin/bash
+{% endif %}
+
 
 # Colors
 set -g status-bg black

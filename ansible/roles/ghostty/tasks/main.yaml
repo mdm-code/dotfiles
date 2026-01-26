@@ -1,0 +1,25 @@
+---
+- name: Install Ghostty on MacOS
+  tags:
+  - ghostty
+  become: "{{ should_run_pkg_mgr_as_root }}"
+  when: ansible_os_family == "Darwin"
+  block:
+    - name: Install Ghostty with a package manager
+      ansible.builtin.package:
+        name:
+        - ghostty
+        state: latest
+
+    - name: Ensure that Ghostty configuration directory is present
+      ansible.builtin.file:
+        path: "{{ ghostty_config_dir }}"
+        state: directory
+        mode: u=+rwx,g=+r-wx,o=+r-wx
+
+    - name: Ensure Ghostty configuration files are present
+      ansible.builtin.copy:
+        src: files/
+        dest: "{{ ghostty_config_dir }}/"
+        mode: u=+rw,g=+r-wx,o=+r-wx
+...

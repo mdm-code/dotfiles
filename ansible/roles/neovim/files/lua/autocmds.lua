@@ -34,7 +34,15 @@ autocmd({ "BufEnter" }, {
 	group = nvim_config_augroup,
 	pattern = { "*" },
 	callback = function()
-		vim.cmd.colorscheme("gruvbox")
+		pcall(vim.cmd.colorscheme, "gruvbox")
+	end,
+})
+
+autocmd({ "BufEnter"}, {
+	group = nvim_config_augroup,
+	pattern = { "*" },
+	callback = function()
+		pcall(vim.treesitter.start)
 	end,
 })
 

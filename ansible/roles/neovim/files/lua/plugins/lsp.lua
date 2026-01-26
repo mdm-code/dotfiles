@@ -19,41 +19,25 @@ return {
 	config = function()
 		local cmp = require("cmp")
 		local cmp_lsp = require("cmp_nvim_lsp")
-		local lspconfig = require("lspconfig")
 		local capabilities = vim.tbl_deep_extend(
 			"force",
 			{},
 			vim.lsp.protocol.make_client_capabilities(),
 			cmp_lsp.default_capabilities())
 
-		lspconfig.gopls.setup {
-			capabilities = capabilities,
-			cmd = { "gopls" },
-			filetypes = { "go", "gomod", "gowork", "templ" },
-			root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
-			settings = {
-				gopls = {
-					analyses = {
-						unusedparams = true,
-					},
-					staticcheck = true,
-					gofumpt = true,
-					completeUnimported = true,
-					usePlaceholders = false,
-				},
+		-- NOTE: Add and configure servers.
+		local server_configs = {
+			gopls = {
+				cmd = { "gopls" },
+				-- ...
 			},
-		} 
+			pyright = {
+			},
+		}
 
-		lspconfig.htmx.setup({
-			capabilities = capabilities,
-			filetypes = { "html", "templ" },
-		})
-
-		local defaultServers = { "pyright", "templ" }
-		for _, lsp in ipairs(defaultServers) do
-			lspconfig[lsp].setup {
-				capabilities = capabilities,
-			}
+		for server, config in pairs(server_configs) do
+			vim.lsp.config(server, config)
+			vim.lsp.enable(server)
 		end
 
 		cmp.setup({
