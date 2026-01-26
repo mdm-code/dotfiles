@@ -3,9 +3,9 @@
   tags:
   - wezterm
   become: "{{ should_run_pkg_mgr_as_root }}"
-  when: ansible_os_family == "Debian"
   block:
   - name: "Configure APT repository on a {{ ansible_os_family }}-based operating system."
+    when: ansible_os_family == "Debian"
     block:
     - name: Add the GPG key to APT
       ansible.builtin.get_url:
