@@ -39,6 +39,7 @@
     - helm
     - k9s
     - wezterm
+    - ghostty
     - firefox
     - karabiner
 ...
