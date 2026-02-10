@@ -33,6 +33,9 @@ The playbook will run all the specified roles in the `setup.yaml` file. It's
 possible to use `--tags` and `--limit` to narrow down the scope of planned
 changes to apply.
 
+In case the OS needs super user privileges, add the `--ask-become-pass` to be
+prompted for one.
+
 
 ## Test Ansible roles in the setup playbook
 
