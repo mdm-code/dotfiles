@@ -34,6 +34,21 @@ possible to use `--tags` and `--limit` to narrow down the scope of planned
 changes to apply.
 
 
+## List tasks for a given set of tags
+
+For instance, this command lists all tasks tagged as `neovim`.
+
+```sh
+ansible-playbook setup.yaml --ask-vault-pass --tags neovim --list-tasks
+```
+
+This command lists all available tags:
+
+```sh
+ansible-playbook setup.yaml --ask-vault-pass --list-tags
+```
+
+
 ## Test Ansible roles in the setup playbook
 
 The `test-on-linux` shell script can be used to test parts of the setup
