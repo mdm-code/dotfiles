@@ -6,6 +6,7 @@
   become: "{{ should_run_pkg_mgr_as_root }}"
   block:
   - name: Install Fd with a package manager
+    ignore_errors: true
     ansible.builtin.package:
       name:
         # NOTE: This is a hack. The package is named 'fd-find' on Debian-based
