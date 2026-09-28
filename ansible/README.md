@@ -26,7 +26,7 @@ ansible localhost -m ping
 Here is how to run it:
 
 ```sh
-ansible-playbook setup.yaml --ask-vault-pass
+ansible-playbook setup.yaml --ask-vault-pass --ask-become-pass
 ```
 
 The playbook will run all the specified roles in the `setup.yaml` file. It's
