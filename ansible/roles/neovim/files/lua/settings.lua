@@ -31,6 +31,7 @@ vim.opt.cursorcolumn = true
 vim.opt.shortmess:append("c")
 vim.opt.listchars = { nbsp = "¬", tab = "»·", trail = "·", extends = ">" }
 vim.opt.list = true
+vim.opt.winborder = "rounded"
 
 ------------- TABS --------------
 vim.opt.tabstop = 4
