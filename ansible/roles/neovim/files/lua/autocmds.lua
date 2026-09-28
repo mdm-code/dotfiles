@@ -19,21 +19,6 @@ autocmd({ "BufEnter" }, {
 	group = nvim_config_augroup,
 	pattern = { "*" },
 	callback = function()
-		vim.schedule(
-			function()
-				vim.cmd([[
-					highlight CursorColumn ctermbg=238
-					highlight CursorLine cterm=bold ctermbg=238
-				]])
-			end
-		)
-	end,
-})
-
-autocmd({ "BufEnter" }, {
-	group = nvim_config_augroup,
-	pattern = { "*" },
-	callback = function()
 		pcall(vim.cmd.colorscheme, "gruvbox")
 	end,
 })
@@ -70,17 +55,18 @@ autocmd("FileType", {
 })
 
 autocmd("LspAttach", {
-	group = nvim_config_augroup,
-	pattern = { "*" },
-	callback = function(args)
-		local opts = { buffer = args.buf }
+	callback = function(ev)
+		local client = vim.lsp.get_client_by_id(ev.data.client_id)
+		if client:supports_method('textDocument/completion') then
+			vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+		end
+
+		local opts = { buffer = ev.buf }
 		vim.keymap.set({ "n" }, "<leader>d", function() vim.lsp.buf.definition() end, opts)
 		vim.keymap.set({ "n" }, "K", function() vim.lsp.buf.hover() end, opts)
 		vim.keymap.set({ "n" }, "<C-k>", function() vim.lsp.buf.signature_help() end, opts)
 		vim.keymap.set({ "n" }, "<leader>rn", function() vim.lsp.buf.rename() end, opts)
 		vim.keymap.set({ "n" }, "<leader>rr", function() vim.lsp.buf.references() end, opts)
-		vim.keymap.set({ "n" }, "<leader>n", function() vim.diagnostic.goto_next() end, opts)
-		vim.keymap.set({ "n" }, "<leader>p", function() vim.diagnostic.goto_prev() end, opts)
 		vim.keymap.set({ "n" }, "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
 		vim.keymap.set({ "n" }, "<leader>gd", function() vim.diagnostic.open_float() end, opts)
 		vim.keymap.set({ "n" }, "<leader>ws", function() vim.lsp.buf.workspace_symbol() end, opts)

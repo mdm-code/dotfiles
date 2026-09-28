@@ -1,4 +1,5 @@
 require("settings")
 require("keymaps")
+require("lsp")
 require("autocmds")
 require("lazy_init")
